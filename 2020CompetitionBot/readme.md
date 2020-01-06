@@ -1,1 +1,0 @@
-# Code for the competition bots
