@@ -8,10 +8,13 @@
 #pragma once
 
 #include <frc2/command/Command.h>
+#include <frc/Joystick.h>
 
 #include "commands/ExampleCommand.h"
 #include "subsystems/ExampleSubsystem.h"
 #include "subsystems/DrivetrainSub.h"
+
+constexpr int DRIVER_JOYSTICK_PORT = 0;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -31,6 +34,8 @@ class RobotContainer {
   ExampleSubsystem m_subsystem;
   DrivetrainSub m_drivetrainSub;
   ExampleCommand m_autonomousCommand;
+
+  frc::Joystick m_driverController;  
 
   void ConfigureButtonBindings();
 };

@@ -7,8 +7,12 @@
 
 #include "RobotContainer.h"
 
-RobotContainer::RobotContainer() : m_autonomousCommand(&m_subsystem) {
+#include "commands/DriveWithJoystickCmd.h"
+
+RobotContainer::RobotContainer() : m_autonomousCommand(&m_subsystem),
+      m_driverController(DRIVER_JOYSTICK_PORT) {
   // Initialize all of your commands and subsystems here
+  m_drivetrainSub.SetDefaultCommand(DriveWithJoystickCmd(&m_drivetrainSub, &m_driverController));
 
   // Configure the button bindings
   ConfigureButtonBindings();

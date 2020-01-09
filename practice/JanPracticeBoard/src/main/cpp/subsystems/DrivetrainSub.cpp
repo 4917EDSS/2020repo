@@ -17,9 +17,7 @@ DrivetrainSub::DrivetrainSub()
 }
 
 // This method will be called once per scheduler run
-void DrivetrainSub::Periodic() {
-    drive(0.1, 0.1);        // TODO:  Remove this!
-}
+void DrivetrainSub::Periodic() {}
 
 void DrivetrainSub::drive(double lPower, double rPower) {
     m_leftMotor1.Set(lPower);
