@@ -9,7 +9,6 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include <frc/Joystick.h>
 
 #include "subsystems/DrivetrainSub.h"
 
@@ -20,10 +19,10 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class DriveWithJoystickCmd
-    : public frc2::CommandHelper<frc2::CommandBase, DriveWithJoystickCmd> {
+class AuxMotorReverseCmd
+    : public frc2::CommandHelper<frc2::CommandBase, AuxMotorReverseCmd> {
  public:
-  DriveWithJoystickCmd(DrivetrainSub *drivetrainSub, frc::Joystick *driverController);
+  AuxMotorReverseCmd(DrivetrainSub *drivetrainSub, double power, double time);
 
   void Initialize() override;
 
@@ -35,5 +34,6 @@ class DriveWithJoystickCmd
 
  private:
   DrivetrainSub *m_drivetrainSubPtr;
-  frc::Joystick *m_driverControllerPtr;
+  double m_power;
+  double m_time;
 };

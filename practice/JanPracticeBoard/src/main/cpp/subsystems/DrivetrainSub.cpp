@@ -5,14 +5,13 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+#include "Constants.h"
 #include "subsystems/DrivetrainSub.h"
 
-constexpr int LEFT_DRIVE_MOTOR_1_CAN_ID = 2;
-constexpr int RIGHT_DRIVE_MOTOR_1_CAN_ID = 22;
-
 DrivetrainSub::DrivetrainSub() 
-    : m_leftMotor1{LEFT_DRIVE_MOTOR_1_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
-      m_rightMotor1{RIGHT_DRIVE_MOTOR_1_CAN_ID, rev::CANSparkMaxLowLevel::MotorType::kBrushless} {
+    : m_leftMotor1{canids::LEFT_DRIVE_MOTOR_1, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
+      m_rightMotor1{canids::RIGHT_DRIVE_MOTOR_1, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
+      m_auxMotor{canids::AUX_MOTOR} {
 
 }
 
@@ -22,4 +21,9 @@ void DrivetrainSub::Periodic() {}
 void DrivetrainSub::drive(double lPower, double rPower) {
     m_leftMotor1.Set(lPower);
     m_rightMotor1.Set(rPower);
+}
+
+// Added motor to drivetrain to be able to use the VictorSPX
+void DrivetrainSub::setAuxPower(double power) {
+    m_auxMotor.Set(power);
 }

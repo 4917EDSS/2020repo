@@ -16,3 +16,9 @@
  * command-specific namespaces within this header, which can then be used where
  * they are needed.
  */
+
+namespace canids {
+    constexpr int LEFT_DRIVE_MOTOR_1 = 2;
+    constexpr int RIGHT_DRIVE_MOTOR_1 = 22;
+    constexpr int AUX_MOTOR = 9;
+}

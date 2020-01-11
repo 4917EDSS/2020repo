@@ -5,25 +5,29 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/DriveWithJoystickCmd.h"
+#include "commands/AuxMotorReverseCmd.h"
 
-DriveWithJoystickCmd::DriveWithJoystickCmd(DrivetrainSub *drivetrainSub, frc::Joystick *driverController) 
-      : m_drivetrainSubPtr(drivetrainSub), 
-        m_driverControllerPtr(driverController) {
+AuxMotorReverseCmd::AuxMotorReverseCmd(DrivetrainSub *drivetrainSub, double power, double time)
+      : m_drivetrainSubPtr(drivetrainSub),
+        m_power(power),
+        m_time(time) {
   // Use addRequirements() here to declare subsystem dependencies.
-  AddRequirements(m_drivetrainSubPtr);
 }
 
 // Called when the command is initially scheduled.
-void DriveWithJoystickCmd::Initialize() {}
-
-// Called repeatedly when this Command is scheduled to run
-void DriveWithJoystickCmd::Execute() {
-  m_drivetrainSubPtr->drive(m_driverControllerPtr->GetX(), m_driverControllerPtr->GetZ());
+void AuxMotorReverseCmd::Initialize() {
+  std::cout << "Starting AuxMotorReverseCmd\n";
+  m_drivetrainSubPtr->setAuxPower(m_power);
 }
 
+// Called repeatedly when this Command is scheduled to run
+void AuxMotorReverseCmd::Execute() {}
+
 // Called once the command ends or is interrupted.
-void DriveWithJoystickCmd::End(bool interrupted) {}
+void AuxMotorReverseCmd::End(bool interrupted) {}
 
 // Returns true when the command should end.
-bool DriveWithJoystickCmd::IsFinished() { return false; }
+bool AuxMotorReverseCmd::IsFinished() { 
+  // TODO: This should run on a timer either internally or as a WithTimeout decorator to the command in RobotContainer.cpp
+  return true; 
+}

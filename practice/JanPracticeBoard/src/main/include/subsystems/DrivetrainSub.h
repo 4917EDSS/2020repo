@@ -9,6 +9,7 @@
 
 #include <frc2/command/SubsystemBase.h>
 #include <rev/CANSparkMax.h>
+#include <ctre/Phoenix.h>
 
 class DrivetrainSub : public frc2::SubsystemBase {
  public:
@@ -19,10 +20,13 @@ class DrivetrainSub : public frc2::SubsystemBase {
    */
   void Periodic();
   void drive(double lPower, double rPower);
+  void setAuxPower(double power);
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
   rev::CANSparkMax m_leftMotor1;
   rev::CANSparkMax m_rightMotor1;
+  WPI_VictorSPX m_auxMotor;   // Not really a drivetrain motor but this is just practice
+  
 };

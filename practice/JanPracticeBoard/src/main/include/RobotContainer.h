@@ -8,6 +8,7 @@
 #pragma once
 
 #include <frc2/command/Command.h>
+#include <frc2/command/InstantCommand.h>
 #include <frc/Joystick.h>
 
 #include "commands/ExampleCommand.h"
@@ -33,9 +34,15 @@ class RobotContainer {
   // The robot's subsystems and commands are defined here...
   ExampleSubsystem m_subsystem;
   DrivetrainSub m_drivetrainSub;
+  
   ExampleCommand m_autonomousCommand;
 
-  frc::Joystick m_driverController;  
-
+  // Controllers and buttons
+  frc::Joystick m_driverController{DRIVER_JOYSTICK_PORT}; 
+  
+  // Special commands
+  frc2::InstantCommand m_auxMotorSlowIcmd{[this] { m_drivetrainSub.setAuxPower(0.1); }, {&m_drivetrainSub}};
+  frc2::InstantCommand m_auxMotorOffIcmd{[this] { m_drivetrainSub.setAuxPower(0.0); }, {&m_drivetrainSub}};
+  
   void ConfigureButtonBindings();
 };
