@@ -7,6 +7,7 @@
 
 #include "Constants.h"
 #include "subsystems/DrivetrainSub.h"
+#include <frc/Encoder.h>
 
 DrivetrainSub::DrivetrainSub() 
     : m_leftMotor1{canids::LEFT_DRIVE_MOTOR_1, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
@@ -26,4 +27,20 @@ void DrivetrainSub::drive(double lPower, double rPower) {
 // Added motor to drivetrain to be able to use the VictorSPX
 void DrivetrainSub::setAuxPower(double power) {
     m_auxMotor.Set(power);
+}
+
+// Reset the encoder
+void DrivetrainSub::resetEncoder() {
+    m_leftMotor1.GetEncoder().SetPosition(0.0);
+    m_rightMotor1.GetEncoder().SetPosition(0.0);
+}
+
+// Get left encoder position
+double DrivetrainSub::getLeftEncoderPosition() {
+    return m_leftMotor1.GetEncoder().GetPosition();
+}
+
+// Get right encoder position
+double DrivetrainSub::getRightEncoderPosition() {
+    return m_rightMotor1.GetEncoder().GetPosition();
 }
