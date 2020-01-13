@@ -38,8 +38,12 @@ bool LeftMotorTwoTurnsCmd::IsFinished() {
   // NB: This is likely not appropriate with real robot weight and momentum
   if (m_turnsAchieved == 2)
   {
-      m_drivetrainSubPtr->drive(0.05, 0.0);
-  }
+      m_drivetrainSubPtr->drive(0.0, 0.0);
 
-  return true;
+      // Done.
+      return true;
+  } else {
+      // Not done yet.
+      return false;
+  }
 }
