@@ -54,6 +54,8 @@ void Robot::TeleopInit() {
     m_autonomousCommand->Cancel();
     m_autonomousCommand = nullptr;
   }
+
+  std::cout << "*** Starting Teleop ***\n";
 }
 
 /**

@@ -9,9 +9,13 @@
 
 #include <frc2/command/button/JoystickButton.h>
 #include <frc2/command/PrintCommand.h>
+#include <frc/smartdashboard/SmartDashboard.h>
+
+#include "commands/PrintHelloCmd.h"
 
 RobotContainer::RobotContainer() : m_autonomousCommand(&m_subsystem) {
   // Initialize all of your commands and subsystems here
+  frc::SmartDashboard::PutData("PrintHelloCmd", new PrintHelloCmd());
 
   // Configure the button bindings
   ConfigureButtonBindings();
@@ -20,8 +24,10 @@ RobotContainer::RobotContainer() : m_autonomousCommand(&m_subsystem) {
 void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
   frc2::JoystickButton m_dUp{&m_joy, 5};
+  frc2::JoystickButton m_button1{&m_joy, 1};
 
   m_dUp.WhenPressed(frc2::PrintCommand("Print message button pressed"));
+  m_button1.WhenPressed(PrintHelloCmd());
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
