@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <frc/Joystick.h>
 #include <frc2/command/Command.h>
 
 #include "commands/ExampleCommand.h"
@@ -26,6 +27,8 @@ class RobotContainer {
   frc2::Command* GetAutonomousCommand();
 
  private:
+  frc::Joystick m_joy{0};
+
   // The robot's subsystems and commands are defined here...
   ExampleSubsystem m_subsystem;
   ExampleCommand m_autonomousCommand;

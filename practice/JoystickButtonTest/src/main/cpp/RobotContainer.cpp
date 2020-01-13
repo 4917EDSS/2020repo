@@ -7,6 +7,9 @@
 
 #include "RobotContainer.h"
 
+#include <frc2/command/button/JoystickButton.h>
+#include <frc2/command/PrintCommand.h>
+
 RobotContainer::RobotContainer() : m_autonomousCommand(&m_subsystem) {
   // Initialize all of your commands and subsystems here
 
@@ -16,6 +19,9 @@ RobotContainer::RobotContainer() : m_autonomousCommand(&m_subsystem) {
 
 void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
+  frc2::JoystickButton m_dUp{&m_joy, 5};
+
+  m_dUp.WhenPressed(frc2::PrintCommand("Print message button pressed"));
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
