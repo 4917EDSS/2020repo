@@ -21,14 +21,16 @@
  * they are needed.
  */
 
-namespace DriveConstants {
-constexpr int kLeftMotor1Port = 0;
-constexpr int kLeftMotor2Port = 1;
-constexpr int kRightMotor1Port = 2;
-constexpr int kRightMotor2Port = 3;
+namespace CanIds {
+constexpr int kLeftMotor1CanId = 1;
+constexpr int kLeftMotor2CanId = 3;
+constexpr int kLeftMotor3CanId = 5;
+constexpr int kRightMotor1CanId = 2;
+constexpr int kRightMotor2CanId = 4;
+constexpr int kRightMotor3CanId = 6;
+}
 
-constexpr int kLeftEncoderPorts[]{0, 1};
-constexpr int kRightEncoderPorts[]{2, 3};
+namespace DriveConstants {
 constexpr bool kLeftEncoderReversed = false;
 constexpr bool kRightEncoderReversed = true;
 

@@ -13,16 +13,23 @@
 using namespace DriveConstants;
 
 DriveSubsystem::DriveSubsystem()
-    : m_left1{kLeftMotor1Port},
-      m_left2{kLeftMotor2Port},
-      m_right1{kRightMotor1Port},
-      m_right2{kRightMotor2Port},
-      m_leftEncoder{kLeftEncoderPorts[0], kLeftEncoderPorts[1]},
-      m_rightEncoder{kRightEncoderPorts[0], kRightEncoderPorts[1]},
+    : m_leftMotor1{CanIds::kLeftMotor1CanId, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
+      m_leftMotor2{CanIds::kLeftMotor2CanId, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
+      m_leftMotor3{CanIds::kLeftMotor3CanId, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
+      m_rightMotor1{CanIds::kRightMotor1CanId, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
+      m_rightMotor2{CanIds::kRightMotor2CanId, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
+      m_rightMotor3{CanIds::kRightMotor3CanId, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
+      m_leftEncoder{m_leftMotor1.GetEncoder()},
+      m_rightEncoder{m_rightMotor1.GetEncoder()},
+      m_gyro{frc::SPI::kMXP},
       m_odometry{frc::Rotation2d(units::degree_t(GetHeading()))} {
+
+  // TODO:  Do we need encoders to be on the output shaft vs on the motor?
+  
   // Set the distance per pulse for the encoders
-  m_leftEncoder.SetDistancePerPulse(kEncoderDistancePerPulse);
-  m_rightEncoder.SetDistancePerPulse(kEncoderDistancePerPulse);
+  // WARNING!  This value can get erased during brownouts.  Safer to do the conversion in the roboRIO TODO.
+  m_leftEncoder.SetPositionConversionFactor(kEncoderDistancePerPulse);
+  m_rightEncoder.SetPositionConversionFactor(kEncoderDistancePerPulse);
 
   ResetEncoders();
 }
@@ -30,8 +37,8 @@ DriveSubsystem::DriveSubsystem()
 void DriveSubsystem::Periodic() {
   // Implementation of subsystem periodic method goes here.
   m_odometry.Update(frc::Rotation2d(units::degree_t(GetHeading())),
-                    units::meter_t(m_leftEncoder.GetDistance()),
-                    units::meter_t(m_rightEncoder.GetDistance()));
+                    units::meter_t(m_leftEncoder.GetPosition()),
+                    units::meter_t(m_rightEncoder.GetPosition()));
 }
 
 void DriveSubsystem::ArcadeDrive(double fwd, double rot) {
@@ -44,17 +51,18 @@ void DriveSubsystem::TankDriveVolts(units::volt_t left, units::volt_t right) {
 }
 
 void DriveSubsystem::ResetEncoders() {
-  m_leftEncoder.Reset();
-  m_rightEncoder.Reset();
+  m_leftEncoder.SetPosition(0);
+  m_rightEncoder.SetPosition(0);
 }
 
 double DriveSubsystem::GetAverageEncoderDistance() {
-  return (m_leftEncoder.GetDistance() + m_rightEncoder.GetDistance()) / 2.0;
+  return (m_leftEncoder.GetPosition() + m_rightEncoder.GetPosition()) / 2.0;
 }
 
-frc::Encoder& DriveSubsystem::GetLeftEncoder() { return m_leftEncoder; }
+// TODO:  Do we need this?  Problem with SparkMax encoder
+//frc::Encoder& DriveSubsystem::GetLeftEncoder() { return m_leftEncoder; }
 
-frc::Encoder& DriveSubsystem::GetRightEncoder() { return m_rightEncoder; }
+//frc::Encoder& DriveSubsystem::GetRightEncoder() { return m_rightEncoder; }
 
 void DriveSubsystem::SetMaxOutput(double maxOutput) {
   m_drive.SetMaxOutput(maxOutput);
@@ -71,8 +79,8 @@ double DriveSubsystem::GetTurnRate() {
 frc::Pose2d DriveSubsystem::GetPose() { return m_odometry.GetPose(); }
 
 frc::DifferentialDriveWheelSpeeds DriveSubsystem::GetWheelSpeeds() {
-  return {units::meters_per_second_t(m_leftEncoder.GetRate()),
-          units::meters_per_second_t(m_rightEncoder.GetRate())};
+  return {units::meters_per_second_t(m_leftEncoder.GetVelocity()),
+          units::meters_per_second_t(m_rightEncoder.GetVelocity())};
 }
 
 void DriveSubsystem::ResetOdometry(frc::Pose2d pose) {

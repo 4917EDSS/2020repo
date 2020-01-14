@@ -7,15 +7,15 @@
 
 #pragma once
 
-#include <frc/ADXRS450_Gyro.h>
 #include <frc/Encoder.h>
-#include <frc/PWMVictorSPX.h>
 #include <frc/SpeedControllerGroup.h>
 #include <frc/drive/DifferentialDrive.h>
 #include <frc/geometry/Pose2d.h>
 #include <frc/kinematics/DifferentialDriveOdometry.h>
 #include <frc2/command/SubsystemBase.h>
 #include <units/units.h>
+#include <rev/CANSparkMax.h>
+#include <AHRS.h>
 
 #include "Constants.h"
 
@@ -63,14 +63,14 @@ class DriveSubsystem : public frc2::SubsystemBase {
    *
    * @return the left drive encoder
    */
-  frc::Encoder& GetLeftEncoder();
+ // frc::Encoder& GetLeftEncoder();
 
   /**
    * Gets the right drive encoder.
    *
    * @return the right drive encoder
    */
-  frc::Encoder& GetRightEncoder();
+ // frc::Encoder& GetRightEncoder();
 
   /**
    * Sets the max output of the drive.  Useful for scaling the drive to drive
@@ -120,28 +120,30 @@ class DriveSubsystem : public frc2::SubsystemBase {
   // declared private and exposed only through public methods.
 
   // The motor controllers
-  frc::PWMVictorSPX m_left1;
-  frc::PWMVictorSPX m_left2;
-  frc::PWMVictorSPX m_right1;
-  frc::PWMVictorSPX m_right2;
+  rev::CANSparkMax m_leftMotor1;
+  rev::CANSparkMax m_leftMotor2;
+  rev::CANSparkMax m_leftMotor3;
+  rev::CANSparkMax m_rightMotor1;
+  rev::CANSparkMax m_rightMotor2;
+  rev::CANSparkMax m_rightMotor3;
 
   // The motors on the left side of the drive
-  frc::SpeedControllerGroup m_leftMotors{m_left1, m_left2};
+  frc::SpeedControllerGroup m_leftMotors{m_leftMotor1, m_leftMotor2, m_leftMotor3};
 
   // The motors on the right side of the drive
-  frc::SpeedControllerGroup m_rightMotors{m_right1, m_right2};
+  frc::SpeedControllerGroup m_rightMotors{m_rightMotor1, m_rightMotor2, m_rightMotor3};
 
   // The robot's drive
   frc::DifferentialDrive m_drive{m_leftMotors, m_rightMotors};
 
   // The left-side drive encoder
-  frc::Encoder m_leftEncoder;
+  rev::CANEncoder m_leftEncoder;
 
   // The right-side drive encoder
-  frc::Encoder m_rightEncoder;
+  rev::CANEncoder m_rightEncoder;
 
   // The gyro sensor
-  frc::ADXRS450_Gyro m_gyro;
+  AHRS m_gyro;
 
   // Odometry class for tracking robot pose
   frc::DifferentialDriveOdometry m_odometry;
