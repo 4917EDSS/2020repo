@@ -34,7 +34,9 @@ class LeftMotorTwoTurnsCmd
 
 private:
   const int kTicksPerTurn = 100;
+  const double kInitialPower = 0.10;
+  
   DrivetrainSub *m_drivetrainSubPtr;
-  int m_turnsAchieved = 0;
+  double m_turnsAchieved = 0;
 
 };
