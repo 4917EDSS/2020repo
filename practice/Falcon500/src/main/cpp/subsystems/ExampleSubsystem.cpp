@@ -11,6 +11,7 @@
 ExampleSubsystem::ExampleSubsystem()
   : m_falcon{25} {
   // Implementation of subsystem constructor goes here.
+  frc::SmartDashboard::PutNumber("motorSpeed", 0.0);
 }
 
 void ExampleSubsystem::Periodic() {
