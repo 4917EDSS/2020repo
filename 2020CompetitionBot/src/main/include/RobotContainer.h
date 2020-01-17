@@ -10,6 +10,7 @@
 #include <frc2/command/Command.h>
 
 #include "commands/ExampleCommand.h"
+#include "subsystems/IntakeSub.h"
 #include "subsystems/ExampleSubsystem.h"
 
 /**
@@ -26,9 +27,13 @@ class RobotContainer {
   frc2::Command* GetAutonomousCommand();
 
  private:
+
   // The robot's subsystems and commands are defined here...
   ExampleSubsystem m_subsystem;
+  IntakeSub m_IntakeSubSubsystem;
+  
   ExampleCommand m_autonomousCommand;
+   
 
   void ConfigureButtonBindings();
 };
