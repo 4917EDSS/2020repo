@@ -11,9 +11,13 @@
 #include <frc/Joystick.h>
 
 #include "commands/ExampleCommand.h"
+#include "subsystems/IntakeSub.h"
 #include "subsystems/ExampleSubsystem.h"
+#include "subsystems/DrivetrainSub.h"
+
 constexpr int DRIVER_JOYSTICK_PORT=0;
 constexpr int OPERATOR_JOYSTICK_PORT=1;
+
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -29,8 +33,12 @@ class RobotContainer {
   frc2::Command* GetAutonomousCommand();
 
  private:
+
   // The robot's subsystems and commands are defined here...
+  DrivetrainSub m_drive;
   ExampleSubsystem m_subsystem;
+  IntakeSub m_IntakeSubSubsystem;
+  
   ExampleCommand m_autonomousCommand;
 //Controllers and Buttons
   frc::Joystick m_driverController{DRIVER_JOYSTICK_PORT};
