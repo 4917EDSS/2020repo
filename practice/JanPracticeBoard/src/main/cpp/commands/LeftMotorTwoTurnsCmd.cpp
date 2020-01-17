@@ -5,6 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+#include <frc/smartdashboard/SmartDashboard.h>
 #include "commands/LeftMotorTwoTurnsCmd.h"
 
 // -----------------------------------------------------------------------------
@@ -48,6 +49,8 @@ void LeftMotorTwoTurnsCmd::Execute() {
   std::cout << leftPos;
   std::cout << "\n";
 
+  frc::SmartDashboard::PutNumber("Left Motor Turns", m_turnsAchieved);
+
   // Dial back the power as we approach 2 turns.
   if (m_turnsAchieved >= 1.75)
     // Once 1.75 turns are acheived, set power to 1/3 initial power.
@@ -82,8 +85,9 @@ bool LeftMotorTwoTurnsCmd::IsFinished() {
   printf("%5.3f", m_turnsAchieved);
   std::cout << "\n";
 
-  // We're done once 2 turns have been acheived, but done also if more in case
-  // our math is off.
+  // We're done once exactly 2 turns have been achieved, but done also if more
+  // because we likely won't get a reading when exactly 2 turns have been
+  // achieved.
   if (m_turnsAchieved >= 2.0)
   {
     // Done.
