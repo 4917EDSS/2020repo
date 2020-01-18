@@ -12,8 +12,6 @@
     "**/.project": true,
     "**/.settings": true,
     "**/.factorypath": true
-<<<<<<< HEAD
-=======
   },
   "C_Cpp.default.configurationProvider": "vscode-wpilib",
   "files.associations": {
@@ -78,6 +76,5 @@
     "thread": "cpp",
     "cinttypes": "cpp",
     "typeinfo": "cpp"
->>>>>>> ee455b81e2c0548d7056bc84ed53d7e608b5c581
   }
 }
