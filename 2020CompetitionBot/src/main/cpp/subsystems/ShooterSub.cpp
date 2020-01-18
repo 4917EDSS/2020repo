@@ -24,27 +24,20 @@ void ShooterSub::Periodic() {
 
   frc::SmartDashboard::PutNumber("motorCurrent", m_falcon1.GetOutputCurrent());
 }
+
 //Sets speed of all motors
 void ShooterSub::setSpeed(double speed) {
   m_falcon1.Set(speed);
   m_falcon2.Set(speed);
 }
+
 // Gets maximum absolute speeds of both motors
 double ShooterSub::getSpeed() {
   double falcon1Speed =  m_falcon1.Get();
-  std::cout << "ShooterSub::getSpeed - falcon1Speed=";
-  std::cout << falcon1Speed;
-  std::cout << "\n";
-
   double falcon2Speed =  m_falcon2.Get();
-  std::cout << "ShooterSub::getSpeed - falcon2Speed=";
-  std::cout << falcon2Speed;
-  std::cout << "\n";
-
   double overallSpeed = std::max(std::abs(falcon1Speed), std::abs(falcon2Speed));
-  std::cout << "ShooterSub::getSpeed - overallSpeed=";
-  std::cout << overallSpeed;
-  std::cout << "\n";
+
+  printf ("ShooterSub::getSpeed - overallSpeed=%4.2f ; falcon1Speed=%4.2f ; falcon2Speed=%4.2f"  , falcon1Speed, falcon2Speed, overallSpeed);
 
   return overallSpeed;
 }
