@@ -13,9 +13,10 @@
 #include "commands/UselessCmd.h"
 #include "subsystems/IntakeSub.h"
 #include "subsystems/DrivetrainSub.h"
-
+#include "subsystems/ShooterSub.h"
 constexpr int DRIVER_JOYSTICK_PORT=0;
 constexpr int OPERATOR_JOYSTICK_PORT=1;
+constexpr int OPERATTOR_JOYSTICK_PORT=2;
 
 
 /**

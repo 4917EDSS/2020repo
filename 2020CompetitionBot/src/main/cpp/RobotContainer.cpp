@@ -7,8 +7,6 @@
 
 #include "RobotContainer.h"
 #include <frc2/command/button/JoystickButton.h>
-constexpr int SHOOTER_BTN=2;
-constexpr int INTAKE_BTN=1;
 #include <frc/controller/PIDController.h>
 #include <frc/controller/RamseteController.h>
 #include <frc/shuffleboard/Shuffleboard.h>
@@ -19,8 +17,13 @@ constexpr int INTAKE_BTN=1;
 #include <frc2/command/RamseteCommand.h>
 #include <frc2/command/SequentialCommandGroup.h>
 #include <frc2/command/button/JoystickButton.h>
+#include "commands/ShootCmd.h"
 #include "commands/IntakeCmd.h"
 #include "Constants.h"
+
+
+constexpr int SHOOTER_BTN=2;
+constexpr int INTAKE_BTN=1;
 
 RobotContainer::RobotContainer() {
   // Initialize all of your commands and subsystems here
@@ -33,8 +36,7 @@ void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
 
   frc2::JoystickButton m_shooterBtn(&m_driverController, SHOOTER_BTN);
-
-  m_shooterBtn.WhenPressed(m_autonomousCommand);
+  m_shooterBtn.WhenPressed(ShootCmd(&m_ShooterSub));
 
   frc2::JoystickButton m_intakeBtn(&m_operatorController, INTAKE_BTN);
   m_intakeBtn.WhenHeld(IntakeCmd(&m_IntakeSubSubsystem));
