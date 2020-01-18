@@ -22,9 +22,9 @@ constexpr int INTAKE_BTN=1;
 #include "commands/IntakeCmd.h"
 #include "Constants.h"
 
-RobotContainer::RobotContainer() : m_autonomousCommand(&m_subsystem) {
+RobotContainer::RobotContainer() {
   // Initialize all of your commands and subsystems here
-
+  //m_autonomousCommand(&m_ShooterSub);
   // Configure the button bindings
   ConfigureButtonBindings();
 }
@@ -33,16 +33,14 @@ void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
 
   frc2::JoystickButton m_shooterBtn(&m_driverController, SHOOTER_BTN);
-  m_shooterBtn.WhenPressed(&m_autonomousCommand);
+
+  m_shooterBtn.WhenPressed(m_autonomousCommand);
 
   frc2::JoystickButton m_intakeBtn(&m_operatorController, INTAKE_BTN);
   m_intakeBtn.WhenHeld(IntakeCmd(&m_IntakeSubSubsystem));
-
 }
-
-
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
   // An example command will be run in autonomous
-  return &m_autonomousCommand;
+  return m_autonomousCommand;
 }

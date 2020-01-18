@@ -1,16 +1,16 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
+/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "subsystems/ExampleSubsystem.h"
+#include "commands/UselessCmd.h"
 
-ExampleSubsystem::ExampleSubsystem() {
-  // Implementation of subsystem constructor goes here.
+UselessCmd::UselessCmd() {
+  // Use Requires() here to declare subsystem dependencies
+  // eg. Requires(Robot::chassis.get());
 }
 
-void ExampleSubsystem::Periodic() {
-  // Implementation of subsystem periodic method goes here.
-}
+// Called once when the command executes
+void UselessCmd::Initialize() {}
