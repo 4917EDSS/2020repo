@@ -9,7 +9,7 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-
+#include "subsystems/ShooterSub.h"
 /**
  * An example command.
  *
@@ -20,13 +20,16 @@
 class ShootCmd
     : public frc2::CommandHelper<frc2::CommandBase, ShootCmd> {
  public:
-  ShootCmd();
+  ShootCmd(ShooterSub* subsystem);
 
   void Initialize() override;
 
-  void Execute() override;
+ 
 
   void End(bool interrupted) override;
 
-  bool IsFinished() override;
+  private:
+  ShooterSub* m_ShootSub;
+
+
 };

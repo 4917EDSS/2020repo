@@ -7,18 +7,19 @@
 
 #include "commands/ShootCmd.h"
 
-ShootCmd::ShootCmd() {
+
+
+ShootCmd::ShootCmd(ShooterSub* subsystem) : m_ShootSub(subsystem){
   // Use addRequirements() here to declare subsystem dependencies.
+AddRequirements({subsystem});
 }
 
 // Called when the command is initially scheduled.
-void ShootCmd::Initialize() {}
-
-// Called repeatedly when this Command is scheduled to run
-void ShootCmd::Execute() {}
+void ShootCmd::Initialize() {
+  m_ShootSub->setSpeed(0.6);
+}
 
 // Called once the command ends or is interrupted.
-void ShootCmd::End(bool interrupted) {}
-
-// Returns true when the command should end.
-bool ShootCmd::IsFinished() { return false; }
+void ShootCmd::End(bool interrupted) {
+    m_ShootSub->setSpeed(0);
+}
