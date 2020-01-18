@@ -33,8 +33,8 @@ void ShooterSub::setSpeed(double speed) {
 
 // Gets maximum absolute speeds of both motors
 double ShooterSub::getSpeed() {
-  double falcon1Speed =  m_falcon1.Get();
-  double falcon2Speed =  m_falcon2.Get();
+  double falcon1Speed =  m_falcon1.GetSensorCollection().GetIntegratedSensorVelocity();
+  double falcon2Speed =  m_falcon2.GetSensorCollection().GetIntegratedSensorVelocity();
   double overallSpeed = std::max(std::abs(falcon1Speed), std::abs(falcon2Speed));
 
   printf ("ShooterSub::getSpeed - overallSpeed=%4.2f ; falcon1Speed=%4.2f ; falcon2Speed=%4.2f"  , falcon1Speed, falcon2Speed, overallSpeed);
