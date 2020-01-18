@@ -9,10 +9,9 @@
 
 #include <frc2/command/Command.h>
 #include <frc/Joystick.h>
-
-#include "commands/ExampleCommand.h"
+#include "subsystems/ShooterSub.h"
+#include "commands/UselessCmd.h"
 #include "subsystems/IntakeSub.h"
-#include "subsystems/ExampleSubsystem.h"
 #include "subsystems/DrivetrainSub.h"
 
 constexpr int DRIVER_JOYSTICK_PORT=0;
@@ -36,10 +35,10 @@ class RobotContainer {
 
   // The robot's subsystems and commands are defined here...
   DrivetrainSub m_drive;
-  ExampleSubsystem m_subsystem;
   IntakeSub m_IntakeSubSubsystem;
+  ShooterSub m_ShooterSub;
   
-  ExampleCommand m_autonomousCommand;
+  frc2::Command* m_autonomousCommand;
 //Controllers and Buttons
   frc::Joystick m_driverController{DRIVER_JOYSTICK_PORT};
   frc::Joystick m_operatorController{OPERATOR_JOYSTICK_PORT};

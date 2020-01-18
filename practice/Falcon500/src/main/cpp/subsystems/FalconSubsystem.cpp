@@ -16,15 +16,16 @@ FalconSubsystem::FalconSubsystem()
   
 void FalconSubsystem::Periodic() {
   // Implementation of subsystem periodic method goes here.
-  double speedToSet = frc::SmartDashboard::GetNumber("motorSpeed", getSpeed());
+  double speedToSet = frc::SmartDashboard::GetNumber("motorSpeed1", getSpeed());
   setSpeed(speedToSet);
   //frc::SmartDashboard::PutNumber("motorSpeed", getSpeed());
-
-  frc::SmartDashboard::PutNumber("motorCurrent", m_falcon1.GetOutputCurrent());
+  frc::SmartDashboard::PutNumber("motorCurrent1", m_falcon1.GetOutputCurrent());
+  frc::SmartDashboard::PutNumber("motorCurrent2", m_falcon2.GetOutputCurrent());
 }
 
 void FalconSubsystem::setSpeed(double speed) {
   m_falcon1.Set(speed);
+  m_falcon2.Set(speed);
 }
 
 double FalconSubsystem::getSpeed() {
