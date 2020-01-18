@@ -9,10 +9,15 @@
 
 IntakeSub::IntakeSub() {
     
-    FrontTopIntakeMotor.reset(new ctre::phoenix::motorcontrol::can::WPI_VictorSPX(1));
-    FrontBottomIntakeMotor.reset(new ctre::phoenix::motorcontrol::can::WPI_VictorSPX(2));
-    BackTopIntakeMotor.reset(new ctre::phoenix::motorcontrol::can::WPI_VictorSPX(3));
-    ConveyorBeltIntakeMotor.reset(new ctre::phoenix::motorcontrol::can::WPI_VictorSPX(4));
+    FrontIntakeMotor.reset(new ctre::phoenix::motorcontrol::can::WPI_VictorSPX(1));
+    InteriorIntakeMotor.reset(new ctre::phoenix::motorcontrol::can::WPI_VictorSPX(4));
+
+}
+
+void IntakeSub::SetIntake(double speed){
+
+    FrontIntakeMotor->Set(ControlMode::PercentOutput, speed);
+    InteriorIntakeMotor->Set(ControlMode::PercentOutput, speed);
 
 }
 
@@ -23,4 +28,6 @@ void IntakeSub::Periodic() {}
 //Ball enters robot through the gap in bumper
 //Motors on rollers suck the ball into robot
 //Ball enters shooter
+
+
 
