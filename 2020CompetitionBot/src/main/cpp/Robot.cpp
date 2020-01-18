@@ -11,7 +11,16 @@
 #include <frc2/command/CommandScheduler.h>
 
 void Robot::RobotInit() {
+
+// autoChooser.reset(new frc::SendableChooser<std::shared_ptr<frc::Command>>());
+// autoChooser->AddOption("Donuts", std::shared_ptr<frc::Command>(new ));
+
+// frc::SmartDashboard::PutData("Auto Modes", autoChooser.get());
 frc::SmartDashboard::PutNumber("shooterspeed", 0);
+
+// frc2::PrintCommand ({ ["FirstAutoHere"] });
+
+
 }
 
 /**
@@ -44,6 +53,9 @@ void Robot::AutonomousInit() {
     m_autonomousCommand->Schedule();
   }
 }
+// autoCommand = autoChooser->GetSelected().lock();
+
+// autoCommand->Start();
 
 void Robot::AutonomousPeriodic() {}
 
