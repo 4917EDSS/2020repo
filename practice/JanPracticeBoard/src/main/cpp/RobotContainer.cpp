@@ -15,6 +15,7 @@
 #include "commands/DriveWithJoystickCmd.h"
 #include "commands/AuxMotorReverseCmd.h"
 #include "commands/AuxHalfForwardCmd.h" 
+#include "commands/LeftMotorTwoTurnsCmd.h" 
 
 constexpr int AUX_MOTOR_SLOW_BTN = 1;
 constexpr int AUX_MOTOR_OFF_BTN = 2;
@@ -27,6 +28,7 @@ RobotContainer::RobotContainer() : m_autonomousCommand(&m_subsystem) {
   frc::SmartDashboard::PutData("AuxSlowCmd", &m_auxMotorSlowIcmd);
   frc::SmartDashboard::PutData("AuxOffCmd", &m_auxMotorOffIcmd);
   frc::SmartDashboard::PutData("AuxHalfForwardCmd", new AuxHalfForwardCmd(&m_drivetrainSub));
+  frc::SmartDashboard::PutData("LeftMotorTwoTurnsCmd", new LeftMotorTwoTurnsCmd(&m_drivetrainSub));
   // Configure the button bindings
   ConfigureButtonBindings();
 

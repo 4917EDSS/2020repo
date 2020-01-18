@@ -6,6 +6,8 @@
 /*----------------------------------------------------------------------------*/
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "subsystems/ShooterSub.h"
+#include <cmath>
+
 
 
 ShooterSub::ShooterSub()
@@ -23,11 +25,20 @@ void ShooterSub::Periodic() {
   frc::SmartDashboard::PutNumber("motorCurrent2", m_falcon2.GetOutputCurrent());
 }
 
+//Sets speed of all motors
 void ShooterSub::setSpeed(double speed) {
   m_falcon1.Set(speed);
   m_falcon2.Set(speed);
 }
 
+// Gets maximum absolute speeds of both motors
 double ShooterSub::getSpeed() {
-  return m_falcon1.Get();
+  double falcon1Speed =  m_falcon1.GetSensorCollection().GetIntegratedSensorVelocity();
+  double falcon2Speed =  m_falcon2.GetSensorCollection().GetIntegratedSensorVelocity();
+  double overallSpeed = std::max(std::abs(falcon1Speed), std::abs(falcon2Speed));
+
+  printf ("ShooterSub::getSpeed - overallSpeed=%4.2f ; falcon1Speed=%4.2f ; falcon2Speed=%4.2f"  , falcon1Speed, falcon2Speed, overallSpeed);
+
+  return overallSpeed;
 }
+  
