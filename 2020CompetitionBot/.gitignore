@@ -4,7 +4,7 @@
 # Prerequisites
 *.d
 
-.vscode/*
+.vscode/*.json
 
 # Compiled Object files
 *.slo
