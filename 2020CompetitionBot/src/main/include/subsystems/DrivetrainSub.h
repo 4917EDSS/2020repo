@@ -18,6 +18,7 @@
 #include <units/units.h>
 #include <rev/CANSparkMax.h>
 #include <AHRS.h>
+#include <frc/solenoid.h>
 
 #include "Constants.h"
 
@@ -149,4 +150,6 @@ class DrivetrainSub : public frc2::SubsystemBase {
 
   // Odometry class for tracking robot pose
   frc::DifferentialDriveOdometry m_odometry;
+
+  frc::Solenoid m_shifter;
 };

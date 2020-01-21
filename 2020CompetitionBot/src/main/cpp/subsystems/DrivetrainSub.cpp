@@ -9,6 +9,10 @@
 
 #include <frc/geometry/Rotation2d.h>
 #include <frc/kinematics/DifferentialDriveWheelSpeeds.h>
+#include <frc/smartdashboard/SmartDashboard.h>
+
+constexpr units::velocity::meters_per_second_t kShiftUpSpeed = 3.0_mps;
+constexpr units::velocity::meters_per_second_t kShiftDownSpeed = 1.0_mps;
 
 using namespace DriveConstants;
 
@@ -24,7 +28,8 @@ DrivetrainSub::DrivetrainSub()
       m_leftEncoder{m_leftMotor1.GetEncoder()},
       m_rightEncoder{m_rightMotor1.GetEncoder()},
       m_gyro{frc::SPI::kMXP},
-      m_odometry{frc::Rotation2d(units::degree_t(GetHeading()))} {
+      m_odometry{frc::Rotation2d(units::degree_t(GetHeading()))},
+      m_shifter{PneumaticIds::kShifterId} {
 
 // TODO: Do we need encoder to be on the output shaft vs on the motor?
 // Set the distance per pulse for the encoders
@@ -33,14 +38,30 @@ DrivetrainSub::DrivetrainSub()
     m_rightEncoder.SetPositionConversionFactor(kEncoderDistancePerPulse);
 
     ResetEncoders();
+    m_shifter.Set(false);
+
+    frc::SmartDashboard::PutNumber("drive power", 0);
 }
 
 // This method will be called once per scheduler run
 void DrivetrainSub::Periodic() {
 
-    m_odometry.Update(frc::Rotation2d(units::degree_t(GetHeading())),
-                      units::meter_t(m_leftEncoder.GetPosition()),
-                      units::meter_t(m_rightEncoder.GetPosition()));
+  m_odometry.Update(frc::Rotation2d(units::degree_t(GetHeading())),
+                    units::meter_t(m_leftEncoder.GetPosition()),
+                    units::meter_t(m_rightEncoder.GetPosition()));
+
+  // Hack to test motors since joysticks aren't coded
+  double currentPower = frc::SmartDashboard::GetNumber("drive power", 0);
+  //ArcadeDrive(currentPower, 0);  
+
+  frc::DifferentialDriveWheelSpeeds wheelSpeeds = GetWheelSpeeds();
+  units::velocity::meters_per_second_t averageSpeed = (wheelSpeeds.left + wheelSpeeds.right) / 2;
+  if(averageSpeed > kShiftUpSpeed) {
+    m_shifter.Set(true);
+  }
+  else if(averageSpeed < kShiftDownSpeed) {
+    m_shifter.Set(false);
+  }
 }
 
 void DrivetrainSub::ArcadeDrive(double fwd, double rot) {
