@@ -50,7 +50,7 @@ void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
 
   frc2::JoystickButton m_shooterBtn(&m_driverController, SHOOTER_BTN);
-  m_shooterBtn.WhenPressed(ShootCmd(&m_ShooterSub));
+  m_shooterBtn.WhenPressed(ShootCmd(&m_ShooterSub, 3000));
 
   frc2::JoystickButton m_intakeBtn(&m_operatorController, INTAKE_BTN);
   m_intakeBtn.WhenHeld(IntakeCmd(&m_IntakeSubSubsystem));
