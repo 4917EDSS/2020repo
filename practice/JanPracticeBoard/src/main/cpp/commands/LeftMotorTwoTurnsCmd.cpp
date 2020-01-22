@@ -32,6 +32,10 @@ void LeftMotorTwoTurnsCmd::Initialize() {
 
   // Set initial power.
   m_drivetrainSubPtr->drive(kInitialPower, 0.0);
+
+  frc::SmartDashboard::PutNumber("Left Motor Position", 0);
+
+  frc::SmartDashboard::PutNumber("Left Motor Turns", 0);
 }
 
 // -----------------------------------------------------------------------------
@@ -48,6 +52,8 @@ void LeftMotorTwoTurnsCmd::Execute() {
   std::cout << "; Left Position = ";
   std::cout << leftPos;
   std::cout << "\n";
+
+  frc::SmartDashboard::PutNumber("Left Motor Position", leftPos);
 
   frc::SmartDashboard::PutNumber("Left Motor Turns", m_turnsAchieved);
 

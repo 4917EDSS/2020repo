@@ -33,8 +33,8 @@ class LeftMotorTwoTurnsCmd
   bool IsFinished() override;
 
 private:
-  const int kTicksPerTurn = 100;
-  const double kInitialPower = 0.10;
+  const int kTicksPerTurn = 0.0257125;
+  const double kInitialPower = 0.05;
   
   DrivetrainSub *m_drivetrainSubPtr;
   double m_turnsAchieved = 0;
