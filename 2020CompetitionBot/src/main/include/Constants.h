@@ -33,6 +33,11 @@ namespace CanIds {
     constexpr int kRightMotor4CanId = 8;
 }
 
+namespace PneumaticIds {
+    //constexpr int Id = 0;
+    constexpr int kShifterId = 1;
+}
+
 namespace DriveConstants {
     constexpr bool kLeftEncoderReversed = false;
     constexpr bool RightEncoderReversed = true;
