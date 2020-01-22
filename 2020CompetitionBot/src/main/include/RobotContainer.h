@@ -36,7 +36,7 @@ class RobotContainer {
 
   // The robot's subsystems and commands are defined here...
   DrivetrainSub m_drive;
-  IntakeSub m_IntakeSubSubsystem;
+  IntakeSub m_IntakeSub;
   ShooterSub m_ShooterSub;
   
   frc2::Command* m_autonomousCommand;

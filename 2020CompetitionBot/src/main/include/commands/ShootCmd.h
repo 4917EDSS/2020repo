@@ -10,6 +10,7 @@
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 #include "subsystems/ShooterSub.h"
+#include "subsystems/IntakeSub.h"
 /**
  * An example command.
  *
@@ -20,7 +21,7 @@
 class ShootCmd
     : public frc2::CommandHelper<frc2::CommandBase, ShootCmd> {
  public:
-  ShootCmd(ShooterSub* subsystem);
+  ShootCmd(ShooterSub* shooterSub,IntakeSub* intakeSub);
 
   void Initialize() override;
 
@@ -30,6 +31,7 @@ class ShootCmd
 
   private:
   ShooterSub* m_ShootSub;
+  IntakeSub* m_IntakeSub;
 
 
 };
