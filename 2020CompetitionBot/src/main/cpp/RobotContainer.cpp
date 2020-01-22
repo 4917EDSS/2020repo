@@ -10,6 +10,7 @@
 #include <frc/controller/PIDController.h>
 #include <frc/controller/RamseteController.h>
 #include <frc/shuffleboard/Shuffleboard.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/trajectory/Trajectory.h>
 #include <frc/trajectory/TrajectoryGenerator.h>
 #include <frc/trajectory/constraint/DifferentialDriveVoltageConstraint.h>
@@ -34,16 +35,28 @@ RobotContainer::RobotContainer() {
   //m_autonomousCommand(&m_ShooterSub);
   // Configure the button bindings
   ConfigureButtonBindings();
+  AutoChooserSetup();
+}
+
+void RobotContainer::AutoChooserSetup(){
+  autoChooser.reset(new frc::SendableChooser< std::shared_ptr<frc2::Command>>());
+
+  autoChooser->AddOption("SecondAuto", std::shared_ptr<frc2::Command>(new IntakeCmd(&m_IntakeSub)));
+  autoChooser->AddDefault("VictoryLap", std::shared_ptr<frc2::Command>(new IntakeCmd(&m_IntakeSub)));
+
+
+  frc::SmartDashboard::PutData("Auto Chooser", autoChooser.get());
+  frc::SmartDashboard::PutNumber("shooterspeed", 0);
 }
 
 void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
 
   frc2::JoystickButton m_shooterBtn(&m_driverController, SHOOTER_BTN);
-  m_shooterBtn.WhenPressed(ShootCmd(&m_ShooterSub));
+  m_shooterBtn.WhenPressed(ShootCmd(&m_ShooterSub, &m_IntakeSub, 3000));
 
   frc2::JoystickButton m_intakeBtn(&m_operatorController, INTAKE_BTN);
-  m_intakeBtn.WhenHeld(IntakeCmd(&m_IntakeSubSubsystem));
+  m_intakeBtn.WhenHeld(IntakeCmd(&m_IntakeSub));
 
   frc2::JoystickButton m_climbReleaseBtn(&m_operatorController, CLIMB_RELEASE_BTN);
   m_climbReleaseBtn.WhenPressed(ClimbReleaseCmd(&m_ClimberSub));
@@ -57,5 +70,6 @@ void RobotContainer::ConfigureButtonBindings() {
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
   // An example command will be run in autonomous
+
   return m_autonomousCommand;
 }
