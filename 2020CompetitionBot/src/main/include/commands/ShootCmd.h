@@ -20,9 +20,10 @@
 class ShootCmd
     : public frc2::CommandHelper<frc2::CommandBase, ShootCmd> {
  public:
-  ShootCmd(ShooterSub* subsystem);
+  ShootCmd(ShooterSub* subsystem, double targetspeed);
 
   void Initialize() override;
+void Execute() override;
 
  
 
@@ -30,6 +31,7 @@ class ShootCmd
 
   private:
   ShooterSub* m_ShootSub;
+  double targetspeed;
 
 
 };
