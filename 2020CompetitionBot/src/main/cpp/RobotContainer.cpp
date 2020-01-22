@@ -20,10 +20,14 @@
 #include "commands/ShootCmd.h"
 #include "commands/IntakeCmd.h"
 #include "Constants.h"
-
+#include "subsystems/ClimberSub.h"
+#include "commands/ClimbReleaseCmd.h"
 
 constexpr int SHOOTER_BTN=2;
 constexpr int INTAKE_BTN=1;
+
+constexpr int CLIMB_RELEASE_BTN=3;
+constexpr int CLIMB_SPOOL_BTN=4;
 
 RobotContainer::RobotContainer() {
   // Initialize all of your commands and subsystems here
@@ -40,7 +44,16 @@ void RobotContainer::ConfigureButtonBindings() {
 
   frc2::JoystickButton m_intakeBtn(&m_operatorController, INTAKE_BTN);
   m_intakeBtn.WhenHeld(IntakeCmd(&m_IntakeSubSubsystem));
+
+  frc2::JoystickButton m_climbReleaseBtn(&m_operatorController, CLIMB_RELEASE_BTN);
+  m_climbReleaseBtn.WhenPressed(ClimbReleaseCmd(&m_ClimberSub));
+
+  frc2::JoystickButton m_climbSpoolBtn(&m_operatorController, CLIMB_SPOOL_BTN);
+  //m_climbSpoolBtn.WhenHeld()
+
 }
+
+
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
   // An example command will be run in autonomous

@@ -20,10 +20,10 @@ class ClimberSub : public frc2::SubsystemBase {
    * Will be called periodically whenever the CommandScheduler runs.
    */
   void Periodic();
-
+  void togglePosition(bool position);
  private:
- std::shared_ptr <rev::CANSparkMax> elevatorMotor1;
- std::shared_ptr <frc::Solenoid> climbReleaseSolenoid;
+  rev::CANSparkMax m_elevatorMotor1;
+  frc::Solenoid m_climbReleaseLatch;
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
 };
