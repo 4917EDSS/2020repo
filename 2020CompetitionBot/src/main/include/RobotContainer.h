@@ -9,8 +9,8 @@
 
 #include <frc2/command/Command.h>
 #include <frc/Joystick.h>
+#include <frc/smartdashboard/SendableChooser.h>
 #include "subsystems/ShooterSub.h"
-#include "commands/UselessCmd.h"
 #include "subsystems/IntakeSub.h"
 #include "subsystems/DrivetrainSub.h"
 #include "subsystems/ShooterSub.h"
@@ -38,11 +38,15 @@ class RobotContainer {
   DrivetrainSub m_drive;
   IntakeSub m_IntakeSubSubsystem;
   ShooterSub m_ShooterSub;
+  std::unique_ptr<frc::SendableChooser<std::shared_ptr<frc2::Command>> > autoChooser;
+  std::shared_ptr<frc2::Command> autoCommand;
   
+
   frc2::Command* m_autonomousCommand;
 //Controllers and Buttons
   frc::Joystick m_driverController{DRIVER_JOYSTICK_PORT};
   frc::Joystick m_operatorController{OPERATOR_JOYSTICK_PORT};
 
+  void AutoChooserSetup();
   void ConfigureButtonBindings();
 };

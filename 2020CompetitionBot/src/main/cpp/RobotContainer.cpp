@@ -10,6 +10,7 @@
 #include <frc/controller/PIDController.h>
 #include <frc/controller/RamseteController.h>
 #include <frc/shuffleboard/Shuffleboard.h>
+#include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/trajectory/Trajectory.h>
 #include <frc/trajectory/TrajectoryGenerator.h>
 #include <frc/trajectory/constraint/DifferentialDriveVoltageConstraint.h>
@@ -30,6 +31,19 @@ RobotContainer::RobotContainer() {
   //m_autonomousCommand(&m_ShooterSub);
   // Configure the button bindings
   ConfigureButtonBindings();
+  AutoChooserSetup();
+}
+
+void RobotContainer::AutoChooserSetup(){
+  autoChooser.reset(new frc::SendableChooser< std::shared_ptr<frc2::Command>>());
+
+  autoChooser->AddOption("FirstAuto", std::shared_ptr<frc2::Command>(new ShootCmd(&m_ShooterSub)));
+  autoChooser->AddOption("SecondAuto", std::shared_ptr<frc2::Command>(new IntakeCmd(&m_IntakeSubSubsystem)));
+  autoChooser->AddDefault("VictoryLap", std::shared_ptr<frc2::Command>(new IntakeCmd(&m_IntakeSubSubsystem)));
+
+
+  frc::SmartDashboard::PutData("Auto Chooser", autoChooser.get());
+  frc::SmartDashboard::PutNumber("shooterspeed", 0);
 }
 
 void RobotContainer::ConfigureButtonBindings() {
@@ -44,5 +58,6 @@ void RobotContainer::ConfigureButtonBindings() {
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
   // An example command will be run in autonomous
+
   return m_autonomousCommand;
 }
