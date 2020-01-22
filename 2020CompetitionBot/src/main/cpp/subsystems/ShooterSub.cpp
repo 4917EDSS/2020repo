@@ -15,7 +15,7 @@ ShooterSub::ShooterSub()
     m_falcon2(26) {
   // Implementation of subsystem constructor goes here.
 }
-  
+
 void ShooterSub::Periodic() {
   // Implementation of subsystem periodic method goes here.
   double speedToSet = frc::SmartDashboard::GetNumber("shooterspeed", 0);

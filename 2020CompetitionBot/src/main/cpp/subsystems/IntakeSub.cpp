@@ -11,12 +11,17 @@ IntakeSub::IntakeSub() {
     
     FrontIntakeMotor.reset(new ctre::phoenix::motorcontrol::can::WPI_VictorSPX(1));
     InteriorIntakeMotor.reset(new ctre::phoenix::motorcontrol::can::WPI_VictorSPX(4));
-
+    MagazineFullSensor.reset(new frc::DigitalInput(1));
 }
-
+//positive takes balls in negative takes balls to shooter 
 void IntakeSub::SetIntake(double speed){
+    if (speed<0){
+         FrontIntakeMotor->Set(ControlMode::PercentOutput,-speed);
+    }
+    else {
+        FrontIntakeMotor->Set(ControlMode::PercentOutput, speed);
+    }
 
-    FrontIntakeMotor->Set(ControlMode::PercentOutput, speed);
     InteriorIntakeMotor->Set(ControlMode::PercentOutput, speed);
 
 }
@@ -28,6 +33,3 @@ void IntakeSub::Periodic() {}
 //Ball enters robot through the gap in bumper
 //Motors on rollers suck the ball into robot
 //Ball enters shooter
-
-
-

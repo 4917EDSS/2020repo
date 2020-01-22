@@ -7,11 +7,13 @@
 
 #include "subsystems/ClimberSub.h"
 
-ClimberSub::ClimberSub() {
-
-elevatorMotor1.reset(new rev::CANSparkMax(13, rev::CANSparkMaxLowLevel::MotorType::kBrushless));
-
- climbReleaseSolenoid.reset(new frc::Solenoid(14));
+ClimberSub::ClimberSub() : m_elevatorMotor1(13, rev::CANSparkMaxLowLevel::MotorType::kBrushless),
+                           m_climbReleaseLatch(14){
 }
+
 // This method will be called once per scheduler run
 void ClimberSub::Periodic() {}
+
+void ClimberSub::togglePosition(bool position){
+    m_climbReleaseLatch.Set(position);
+}

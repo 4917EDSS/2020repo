@@ -9,11 +9,12 @@
 
 #include <frc2/command/SubsystemBase.h>
 #include <ctre/Phoenix.h>
+#include <frc/WPILib.h>
 
 class IntakeSub : public frc2::SubsystemBase {
  public:
   IntakeSub();
-  
+  // negative speed sends balls to shooter positive takes them to magazine 
   void SetIntake(double speed);
 
   /**
@@ -24,12 +25,8 @@ class IntakeSub : public frc2::SubsystemBase {
 
   std::shared_ptr<ctre::phoenix::motorcontrol::can::WPI_VictorSPX>FrontIntakeMotor;
   std::shared_ptr<ctre::phoenix::motorcontrol::can::WPI_VictorSPX>InteriorIntakeMotor;
+  std::shared_ptr<frc::DigitalInput>MagazineFullSensor;
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
-
-
-
-
-
 
 };
