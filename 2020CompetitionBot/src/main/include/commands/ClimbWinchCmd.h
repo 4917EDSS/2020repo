@@ -9,7 +9,7 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include "subsystems/IntakeSub.h"
+#include "subsystems/ClimberSub.h"
 
 /**
  * An example command.
@@ -18,17 +18,17 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class IntakeCmd
-    : public frc2::CommandHelper<frc2::CommandBase, IntakeCmd> {
+class ClimbWinchCmd
+    : public frc2::CommandHelper<frc2::CommandBase, ClimbWinchCmd> {
  public:
-  IntakeCmd(IntakeSub* subsystem);
+  ClimbWinchCmd(ClimberSub* climbSub);
 
-  void Initialize() override;
+  void Execute() override;
 
+  void End();
 
-  void End(bool interrupted) override;
+  bool IsFinished() override;
 
-
-private:
-  IntakeSub* m_intakeSub;
+  private:
+  ClimberSub* m_climbSub;
 };
