@@ -25,51 +25,70 @@
 #include "commands/ClimbReleaseCmd.h"
 #include "commands/ClimbWinchCmd.h"
 
-constexpr int SHOOTER_BTN=2;
-constexpr int INTAKE_BTN=1;
 
-constexpr int CLIMB_RELEASE_BTN=3;
-constexpr int CLIMB_SPOOL_BTN=4;
+/*
+ * ON LOGITECH F310 CONTROLLER:
+ * X = 1            (Blue)
+ * A = 2            (Green)
+ * B = 3            (Red)
+ * Y = 4            (Yellow)
+ * LB = 5           (Left-Bumper: top button)
+ * RB = 6           (Right-Bumper: top button)
+ * LT = 7           (Left-Trigger: bottom button)
+ * RT = 8           (Right-Trigger: bottom button)
+ * Select/Back = 9  (Above left joystick)
+ * Start = 10       (Above right joytsick)
+ * L3 = 11          (Press left joystick)
+ * R3 = 12          (Press right joystick)
+ * 
+ * Left Joystick Vertical Axis = 1
+ * Left Joystick Horizontal Axis = 0
+ * Right Joystick Vertical Axis = 3
+ * Right Joystick Horizontal Axis = 2
+ */
+constexpr int kIntakeBtn=1;
+constexpr int kShooterBtn=2;
+constexpr int kClimbReleaseBtn=3;
+constexpr int kClimbWinchBtn=4;
 
 RobotContainer::RobotContainer() {
   // Initialize all of your commands and subsystems here
-  //m_autonomousCommand(&m_ShooterSub);
+  //m_autonomousCommand(&m_shooterSub);
   // Configure the button bindings
-  ConfigureButtonBindings();
-  AutoChooserSetup();
+  configureButtonBindings();
+  autoChooserSetup();
 }
 
-void RobotContainer::AutoChooserSetup(){
-  autoChooser.reset(new frc::SendableChooser< std::shared_ptr<frc2::Command>>());
-
-  autoChooser->AddOption("SecondAuto", std::shared_ptr<frc2::Command>(new IntakeCmd(&m_IntakeSub)));
-  autoChooser->AddDefault("VictoryLap", std::shared_ptr<frc2::Command>(new IntakeCmd(&m_IntakeSub)));
+void RobotContainer::autoChooserSetup(){
+  m_autoChooser.AddOption("SecondAuto", new IntakeCmd(&m_intakeSub));
+  m_autoChooser.SetDefaultOption("VictoryLap", new IntakeCmd(&m_intakeSub));
 
 
-  frc::SmartDashboard::PutData("Auto Chooser", autoChooser.get());
+  frc::SmartDashboard::PutData("Auto Chooser", &m_autoChooser);
   frc::SmartDashboard::PutNumber("shooterspeed", 0);
 }
 
-void RobotContainer::ConfigureButtonBindings() {
+void RobotContainer::configureButtonBindings() {
   // Configure your button bindings here
 
-  frc2::JoystickButton m_shooterBtn(&m_driverController, SHOOTER_BTN);
-  m_shooterBtn.WhenPressed(ShootCmd(&m_ShooterSub, &m_IntakeSub, 3000));
+  frc2::JoystickButton shooterBtn(&m_driverController, kShooterBtn);
+  shooterBtn.WhenPressed(ShootCmd(&m_shooterSub, &m_intakeSub, 3000));
 
-  frc2::JoystickButton m_intakeBtn(&m_operatorController, INTAKE_BTN);
-  m_intakeBtn.WhenHeld(IntakeCmd(&m_IntakeSub));
+  frc2::JoystickButton intakeBtn(&m_operatorController, kIntakeBtn);
+  intakeBtn.WhenHeld(IntakeCmd(&m_intakeSub));
 
-  frc2::JoystickButton m_climbReleaseBtn(&m_operatorController, CLIMB_RELEASE_BTN);
-  m_climbReleaseBtn.WhenPressed(ClimbReleaseCmd(&m_ClimberSub));
+  frc2::JoystickButton climbReleaseBtn(&m_operatorController, kClimbReleaseBtn);
+  climbReleaseBtn.WhenPressed(ClimbReleaseCmd(&m_climberSub));
 
-  frc2::JoystickButton m_climbWinchBtn(&m_operatorController, CLIMB_SPOOL_BTN);
-  m_climbWinchBtn.WhenHeld(ClimbWinchCmd(&m_ClimberSub));
+
+  frc2::JoystickButton climbWinchBtn(&m_operatorController, kClimbWinchBtn);
+  climbWinchBtn.WhenHeld(ClimbWinchCmd(&m_climberSub));
 
 }
 
 
 
-frc2::Command* RobotContainer::GetAutonomousCommand() {
+frc2::Command* RobotContainer::getAutonomousCommand() {
   // An example command will be run in autonomous
 
   return m_autonomousCommand;

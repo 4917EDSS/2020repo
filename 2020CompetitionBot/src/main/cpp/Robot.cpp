@@ -41,15 +41,12 @@ void Robot::DisabledPeriodic() {}
  * RobotContainer} class.
  */
 void Robot::AutonomousInit() {
-  m_autonomousCommand = m_container.GetAutonomousCommand();
+  m_autonomousCommand = m_container.getAutonomousCommand();
 
   if (m_autonomousCommand != nullptr) {
     m_autonomousCommand->Schedule();
   }
 }
-// autoCommand = autoChooser->GetSelected().lock();
-
-// autoCommand->Start();
 
 void Robot::AutonomousPeriodic() {}
 

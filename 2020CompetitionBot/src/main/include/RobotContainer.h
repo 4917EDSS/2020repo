@@ -32,24 +32,22 @@ class RobotContainer {
  public:
   RobotContainer();
 
-  frc2::Command* GetAutonomousCommand();
+  frc2::Command* getAutonomousCommand();
 
  private:
 
   // The robot's subsystems and commands are defined here...
   DrivetrainSub m_drive;
-  IntakeSub m_IntakeSub;
-  ShooterSub m_ShooterSub;
-  ClimberSub m_ClimberSub;
-  std::unique_ptr<frc::SendableChooser<std::shared_ptr<frc2::Command>> > autoChooser;
-  std::shared_ptr<frc2::Command> autoCommand;
-  
-
+  IntakeSub m_intakeSub;
+  ShooterSub m_shooterSub;
+  ClimberSub m_climberSub;
+  frc::SendableChooser<frc2::Command*> m_autoChooser;
   frc2::Command* m_autonomousCommand;
+
 //Controllers and Buttons
   frc::Joystick m_driverController{DRIVER_JOYSTICK_PORT};
   frc::Joystick m_operatorController{OPERATOR_JOYSTICK_PORT};
 
-  void AutoChooserSetup();
-  void ConfigureButtonBindings();
+  void autoChooserSetup();
+  void configureButtonBindings();
 };
