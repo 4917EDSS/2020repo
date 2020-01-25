@@ -7,17 +7,17 @@
 
 #include "commands/IntakeCmd.h"
 
-IntakeCmd::IntakeCmd(IntakeSub* subsystem) : m_IntakeSub(subsystem){
+IntakeCmd::IntakeCmd(IntakeSub* subsystem) : m_intakeSub(subsystem){
   // Use addRequirements() here to declare subsystem dependencies.
 AddRequirements({subsystem});
 }
 
 // Called when the command is initially scheduled.
 void IntakeCmd::Initialize() {
-  m_IntakeSub->SetIntake(0.6);
+  m_intakeSub->SetIntake(0.6);
 }
 
 // Called once the command ends or is interrupted.
 void IntakeCmd::End(bool interrupted) {
-    m_IntakeSub->SetIntake(0);
+    m_intakeSub->SetIntake(0);
 }

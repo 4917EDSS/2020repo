@@ -33,7 +33,7 @@ void Execute() override;
 
   private:
   ShooterSub* m_ShootSub;
-  IntakeSub* m_IntakeSub;
+  IntakeSub* m_intakeSub;
   double targetspeed;
 
 
