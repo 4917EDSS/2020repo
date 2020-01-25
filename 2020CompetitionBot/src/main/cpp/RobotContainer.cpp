@@ -18,6 +18,8 @@
 #include <frc2/command/RamseteCommand.h>
 #include <frc2/command/SequentialCommandGroup.h>
 #include <frc2/command/button/JoystickButton.h>
+#include <frc2/command/RunCommand.h>
+
 #include "commands/ShootCmd.h"
 #include "commands/IntakeCmd.h"
 #include "Constants.h"
@@ -36,6 +38,13 @@ RobotContainer::RobotContainer() {
   // Configure the button bindings
   ConfigureButtonBindings();
   AutoChooserSetup();
+  m_drivetrainSub.SetDefaultCommand(frc2::RunCommand(
+  [this] {
+    m_drivetrainSub.ArcadeDrive(
+        m_driverController.GetY(frc::GenericHID::kLeftHand),
+        m_driverController.GetX(frc::GenericHID::kRightHand));
+  },
+  {&m_drivetrainSub}));
 }
 
 void RobotContainer::AutoChooserSetup(){
@@ -65,8 +74,6 @@ void RobotContainer::ConfigureButtonBindings() {
   //m_climbSpoolBtn.WhenHeld()
 
 }
-
-
 
 frc2::Command* RobotContainer::GetAutonomousCommand() {
   // An example command will be run in autonomous

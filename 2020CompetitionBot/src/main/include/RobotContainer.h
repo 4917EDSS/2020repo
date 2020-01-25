@@ -37,7 +37,7 @@ class RobotContainer {
  private:
 
   // The robot's subsystems and commands are defined here...
-  DrivetrainSub m_drive;
+  DrivetrainSub m_drivetrainSub;
   IntakeSub m_IntakeSub;
   ShooterSub m_ShooterSub;
   ClimberSub m_ClimberSub;
