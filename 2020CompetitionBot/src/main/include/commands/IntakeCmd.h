@@ -30,5 +30,5 @@ class IntakeCmd
 
 
 private:
-  IntakeSub* m_IntakeSub;
+  IntakeSub* m_intakeSub;
 };

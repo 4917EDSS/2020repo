@@ -9,8 +9,8 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include "subsystems/ShooterSub.h"
-#include "subsystems/IntakeSub.h"
+#include "subsystems/ClimberSub.h"
+
 /**
  * An example command.
  *
@@ -18,20 +18,17 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class ShootCmd
-    : public frc2::CommandHelper<frc2::CommandBase, ShootCmd> {
+class ClimbWinchCmd
+    : public frc2::CommandHelper<frc2::CommandBase, ClimbWinchCmd> {
  public:
+  ClimbWinchCmd(ClimberSub* climbSub);
 
-  ShootCmd(ShooterSub* subsystem, IntakeSub* intakeSub, double targetspeed);
-
-  void Initialize() override;
   void Execute() override;
-  void End(bool interrupted) override;
+
+  void End();
+
+  bool IsFinished() override;
 
   private:
-  ShooterSub* m_shooterSub;
-  IntakeSub* m_intakeSub;
-  double targetspeed;
-
-
+  ClimberSub* m_climbSub;
 };

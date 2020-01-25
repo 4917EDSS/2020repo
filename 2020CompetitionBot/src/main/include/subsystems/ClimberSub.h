@@ -21,6 +21,7 @@ class ClimberSub : public frc2::SubsystemBase {
    */
   void Periodic();
   void togglePosition(bool position);
+  void setWinchSpeed(double speed);
  private:
   rev::CANSparkMax m_elevatorMotor1;
   frc::Solenoid m_climbReleaseLatch;

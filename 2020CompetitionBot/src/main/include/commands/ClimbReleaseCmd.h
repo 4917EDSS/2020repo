@@ -21,13 +21,9 @@
 class ClimbReleaseCmd
     : public frc2::CommandHelper<frc2::CommandBase, ClimbReleaseCmd> {
  public:
-  ClimbReleaseCmd(ClimberSub* subsystem);
+  ClimbReleaseCmd(ClimberSub* climbSub);
 
   void Initialize() override;
-
-  void Execute() override;
-
-  void End(bool interrupted) override;
 
   bool IsFinished() override;
 

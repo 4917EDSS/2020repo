@@ -11,7 +11,7 @@ constexpr double P=0.001;
 constexpr double MAX_RPM=5000;
 
 
-ShootCmd::ShootCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, double targetspeed) : m_ShootSub(shooterSub), m_IntakeSub(intakeSub), targetspeed(targetspeed){
+ShootCmd::ShootCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, double targetspeed) : m_shooterSub(shooterSub), m_intakeSub(intakeSub), targetspeed(targetspeed){
 
   // Use addRequirements() here to declare subsystem dependencies.
 AddRequirements({shooterSub});
@@ -20,13 +20,13 @@ AddRequirements({intakeSub});
 
 // Called when the command is initially scheduled.
 void ShootCmd::Initialize() {
-  m_ShootSub->setSpeed(0.6);
-  m_IntakeSub->setIntake(-0.6);
+  m_shooterSub->setSpeed(0.6);
+  m_intakeSub->setIntake(-0.6);
 }
   void ShootCmd::Execute() {
-    double diff=targetspeed-m_ShootSub->getSpeed();
-    double feed=targetspeed/MAX_RPM;
-    m_ShootSub->setSpeed(diff*P+feed);
+    double diff = targetspeed - m_shooterSub->getSpeed();
+    double feed = targetspeed / MAX_RPM;
+    m_shooterSub->setSpeed(diff * P + feed);
     //P and MAX_RPM are arbitrary values for now.
 }
 
@@ -34,8 +34,6 @@ void ShootCmd::Initialize() {
 
 // Called once the command ends or is interrupted.
 void ShootCmd::End(bool interrupted) {
-    m_ShootSub->setSpeed(0);
-    m_IntakeSub->setIntake(0);
-
-
+    m_shooterSub->setSpeed(0);
+    m_intakeSub->setIntake(0);
 }

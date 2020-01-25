@@ -9,6 +9,7 @@
 
 #include <frc2/command/SubsystemBase.h>
 #include <rev/CANSparkMax.h>
+#include <rev/CANSparkMaxLowLevel.h>
 #include <frc/Encoder.h>
 #include <frc/SpeedControllerGroup.h>
 #include <frc/drive/DifferentialDrive.h>
@@ -16,7 +17,6 @@
 #include <frc/kinematics/DifferentialDriveOdometry.h>
 #include <frc2/command/SubsystemBase.h>
 #include <units/units.h>
-#include <rev/CANSparkMax.h>
 #include <AHRS.h>
 #include <frc/solenoid.h>
 
@@ -25,11 +25,15 @@
 class DrivetrainSub : public frc2::SubsystemBase {
  public:
   DrivetrainSub();
-
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */
   void Periodic() override;
+  void SetDrivetrainEncoderZero();
+  void drive(double lSpeed, double rSpeed);
+  void autoShift();
+  double getLeftEncoder();
+  double getRightEncoder();
   // Subsystem methods go here.
 
   /**
@@ -131,19 +135,13 @@ class DrivetrainSub : public frc2::SubsystemBase {
   rev::CANSparkMax m_rightMotor4;
 
   // The motors on the left side of the drive
-  frc::SpeedControllerGroup m_leftMotors{m_leftMotor1, m_leftMotor2, m_leftMotor3};
+  frc::SpeedControllerGroup m_leftMotors{m_leftMotor1, m_leftMotor2, m_leftMotor3, m_leftMotor4};
 
   // The motors on the right side of the drive
-  frc::SpeedControllerGroup m_rightMotors{m_rightMotor1, m_rightMotor2, m_rightMotor3};
+  frc::SpeedControllerGroup m_rightMotors{m_rightMotor1, m_rightMotor2, m_rightMotor3, m_rightMotor4};
 
   // The robot's drive
   frc::DifferentialDrive m_drive{m_leftMotors, m_rightMotors};
-
-  // The left-side drive encoder
-  rev::CANEncoder m_leftEncoder;
-
-  // The right-side drive encoder
-  rev::CANEncoder m_rightEncoder;
 
   // The gyro sensor
   AHRS m_gyro;
