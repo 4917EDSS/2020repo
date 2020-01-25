@@ -17,3 +17,7 @@ void ClimberSub::Periodic() {}
 void ClimberSub::togglePosition(bool position){
     m_climbReleaseLatch.Set(position);
 }
+void ClimberSub::setWinchSpeed(double speed){
+    m_elevatorMotor1.Set(speed);
+
+}

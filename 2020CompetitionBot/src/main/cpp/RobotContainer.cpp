@@ -23,6 +23,7 @@
 #include "Constants.h"
 #include "subsystems/ClimberSub.h"
 #include "commands/ClimbReleaseCmd.h"
+#include "commands/ClimbWinchCmd.h"
 
 constexpr int SHOOTER_BTN=2;
 constexpr int INTAKE_BTN=1;
@@ -61,8 +62,8 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton m_climbReleaseBtn(&m_operatorController, CLIMB_RELEASE_BTN);
   m_climbReleaseBtn.WhenPressed(ClimbReleaseCmd(&m_ClimberSub));
 
-  frc2::JoystickButton m_climbSpoolBtn(&m_operatorController, CLIMB_SPOOL_BTN);
-  //m_climbSpoolBtn.WhenHeld()
+  frc2::JoystickButton m_climbWinchBtn(&m_operatorController, CLIMB_SPOOL_BTN);
+  m_climbWinchBtn.WhenHeld(ClimbWinchCmd(&m_ClimberSub));
 
 }
 

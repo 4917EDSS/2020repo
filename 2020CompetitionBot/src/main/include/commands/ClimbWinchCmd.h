@@ -18,15 +18,17 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class ClimbReleaseCmd
-    : public frc2::CommandHelper<frc2::CommandBase, ClimbReleaseCmd> {
+class ClimbWinchCmd
+    : public frc2::CommandHelper<frc2::CommandBase, ClimbWinchCmd> {
  public:
-  ClimbReleaseCmd(ClimberSub* climbSub);
+  ClimbWinchCmd(ClimberSub* climbSub);
 
-  void Initialize() override;
+  void Execute() override;
+
+  void End();
 
   bool IsFinished() override;
 
   private:
-  ClimberSub* m_ClimbSub;
+  ClimberSub* m_climbSub;
 };

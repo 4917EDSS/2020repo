@@ -8,7 +8,7 @@
 #pragma once
 
 #include <frc2/command/SubsystemBase.h>
-#include <frc/WPILib.h>
+#include <frc/Solenoid.h>
 #include <rev/CANSparkMax.h>
 #include <rev/CANSparkMaxLowLevel.h>
 
@@ -21,6 +21,7 @@ class ClimberSub : public frc2::SubsystemBase {
    */
   void Periodic();
   void togglePosition(bool position);
+  void setWinchSpeed(double speed);
  private:
   rev::CANSparkMax m_elevatorMotor1;
   frc::Solenoid m_climbReleaseLatch;

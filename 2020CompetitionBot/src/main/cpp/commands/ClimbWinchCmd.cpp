@@ -5,18 +5,19 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/ClimbReleaseCmd.h"
+#include "commands/ClimbWinchCmd.h"
 
-ClimbReleaseCmd::ClimbReleaseCmd(ClimberSub* climbSub)  : m_ClimbSub(climbSub){
+ClimbWinchCmd::ClimbWinchCmd(ClimberSub* climbSub) {
   // Use addRequirements() here to declare subsystem dependencies.
-  
-  AddRequirements({climbSub});
 }
 
-// Called when the command is initially scheduled.
-void ClimbReleaseCmd::Initialize() {
-  m_ClimbSub->togglePosition(1);
+// Called repeatedly when this Command is scheduled to run
+void ClimbWinchCmd::Execute() {
+  m_climbSub->setWinchSpeed(1);
 }
 
+void ClimbWinchCmd::End(){
+  m_climbSub->setWinchSpeed(0);
+}
 // Returns true when the command should end.
-bool ClimbReleaseCmd::IsFinished() { return true; }
+bool ClimbWinchCmd::IsFinished() { return false; }
