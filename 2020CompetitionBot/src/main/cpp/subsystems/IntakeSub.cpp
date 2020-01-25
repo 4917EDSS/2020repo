@@ -6,24 +6,24 @@
 /*----------------------------------------------------------------------------*/
 
 #include "subsystems/IntakeSub.h"
+#include "Constants.h"
 
-IntakeSub::IntakeSub() {
+IntakeSub::IntakeSub() 
+    : m_frontIntakeMotor{ctre::phoenix::motorcontrol::can::WPI_VictorSPX(CanIds::kFrontIntakeMotor)},
+      m_interiorIntakeMotor{ctre::phoenix::motorcontrol::can::WPI_VictorSPX(CanIds::kInteriorIntakeMotor)},
+      m_magazineFullSensor{frc::DigitalInput(DioIds::kMagazineFullSensor)} {
     
-    FrontIntakeMotor.reset(new ctre::phoenix::motorcontrol::can::WPI_VictorSPX(1));
-    InteriorIntakeMotor.reset(new ctre::phoenix::motorcontrol::can::WPI_VictorSPX(4));
-    MagazineFullSensor.reset(new frc::DigitalInput(1));
 }
 //positive takes balls in negative takes balls to shooter 
-void IntakeSub::SetIntake(double speed){
-    if (speed<0){
-         FrontIntakeMotor->Set(ControlMode::PercentOutput,-speed);
+void IntakeSub::setIntake(double speed) {
+    if(speed < 0) {
+        m_frontIntakeMotor.Set(ControlMode::PercentOutput,-speed);
     }
     else {
-        FrontIntakeMotor->Set(ControlMode::PercentOutput, speed);
+        m_frontIntakeMotor.Set(ControlMode::PercentOutput, speed);
     }
 
-    InteriorIntakeMotor->Set(ControlMode::PercentOutput, speed);
-
+    m_interiorIntakeMotor.Set(ControlMode::PercentOutput, speed);
 }
 
 // This method will be called once per scheduler run

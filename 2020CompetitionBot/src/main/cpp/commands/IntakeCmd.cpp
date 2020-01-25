@@ -14,10 +14,10 @@ AddRequirements({subsystem});
 
 // Called when the command is initially scheduled.
 void IntakeCmd::Initialize() {
-  m_IntakeSub->SetIntake(0.6);
+  m_IntakeSub->setIntake(0.6);
 }
 
 // Called once the command ends or is interrupted.
 void IntakeCmd::End(bool interrupted) {
-    m_IntakeSub->SetIntake(0);
+    m_IntakeSub->setIntake(0);
 }

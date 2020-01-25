@@ -31,11 +31,17 @@ namespace CanIds {
     constexpr int kRightMotor2CanId = 4;
     constexpr int kRightMotor3CanId = 6;
     constexpr int kRightMotor4CanId = 8;
+    constexpr int kFrontIntakeMotor = 9;
+    constexpr int kInteriorIntakeMotor = 10;
 }
 
 namespace PneumaticIds {
     //constexpr int Id = 0;
     constexpr int kShifterId = 1;
+}
+
+namespace DioIds {
+    constexpr int kMagazineFullSensor = 1;
 }
 
 namespace DriveConstants {

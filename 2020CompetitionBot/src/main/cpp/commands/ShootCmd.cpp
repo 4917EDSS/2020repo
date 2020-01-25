@@ -21,7 +21,7 @@ AddRequirements({intakeSub});
 // Called when the command is initially scheduled.
 void ShootCmd::Initialize() {
   m_ShootSub->setSpeed(0.6);
-  m_IntakeSub->SetIntake(-0.6);
+  m_IntakeSub->setIntake(-0.6);
 }
   void ShootCmd::Execute() {
     double diff=targetspeed-m_ShootSub->getSpeed();
@@ -35,7 +35,7 @@ void ShootCmd::Initialize() {
 // Called once the command ends or is interrupted.
 void ShootCmd::End(bool interrupted) {
     m_ShootSub->setSpeed(0);
-    m_IntakeSub->SetIntake(0);
+    m_IntakeSub->setIntake(0);
 
 
 }
