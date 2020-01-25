@@ -22,7 +22,7 @@
 class AuxMotorReverseCmd
     : public frc2::CommandHelper<frc2::CommandBase, AuxMotorReverseCmd> {
  public:
-  AuxMotorReverseCmd(DrivetrainSub *drivetrainSub, double power, double time);
+  AuxMotorReverseCmd(DrivetrainSub *drivetrainSub, double power);
 
   void Initialize() override;
 
@@ -35,5 +35,4 @@ class AuxMotorReverseCmd
  private:
   DrivetrainSub *m_drivetrainSubPtr;
   double m_power;
-  double m_time;
 };

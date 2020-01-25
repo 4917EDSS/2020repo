@@ -21,6 +21,9 @@ class DrivetrainSub : public frc2::SubsystemBase {
   void Periodic();
   void drive(double lPower, double rPower);
   void setAuxPower(double power);
+  void resetEncoder();
+  double getLeftEncoderPosition();
+  double getRightEncoderPosition();
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be

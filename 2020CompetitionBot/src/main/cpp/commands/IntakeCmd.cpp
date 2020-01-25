@@ -5,20 +5,19 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#pragma once
+#include "commands/IntakeCmd.h"
 
-#include <frc2/command/SubsystemBase.h>
+IntakeCmd::IntakeCmd(IntakeSub* subsystem) : m_IntakeSub(subsystem){
+  // Use addRequirements() here to declare subsystem dependencies.
+AddRequirements({subsystem});
+}
 
-class ExampleSubsystem : public frc2::SubsystemBase {
- public:
-  ExampleSubsystem();
+// Called when the command is initially scheduled.
+void IntakeCmd::Initialize() {
+  m_IntakeSub->SetIntake(0.6);
+}
 
-  /**
-   * Will be called periodically whenever the CommandScheduler runs.
-   */
-  void Periodic() override;
-
- private:
-  // Components (e.g. motor controllers and sensors) should generally be
-  // declared private and exposed only through public methods.
-};
+// Called once the command ends or is interrupted.
+void IntakeCmd::End(bool interrupted) {
+    m_IntakeSub->SetIntake(0);
+}

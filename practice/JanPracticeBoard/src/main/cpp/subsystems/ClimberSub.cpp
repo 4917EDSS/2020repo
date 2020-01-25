@@ -5,12 +5,9 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "subsystems/ExampleSubsystem.h"
+#include "subsystems/ClimberSub.h"
 
-ExampleSubsystem::ExampleSubsystem() {
-  // Implementation of subsystem constructor goes here.
-}
+ClimberSub::ClimberSub() {}
 
-void ExampleSubsystem::Periodic() {
-  // Implementation of subsystem periodic method goes here.
-}
+// This method will be called once per scheduler run
+void ClimberSub::Periodic() {}

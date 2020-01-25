@@ -8,9 +8,18 @@
 #pragma once
 
 #include <frc2/command/Command.h>
+#include <frc/Joystick.h>
+#include <frc/smartdashboard/SendableChooser.h>
+#include "subsystems/ShooterSub.h"
+#include "subsystems/IntakeSub.h"
+#include "subsystems/DrivetrainSub.h"
+#include "subsystems/ShooterSub.h"
+#include "subsystems/ClimberSub.h"
+#include "commands/ClimbReleaseCmd.h"
 
-#include "commands/ExampleCommand.h"
-#include "subsystems/ExampleSubsystem.h"
+constexpr int DRIVER_JOYSTICK_PORT=0;
+constexpr int OPERATOR_JOYSTICK_PORT=1;
+
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -26,9 +35,21 @@ class RobotContainer {
   frc2::Command* GetAutonomousCommand();
 
  private:
-  // The robot's subsystems and commands are defined here...
-  ExampleSubsystem m_subsystem;
-  ExampleCommand m_autonomousCommand;
 
+  // The robot's subsystems and commands are defined here...
+  DrivetrainSub m_drive;
+  IntakeSub m_IntakeSub;
+  ShooterSub m_ShooterSub;
+  ClimberSub m_ClimberSub;
+  std::unique_ptr<frc::SendableChooser<std::shared_ptr<frc2::Command>> > autoChooser;
+  std::shared_ptr<frc2::Command> autoCommand;
+  
+
+  frc2::Command* m_autonomousCommand;
+//Controllers and Buttons
+  frc::Joystick m_driverController{DRIVER_JOYSTICK_PORT};
+  frc::Joystick m_operatorController{OPERATOR_JOYSTICK_PORT};
+
+  void AutoChooserSetup();
   void ConfigureButtonBindings();
 };

@@ -7,16 +7,16 @@
 
 #include "commands/AuxMotorReverseCmd.h"
 
-AuxMotorReverseCmd::AuxMotorReverseCmd(DrivetrainSub *drivetrainSub, double power, double time)
+  double m_time;
+AuxMotorReverseCmd::AuxMotorReverseCmd(DrivetrainSub *drivetrainSub, double power)
       : m_drivetrainSubPtr(drivetrainSub),
-        m_power(power),
-        m_time(time) {
+        m_power(power) {
   // Use addRequirements() here to declare subsystem dependencies.
 }
 
 // Called when the command is initially scheduled.
 void AuxMotorReverseCmd::Initialize() {
-  std::cout << "Starting AuxMotorReverseCmd\n";
+  std::cout << "Starting AuxMotorReverseCmd with " << m_power << " power.\n";
   m_drivetrainSubPtr->setAuxPower(m_power);
 }
 
@@ -24,10 +24,12 @@ void AuxMotorReverseCmd::Initialize() {
 void AuxMotorReverseCmd::Execute() {}
 
 // Called once the command ends or is interrupted.
-void AuxMotorReverseCmd::End(bool interrupted) {}
+void AuxMotorReverseCmd::End(bool interrupted) {
+  m_drivetrainSubPtr->setAuxPower(0);
+}
 
 // Returns true when the command should end.
 bool AuxMotorReverseCmd::IsFinished() { 
-  // TODO: This should run on a timer either internally or as a WithTimeout decorator to the command in RobotContainer.cpp
-  return true; 
+  // This command is meant to be used with a WithTimeout(?_s) decorator
+  return false; 
 }

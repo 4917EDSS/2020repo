@@ -14,6 +14,7 @@
 #include "commands/ExampleCommand.h"
 #include "subsystems/ExampleSubsystem.h"
 #include "subsystems/DrivetrainSub.h"
+#include "subsystems/ColorSub.h"
 
 constexpr int DRIVER_JOYSTICK_PORT = 0;
 
@@ -34,6 +35,9 @@ class RobotContainer {
   // The robot's subsystems and commands are defined here...
   ExampleSubsystem m_subsystem;
   DrivetrainSub m_drivetrainSub;
+  
+  ColorSub m_colorSub;
+
   
   ExampleCommand m_autonomousCommand;
 
