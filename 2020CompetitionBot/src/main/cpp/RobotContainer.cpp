@@ -61,9 +61,9 @@ RobotContainer::RobotContainer() {
   autoChooserSetup();
   m_drivetrainSub.SetDefaultCommand(frc2::RunCommand(
   [this] {
-    m_drivetrainSub.ArcadeDrive(
-        m_driverController.GetY(frc::GenericHID::kLeftHand),
-        m_driverController.GetX(frc::GenericHID::kRightHand));
+    m_drivetrainSub.arcadeDrive(
+        -m_driverController.GetY(frc::GenericHID::kLeftHand),
+        m_driverController.GetZ());
   },
   {&m_drivetrainSub}));
 }

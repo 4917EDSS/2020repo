@@ -29,7 +29,7 @@ class DrivetrainSub : public frc2::SubsystemBase {
    * Will be called periodically whenever the CommandScheduler runs.
    */
   void Periodic() override;
-  void SetDrivetrainEncoderZero();
+  void setDrivetrainEncoderZero();
   void drive(double lSpeed, double rSpeed);
   void autoShift();
   double getLeftEncoder();
@@ -42,7 +42,7 @@ class DrivetrainSub : public frc2::SubsystemBase {
    * @param fwd the commanded forward movement
    * @param rot the commanded rotation
    */
-  void ArcadeDrive(double fwd, double rot);
+  void arcadeDrive(double fwd, double rot);
 
 /**
    * Controls each side of the drive directly with a voltage.
@@ -50,7 +50,7 @@ class DrivetrainSub : public frc2::SubsystemBase {
    * @param left the commanded left output
    * @param right the commanded right output
    */
-  void TankDriveVolts(units::volt_t left, units::volt_t right);
+  void tankDriveVolts(units::volt_t left, units::volt_t right);
   /**
    * Resets the drive encoders to currently read a position of 0.
    */
@@ -61,7 +61,7 @@ class DrivetrainSub : public frc2::SubsystemBase {
    *
    * @return the average of the TWO encoder readings
    */
-  double GetAverageEncoderDistance();
+  double getAverageEncoderDistance();
 
   /**
    * Gets the left drive encoder.
@@ -83,42 +83,42 @@ class DrivetrainSub : public frc2::SubsystemBase {
    *
    * @param maxOutput the maximum output to which the drive will be constrained
    */
-  void SetMaxOutput(double maxOutput);
+  void setMaxOutput(double maxOutput);
 
   /**
    * Returns the heading of the robot.
    *
    * @return the robot's heading in degrees, from 180 to 180
    */
-  double GetHeading();
+  double getHeading();
 
   /**
    * Returns the turn rate of the robot.
    *
    * @return The turn rate of the robot, in degrees per second
    */
-  double GetTurnRate();
+  double getTurnRate();
 
   /**
    * Returns the currently-estimated pose of the robot.
    *
    * @return The pose.
    */
-  frc::Pose2d GetPose();
+  frc::Pose2d getPose();
 
   /**
    * Returns the current wheel speeds of the robot.
    *
    * @return The current wheel speeds.
    */
-  frc::DifferentialDriveWheelSpeeds GetWheelSpeeds();
+  frc::DifferentialDriveWheelSpeeds getWheelSpeeds();
 
   /**
    * Resets the odometry to the specified pose.
    *
    * @param pose The pose to which to set the odometry.
    */
-  void ResetOdometry(frc::Pose2d pose);
+  void resetOdometry(frc::Pose2d pose);
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
