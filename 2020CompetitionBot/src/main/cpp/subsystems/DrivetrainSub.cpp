@@ -27,7 +27,8 @@ DrivetrainSub::DrivetrainSub()
     m_rightMotor4{CanIds::kRightMotor4CanId, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
     m_gyro{frc::SPI::kMXP},
     m_odometry{frc::Rotation2d(units::degree_t(getHeading()))},
-    m_shifter{PneumaticIds::kShifterId} {
+    m_shifter{PneumaticIds::kShifterId},
+    m_isAutoShiftEnabled{false} {
 
 // TODO: Do we need encoder to be on the output shaft vs on the motor?
 // Set the distance per pulse for the encoders
@@ -47,6 +48,7 @@ DrivetrainSub::DrivetrainSub()
 
 
   frc::SmartDashboard::PutNumber("drive power", 0);
+  frc::SmartDashboard::PutBoolean("autoshifter", m_isAutoShiftEnabled);
 }
 
 // This method will be called once per scheduler run
@@ -56,9 +58,10 @@ void DrivetrainSub::Periodic() {
                     units::meter_t(getLeftEncoder()),
                     units::meter_t(getRightEncoder()));
 
-  
-
-  autoShift();
+  m_isAutoShiftEnabled = frc::SmartDashboard::GetBoolean("autoshifter", m_isAutoShiftEnabled);
+  if(m_isAutoShiftEnabled) {
+    autoShift();
+  }
 
   m_drive.Feed();
 }
@@ -75,7 +78,7 @@ void DrivetrainSub::setDrivetrainEncoderZero(){
 
 void DrivetrainSub::arcadeDrive(double fwd, double rot) {
   m_drive.ArcadeDrive(fwd, rot);
-  printf("fwd=%4.2f rot=%4.2f\n", fwd, rot);
+  //printf("fwd=%4.2f rot=%4.2f\n", fwd, rot);
 }
 
 void DrivetrainSub::tankDriveVolts(units::volt_t left, units::volt_t right) {

@@ -150,4 +150,5 @@ class DrivetrainSub : public frc2::SubsystemBase {
   frc::DifferentialDriveOdometry m_odometry;
 
   frc::Solenoid m_shifter;
+  bool m_isAutoShiftEnabled;
 };
