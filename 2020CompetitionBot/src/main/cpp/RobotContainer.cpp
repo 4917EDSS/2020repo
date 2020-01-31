@@ -62,8 +62,8 @@ RobotContainer::RobotContainer() {
   m_drivetrainSub.SetDefaultCommand(frc2::RunCommand(
   [this] {
     m_drivetrainSub.arcadeDrive(
-        -m_driverController.GetY(frc::GenericHID::kLeftHand),
-        m_driverController.GetZ());
+          m_driverController.GetY(),
+          m_driverController.GetZ());
   },
   {&m_drivetrainSub}));
 }
@@ -93,6 +93,15 @@ void RobotContainer::configureButtonBindings() {
   frc2::JoystickButton climbWinchBtn(&m_operatorController, kClimbWinchBtn);
   climbWinchBtn.WhenHeld(ClimbWinchCmd(&m_climberSub));
 
+  m_driverController.SetXChannel(0);
+  m_driverController.SetYChannel(1);
+  m_driverController.SetZChannel(2);
+  m_driverController.SetThrottleChannel(3);
+
+  m_operatorController.SetXChannel(0);
+  m_operatorController.SetYChannel(1);
+  m_operatorController.SetZChannel(2);
+  m_operatorController.SetThrottleChannel(3);
 }
 
 frc2::Command* RobotContainer::getAutonomousCommand() {
