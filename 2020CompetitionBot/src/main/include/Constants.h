@@ -86,3 +86,7 @@ namespace OIConstants {
 constexpr int kDriverControllerPort = 1;
 }  // namespace OIConstants
 
+namespace VisionConstants {
+    constexpr double kXAllignmentTolerence = 0.1;
+    constexpr double kXMax = 100.0;
+}
