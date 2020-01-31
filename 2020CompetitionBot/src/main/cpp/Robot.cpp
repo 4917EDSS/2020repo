@@ -9,6 +9,8 @@
 
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/CommandScheduler.h>
+#include <frc/DriverStation.h>
+#include <cstdlib>
 
 
 void Robot::RobotInit() {
@@ -61,12 +63,36 @@ void Robot::TeleopInit() {
   }
   
 }
-
 /**
  * This function is called periodically during operator control.
  */
-void Robot::TeleopPeriodic() {}
+void Robot::TeleopPeriodic() {
 
+std::string gameData;
+gameData = frc::DriverStation::GetInstance().GetGameSpecificMessage();
+  if (gameData.length() > 0){
+    switch (gameData[0]) {
+      case 'B': 
+        frc::SmartDashboard::PutString("Target Colour", "Blue");
+        break;
+      case 'R': 
+        frc::SmartDashboard::PutString("Target Colour", "Red");
+        break;
+      case 'G': 
+        frc::SmartDashboard::PutString("Target Colour", "Green");
+        break;
+      case 'Y':
+        frc::SmartDashboard::PutString("Target Colour", "Yellow");
+        break;
+      default:
+        frc::SmartDashboard::PutString("Target Colour", "____");
+        break;
+    }
+  }
+  else {
+    frc::SmartDashboard::PutString("Target Colour", "Transmission not received");
+  }
+}
 /**
  * This function is called periodically during test mode.
  */
