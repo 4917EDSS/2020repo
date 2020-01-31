@@ -68,6 +68,13 @@ void Robot::TeleopInit() {
  */
 void Robot::TeleopPeriodic() {
 
+//This is an example of how to create a boolean box with specific colours:
+// NetworkTableEntry myBoolean = Shuffleboard.getTab("SmartDashboard")
+//         .add("Target Color", false)
+//         .withWidget("Boolean Box")
+//         .withProperties(Map.of("colorWhenTrue", "blue", "colorWhenFalse",       
+//         "gray")) .getEntry();
+
 std::string gameData;
 gameData = frc::DriverStation::GetInstance().GetGameSpecificMessage();
   if (gameData.length() > 0){
