@@ -89,4 +89,5 @@ constexpr int kDriverControllerPort = 1;
 namespace VisionConstants {
     constexpr double kXAllignmentTolerence = 0.1;
     constexpr double kXMax = 100.0;
+    constexpr double kFrontCameraId = 1;
 }  // namespace VisionConstants
