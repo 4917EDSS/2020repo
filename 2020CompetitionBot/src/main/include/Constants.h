@@ -23,18 +23,17 @@
  */
 
 namespace CanIds {
-    constexpr int kLeftMotor1 = 5;
-    constexpr int kLeftMotor2 = 6;
-    constexpr int kLeftMotor3 = 7;
-    constexpr int kLeftMotor4 = 8;
     constexpr int kRightMotor1 = 1;
     constexpr int kRightMotor2 = 2;
     constexpr int kRightMotor3 = 3;
     constexpr int kRightMotor4 = 4;
-    constexpr int kFrontIntakeMotor = 9;
-    constexpr int kInteriorIntakeMotor = 10;
-    constexpr int kElevatorMotor = 13;
-    constexpr int kClimbBalanceMotor = 14;
+    constexpr int kLeftMotor1 = 5;
+    constexpr int kLeftMotor2 = 6;
+    constexpr int kLeftMotor3 = 7;
+    constexpr int kLeftMotor4 = 8;
+    constexpr int kBottomIntakeMotor = 9;
+    constexpr int kTopIntakeMotor = 10;
+    constexpr int kClimbBalanceMotor = 11;
     constexpr int kShootMotor1 = 25;
     constexpr int kShootMotor2 = 26;
 }

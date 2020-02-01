@@ -9,26 +9,21 @@
 #include "Constants.h"
 
 IntakeSub::IntakeSub() 
-    : m_frontIntakeMotor{CanIds::kFrontIntakeMotor},
-      m_interiorIntakeMotor{CanIds::kInteriorIntakeMotor},
-      m_magazineFullSensor{DioIds::kMagazineFullSensor} {
+    : m_topIntakeMotor{ctre::phoenix::motorcontrol::can::WPI_VictorSPX(CanIds::kTopIntakeMotor)},
+      m_bottomIntakeMotor{ctre::phoenix::motorcontrol::can::WPI_VictorSPX(CanIds::kBottomIntakeMotor)},
+      m_magazineFullSensor{frc::DigitalInput(DioIds::kMagazineFullSensor)} {
     
 }
 //positive takes balls in negative takes balls to shooter 
-void IntakeSub::setIntake(double speed) {
-    if(speed < 0) {
-        m_frontIntakeMotor.Set(ControlMode::PercentOutput,-speed);
-    }
-    else {
-        m_frontIntakeMotor.Set(ControlMode::PercentOutput, speed);
-    }
-
-    m_interiorIntakeMotor.Set(ControlMode::PercentOutput, speed);
-}
 
 // This method will be called once per scheduler run
 void IntakeSub::Periodic() {}
 
+void IntakeSub::setIntake(double speed) {
+    m_topIntakeMotor.Set(ControlMode::PercentOutput, -speed);
+
+    m_bottomIntakeMotor.Set(ControlMode::PercentOutput, speed);
+}
 
 //Ball enters robot through the gap in bumper
 //Motors on rollers suck the ball into robot

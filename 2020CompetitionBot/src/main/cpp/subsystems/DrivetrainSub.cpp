@@ -12,9 +12,9 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "RobotContainer.h"
 
-constexpr float kEncoderTicksToMm = 30.928;
-constexpr units::velocity::meters_per_second_t kShiftUpSpeed = 3.0_mps;
-constexpr units::velocity::meters_per_second_t kShiftDownSpeed = 1.0_mps;
+constexpr float kEncoderTicksToM = 5.0/(-164.32);
+constexpr double kShiftUpSpeed = 3.0;
+constexpr double kShiftDownSpeed = 1.0;
 
 DrivetrainSub::DrivetrainSub() 
   : m_leftMotor1{CanIds::kLeftMotor1, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
@@ -66,6 +66,14 @@ void DrivetrainSub::Periodic() {
   }
 
   m_drive.Feed();
+
+  frc::SmartDashboard::PutNumber("RawEnc R", getRightEncoderRaw());
+  frc::SmartDashboard::PutNumber("RawEnc L", getLeftEncoderRaw());
+  frc::SmartDashboard::PutNumber("CnvrtdEnc R", getRightEncoder());
+  frc::SmartDashboard::PutNumber("CnvrtdEnc L", getLeftEncoder());
+  frc::SmartDashboard::PutNumber("MtrVlcty R", getRightVelocity());
+  frc::SmartDashboard::PutNumber("MtrVlcty L", getRightVelocity());
+
 }
 
 void DrivetrainSub::setDrivetrainEncoderZero(){
@@ -129,21 +137,44 @@ void DrivetrainSub::resetOdometry(frc::Pose2d pose) {
 
 double DrivetrainSub::getRightEncoder()
 {
-  return (m_rightMotor1.GetEncoder().GetPosition()*kEncoderTicksToMm);
+  return (m_rightMotor1.GetEncoder().GetPosition()*kEncoderTicksToM);
 }
 
 double DrivetrainSub::getLeftEncoder()
 {
-    return (m_leftMotor1.GetEncoder().GetPosition()*kEncoderTicksToMm);
+    return (m_leftMotor1.GetEncoder().GetPosition()*kEncoderTicksToM);
 }
 
+
+double DrivetrainSub::getRightEncoderRaw()
+{
+  return (m_rightMotor1.GetEncoder().GetPosition());
+}
+
+double DrivetrainSub::getLeftEncoderRaw()
+{
+  return (m_leftMotor1.GetEncoder().GetPosition());
+}
+
+double DrivetrainSub::getLeftVelocity()
+{
+  auto encoder = m_leftMotor1.GetEncoder();
+  return (encoder.GetVelocity() * encoder.GetCountsPerRevolution() * kEncoderTicksToM / 60.0 );
+}
+double DrivetrainSub::getRightVelocity()
+{
+  auto encoder = m_rightMotor1.GetEncoder();
+  return (encoder.GetVelocity() * encoder.GetCountsPerRevolution() * kEncoderTicksToM / 60.0 );
+}
+
+
+
 void DrivetrainSub::autoShift() {
-  frc::DifferentialDriveWheelSpeeds wheelSpeeds = getWheelSpeeds();
-  units::velocity::meters_per_second_t averageSpeed = (wheelSpeeds.left + wheelSpeeds.right) / 2;
-  if(averageSpeed > kShiftUpSpeed) {
+  double avgWheelSpeeds = (getLeftVelocity() + getRightVelocity()) / 2;
+  if(avgWheelSpeeds > kShiftUpSpeed) {
     shiftUp();
   }
-  else if(averageSpeed < kShiftDownSpeed) {
+  else if(avgWheelSpeeds < kShiftDownSpeed) {
     shiftDown();
   }
 }
