@@ -12,7 +12,7 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "RobotContainer.h"
 
-constexpr float kEncoderTicksToMm = 30.928;
+constexpr float kEncoderTicksToM = .030928;
 constexpr units::velocity::meters_per_second_t kShiftUpSpeed = 3.0_mps;
 constexpr units::velocity::meters_per_second_t kShiftDownSpeed = 1.0_mps;
 
@@ -69,6 +69,8 @@ void DrivetrainSub::Periodic() {
 
   frc::SmartDashboard::PutNumber("RawEnc R", getRightEncoderRaw());
   frc::SmartDashboard::PutNumber("RawEnc L", getLeftEncoderRaw());
+  frc::SmartDashboard::PutNumber("CnvrtdEnc R", getRightEncoder());
+  frc::SmartDashboard::PutNumber("CnvrtdEnc L", getLeftEncoder());
 }
 
 void DrivetrainSub::setDrivetrainEncoderZero(){
@@ -132,12 +134,12 @@ void DrivetrainSub::resetOdometry(frc::Pose2d pose) {
 
 double DrivetrainSub::getRightEncoder()
 {
-  return (m_rightMotor1.GetEncoder().GetPosition()*kEncoderTicksToMm);
+  return (m_rightMotor1.GetEncoder().GetPosition()*kEncoderTicksToM);
 }
 
 double DrivetrainSub::getLeftEncoder()
 {
-    return (m_leftMotor1.GetEncoder().GetPosition()*kEncoderTicksToMm);
+    return (m_leftMotor1.GetEncoder().GetPosition()*kEncoderTicksToM);
 }
 
 
