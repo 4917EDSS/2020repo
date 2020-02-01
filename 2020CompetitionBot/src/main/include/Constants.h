@@ -31,8 +31,8 @@ namespace CanIds {
     constexpr int kRightMotor2CanId = 2;
     constexpr int kRightMotor3CanId = 3;
     constexpr int kRightMotor4CanId = 4;
-    constexpr int kFrontIntakeMotor = 9;
-    constexpr int kInteriorIntakeMotor = 10;
+    constexpr int kTopIntakeMotor = 10;
+    constexpr int kBottomIntakeMotor = 9;
 }
 
 namespace PneumaticIds {

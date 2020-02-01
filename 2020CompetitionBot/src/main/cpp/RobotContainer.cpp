@@ -48,10 +48,15 @@
  * Right Joystick Vertical Axis = 3
  * Right Joystick Horizontal Axis = 2
  */
+
+
+//Operator Buttons
 constexpr int kIntakeBtn=1;
 constexpr int kShooterBtn=2;
 constexpr int kClimbReleaseBtn=3;
 constexpr int kClimbWinchBtn=4;
+
+//Driver Buttons
 constexpr int kShiftUpBtn=5;
 constexpr int kShiftDownBtn=6;
 
@@ -76,8 +81,8 @@ void RobotContainer::autoChooserSetup(){
 void RobotContainer::configureButtonBindings() {
   // Configure your button bindings here
 
-  frc2::JoystickButton shooterBtn(&m_driverController, kShooterBtn);
-  shooterBtn.WhenPressed(ShootCmd(&m_shooterSub, &m_intakeSub, 3000));
+  frc2::JoystickButton shooterBtn(&m_operatorController, kShooterBtn);
+  shooterBtn.WhenHeld(ShootCmd(&m_shooterSub, &m_intakeSub, 3000));
 
   frc2::JoystickButton shiftUpBtn(&m_driverController, kShiftUpBtn);
   shiftUpBtn.WhenPressed(frc2::InstantCommand(
