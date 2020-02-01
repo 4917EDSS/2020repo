@@ -23,7 +23,7 @@ class IntakeSub : public frc2::SubsystemBase {
   void Periodic();
  private:
 
-  ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_frontIntakeMotor;
-  ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_interiorIntakeMotor;
+  ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_topIntakeMotor;
+  ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_bottomIntakeMotor;
   frc::DigitalInput m_magazineFullSensor;
 };
