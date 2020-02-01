@@ -86,11 +86,11 @@ void DrivetrainSub::arcadeDrive(double fwd, double rot) {
 }
 
 void DrivetrainSub::shiftUp(){
-        m_shifter.Set(true);
+        m_shifter.Set(false);
   }
 
  void DrivetrainSub::shiftDown(){
-        m_shifter.Set(false);
+        m_shifter.Set(true);
   }
 
 void DrivetrainSub::tankDriveVolts(units::volt_t left, units::volt_t right) {
@@ -141,9 +141,9 @@ void DrivetrainSub::autoShift() {
   frc::DifferentialDriveWheelSpeeds wheelSpeeds = getWheelSpeeds();
   units::velocity::meters_per_second_t averageSpeed = (wheelSpeeds.left + wheelSpeeds.right) / 2;
   if(averageSpeed > kShiftUpSpeed) {
-    m_shifter.Set(true);
+    shiftUp();
   }
   else if(averageSpeed < kShiftDownSpeed) {
-    m_shifter.Set(false);
+    shiftDown();
   }
 }
