@@ -34,6 +34,7 @@ namespace CanIds {
     constexpr int kBottomIntakeMotor = 9;
     constexpr int kTopIntakeMotor = 10;
     constexpr int kClimbBalanceMotor = 11;
+    constexpr int kElevatorMotor = 13;
     constexpr int kShootMotor1 = 25;
     constexpr int kShootMotor2 = 26;
 }
