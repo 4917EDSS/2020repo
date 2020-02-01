@@ -81,6 +81,14 @@ void DrivetrainSub::ArcadeDrive(double fwd, double rot) {
   m_drive.ArcadeDrive(fwd, rot);
 }
 
+void DrivetrainSub::shiftUp(){
+        m_shifter.Set(true);
+  }
+
+ void DrivetrainSub::shiftDown(){
+        m_shifter.Set(false);
+  }
+
 void DrivetrainSub::TankDriveVolts(units::volt_t left, units::volt_t right) {
   m_leftMotors.SetVoltage(left);
   m_rightMotors.SetVoltage(-right);

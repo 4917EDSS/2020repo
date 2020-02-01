@@ -31,6 +31,8 @@ class DrivetrainSub : public frc2::SubsystemBase {
   void Periodic() override;
   void SetDrivetrainEncoderZero();
   void drive(double lSpeed, double rSpeed);
+  void shiftUp();
+  void shiftDown();
   void autoShift();
   double getLeftEncoder();
   double getRightEncoder();

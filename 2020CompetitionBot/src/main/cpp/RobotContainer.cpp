@@ -52,6 +52,8 @@ constexpr int kIntakeBtn=1;
 constexpr int kShooterBtn=2;
 constexpr int kClimbReleaseBtn=3;
 constexpr int kClimbWinchBtn=4;
+constexpr int kShiftUpBtn=5;
+constexpr int kShiftDownBtn=6;
 
 RobotContainer::RobotContainer() {
   // Initialize all of your commands and subsystems here
@@ -82,6 +84,23 @@ void RobotContainer::configureButtonBindings() {
 
   frc2::JoystickButton shooterBtn(&m_driverController, kShooterBtn);
   shooterBtn.WhenPressed(ShootCmd(&m_shooterSub, &m_intakeSub, 3000));
+
+  frc2::JoystickButton shiftUpBtn(&m_driverController, kShiftUpBtn);
+  shiftUpBtn.WhenPressed(frc2::InstantCommand(
+  [this] {
+    m_drivetrainSub.shiftUp();
+        
+  },
+  {&m_drivetrainSub}));
+
+   frc2::JoystickButton shiftDownBtn(&m_driverController, kShiftDownBtn);
+  shiftDownBtn.WhenPressed(frc2::InstantCommand(
+  [this] {
+    m_drivetrainSub.shiftDown();
+        
+  },
+  {&m_drivetrainSub}));
+
 
   frc2::JoystickButton intakeBtn(&m_operatorController, kIntakeBtn);
   intakeBtn.WhenHeld(IntakeCmd(&m_intakeSub));
