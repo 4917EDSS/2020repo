@@ -21,6 +21,7 @@ void VisionAlignmentCmd::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void VisionAlignmentCmd::Execute() {
+  // REVIEW: [Jason] Should use a constant for camera ID
   double x = m_visionSub->getVisionTarget(1);
  
   if (x > VisionConstants::kXAllignmentTolerence || x < -(VisionConstants::kXAllignmentTolerence)) { 
@@ -39,6 +40,9 @@ void VisionAlignmentCmd::Execute() {
 
     }
   }
+  // REVIEW: [Jason] Since we already know here we have acheived alignment, perhaps we should have an else block with this:
+  //                    - set a flag indicating alignment was acheived
+  //                    - set left/right drive volts to 0 (stopping motors - so we don't oscillate from overshots)
 }
 
 // Called once the command ends or is interrupted.
@@ -46,6 +50,10 @@ void VisionAlignmentCmd::End(bool interrupted) {}
 
 // Returns true when the command should end.
 bool VisionAlignmentCmd::IsFinished() { 
+  // REVIEW: [Jason] If we set a flag in Execute when alignement is acheived, we can use it here instead of getting and checking x again.
+  //                 We *must* make motors stop, and that is best done in Execute so we don't oscillate from overshots.
+
+  // REVIEW: [Jason] Should use a constant for camera ID
   double x = m_visionSub->getVisionTarget(1);
 
   if (x > VisionConstants::kXAllignmentTolerence || x < -(VisionConstants::kXAllignmentTolerence)) { 
