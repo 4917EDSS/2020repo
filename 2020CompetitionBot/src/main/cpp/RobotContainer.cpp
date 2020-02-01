@@ -26,7 +26,7 @@
 #include "subsystems/ClimberSub.h"
 #include "commands/ClimbReleaseCmd.h"
 #include "commands/ClimbWinchCmd.h"
-
+#include "commands/VisionAlignmentCmd.h"
 
 /*
  * ON LOGITECH F310 CONTROLLER:
@@ -54,6 +54,7 @@ constexpr int kClimbReleaseBtn=3;
 constexpr int kClimbWinchBtn=4;
 constexpr int kShiftUpBtn=5;
 constexpr int kShiftDownBtn=6;
+constexpr int kFrontCameraAlignment=7;
 
 RobotContainer::RobotContainer() {
   // Initialize all of your commands and subsystems here
@@ -95,6 +96,8 @@ void RobotContainer::configureButtonBindings() {
   },
   {&m_drivetrainSub}));
 
+  frc2::JoystickButton frontCameraAlignmentBtn(&m_driverController, kFrontCameraAlignment);
+  frontCameraAlignmentBtn.WhenPressed(VisionAlignmentCmd(&m_visionSub, &m_drivetrainSub));
 
   frc2::JoystickButton intakeBtn(&m_operatorController, kIntakeBtn);
   intakeBtn.WhenHeld(IntakeCmd(&m_intakeSub));

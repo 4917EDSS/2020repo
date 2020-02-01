@@ -16,6 +16,7 @@
 #include "subsystems/ShooterSub.h"
 #include "subsystems/ClimberSub.h"
 #include "commands/ClimbReleaseCmd.h"
+#include "subsystems/VisionSub.h"
 
 constexpr int DRIVER_JOYSTICK_PORT=0;
 constexpr int OPERATOR_JOYSTICK_PORT=1;
@@ -43,8 +44,9 @@ class RobotContainer {
   ClimberSub m_climberSub;
   frc::SendableChooser<frc2::Command*> m_autoChooser;
   frc2::Command* m_autonomousCommand;
+  VisionSub m_visionSub;
 
-//Controllers and Buttons
+  //Controllers and Buttons
   frc::Joystick m_driverController{DRIVER_JOYSTICK_PORT};
   frc::Joystick m_operatorController{OPERATOR_JOYSTICK_PORT};
 

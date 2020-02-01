@@ -17,7 +17,9 @@ VisionAlignmentCmd::VisionAlignmentCmd(VisionSub* visionSub, DrivetrainSub* driv
 }
 
 // Called when the command is initially scheduled.
-void VisionAlignmentCmd::Initialize() {}
+void VisionAlignmentCmd::Initialize() {
+  m_drivetrainSub->shiftDown();
+}
 
 // Called repeatedly when this Command is scheduled to run
 void VisionAlignmentCmd::Execute() {
