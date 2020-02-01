@@ -18,7 +18,6 @@ void DriveWithJoystickCmd::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void DriveWithJoystickCmd::Execute() {
-  printf("in execute\n");
   m_drivetrainSub->arcadeDrive(
           m_joystick->GetY(),
           -m_joystick->GetZ());
