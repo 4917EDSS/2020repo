@@ -27,7 +27,7 @@
 #include "commands/ClimbReleaseCmd.h"
 #include "commands/ClimbWinchCmd.h"
 #include "commands/VisionAlignmentCmd.h"
-
+#include "commands/ClimbBalanceCmd.h"
 /*
  * ON LOGITECH F310 CONTROLLER:
  * X = 1            (Blue)
@@ -59,7 +59,9 @@ constexpr int kClimbWinchBtn=4;
 //Driver Buttons
 constexpr int kShiftUpBtn=5;
 constexpr int kShiftDownBtn=6;
-constexpr int kFrontCameraAlignment=7;
+constexpr int kClimbBalanceLeft=7;
+constexpr int kClimbBalanceRight=8;
+constexpr int kFrontCameraAlignment=9;
 
 RobotContainer::RobotContainer() {
   // Initialize all of your commands and subsystems here
@@ -82,21 +84,8 @@ void RobotContainer::autoChooserSetup(){
 void RobotContainer::configureButtonBindings() {
   // Configure your button bindings here
 
-  //Operator Commands
-  frc2::JoystickButton shooterBtn(&m_operatorController, kShooterBtn);
-  shooterBtn.WhenHeld(ShootCmd(&m_shooterSub, &m_intakeSub, 3000));
+  //Driver Commands...
 
-  frc2::JoystickButton intakeBtn(&m_operatorController, kIntakeBtn);
-  intakeBtn.WhenHeld(IntakeCmd(&m_intakeSub));
-
-  frc2::JoystickButton climbReleaseBtn(&m_operatorController, kClimbReleaseBtn);
-  climbReleaseBtn.WhenPressed(ClimbReleaseCmd(&m_climberSub));
-
-
-  frc2::JoystickButton climbWinchBtn(&m_operatorController, kClimbWinchBtn);
-  climbWinchBtn.WhenHeld(ClimbWinchCmd(&m_climberSub));
-
-  //Driver Commands
   frc2::JoystickButton shiftUpBtn(&m_driverController, kShiftUpBtn);
   shiftUpBtn.WhenPressed(frc2::InstantCommand(
   [this] {
@@ -112,6 +101,29 @@ void RobotContainer::configureButtonBindings() {
         
   },
   {&m_drivetrainSub}));
+
+  //Operator Commands...
+
+  frc2::JoystickButton shooterBtn(&m_operatorController, kShooterBtn);
+  shooterBtn.WhenHeld(ShootCmd(&m_shooterSub, &m_intakeSub, 3000));
+
+  frc2::JoystickButton climbBalanceRightBtn(&m_driverController, kClimbBalanceRight);
+  climbBalanceRightBtn.WhenHeld(ClimbBalanceCmd(&m_climberSub, true));
+
+  frc2::JoystickButton climbBalanceLeftBtn(&m_driverController, kClimbBalanceLeft);
+  climbBalanceLeftBtn.WhenHeld(ClimbBalanceCmd(&m_climberSub, false));
+
+  frc2::JoystickButton frontCameraAlignmentBtn(&m_driverController, kFrontCameraAlignment);
+  frontCameraAlignmentBtn.WhenPressed(VisionAlignmentCmd(&m_visionSub, &m_drivetrainSub));
+
+  frc2::JoystickButton intakeBtn(&m_operatorController, kIntakeBtn);
+  intakeBtn.WhenHeld(IntakeCmd(&m_intakeSub));
+
+  frc2::JoystickButton climbReleaseBtn(&m_operatorController, kClimbReleaseBtn);
+  climbReleaseBtn.WhenPressed(ClimbReleaseCmd(&m_climberSub));
+
+  frc2::JoystickButton climbWinchBtn(&m_operatorController, kClimbWinchBtn);
+  climbWinchBtn.WhenHeld(ClimbWinchCmd(&m_climberSub));
 
   m_driverController.SetXChannel(0);
   m_driverController.SetYChannel(1);

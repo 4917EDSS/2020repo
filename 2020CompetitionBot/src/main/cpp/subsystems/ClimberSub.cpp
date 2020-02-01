@@ -6,18 +6,25 @@
 /*----------------------------------------------------------------------------*/
 
 #include "subsystems/ClimberSub.h"
+#include "Constants.h"
 
-ClimberSub::ClimberSub() : m_elevatorMotor1(13, rev::CANSparkMaxLowLevel::MotorType::kBrushless),
-                           m_climbReleaseLatch(14){
+ClimberSub::ClimberSub() :
+    m_elevatorMotor1{CanIds::kElevatorMotor, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
+    m_climbReleaseLatch{PneumaticIds::kClimbReleaseLatch},
+    m_climbBalanceMotor{CanIds::kClimbBalanceMotor} {
 }
 
 // This method will be called once per scheduler run
 void ClimberSub::Periodic() {}
 
-void ClimberSub::togglePosition(bool position){
+void ClimberSub::togglePosition(bool position) {
     m_climbReleaseLatch.Set(position);
 }
-void ClimberSub::setWinchSpeed(double speed){
-    m_elevatorMotor1.Set(speed);
 
+void ClimberSub::setWinchSpeed(double speed) {
+    m_elevatorMotor1.Set(speed);
+}
+
+void ClimberSub::moveOnGenSwitch(double power) {
+    m_climbBalanceMotor.Set(power);
 }

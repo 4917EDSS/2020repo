@@ -14,8 +14,8 @@
 
 constexpr float kEncoderTicksToMLowGear = 5.0/(164.328);
 constexpr float kEncoderTicksToMHighGear = 5.0/(102.264);
-constexpr units::velocity::meters_per_second_t kShiftUpSpeed = 3.0_mps;
-constexpr units::velocity::meters_per_second_t kShiftDownSpeed = 1.0_mps;
+constexpr double kShiftUpSpeed = 3.0;
+constexpr double kShiftDownSpeed = 1.0;
 
 DrivetrainSub::DrivetrainSub() 
   : m_leftMotor1{CanIds::kLeftMotor1, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
@@ -72,6 +72,8 @@ void DrivetrainSub::Periodic() {
   frc::SmartDashboard::PutNumber("RawEnc L", getLeftEncoderRaw());
   frc::SmartDashboard::PutNumber("CnvrtdEnc R", getRightEncoderDistanceM());
   frc::SmartDashboard::PutNumber("CnvrtdEnc L", getLeftEncoderDistanceM());
+  frc::SmartDashboard::PutNumber("MtrVlcty R", getRightVelocity());
+  frc::SmartDashboard::PutNumber("MtrVlcty L", getRightVelocity());
   frc::SmartDashboard::PutBoolean("High Gear", isShifterInHighGear());
 }
 
@@ -94,12 +96,10 @@ void DrivetrainSub::arcadeDrive(double fwd, double rot) {
 
 void DrivetrainSub::shiftUp() {
    m_shifter.Set(false);
-   printf("Shifting up, now %c\n", isShifterInHighGear()?'h':'l');
 }
 
 void DrivetrainSub::shiftDown() {
   m_shifter.Set(true);
-  printf("Shifting down, now %c\n", isShifterInHighGear()?'h':'l');
 }
 
 bool DrivetrainSub::isShifterInHighGear() {
@@ -177,13 +177,25 @@ double DrivetrainSub::getRightEncoderRaw()
   return (m_rightMotor1.GetEncoder().GetPosition());
 }
 
+double DrivetrainSub::getLeftVelocity()
+{
+  auto encoder = m_leftMotor1.GetEncoder();
+  return (encoder.GetVelocity() * encoder.GetCountsPerRevolution() * getEncorderTicksToM() / 60.0 );
+}
+double DrivetrainSub::getRightVelocity()
+{
+  auto encoder = m_rightMotor1.GetEncoder();
+  return (encoder.GetVelocity() * encoder.GetCountsPerRevolution() * getEncorderTicksToM() / 60.0 );
+}
+
+
+
 void DrivetrainSub::autoShift() {
-  frc::DifferentialDriveWheelSpeeds wheelSpeeds = getWheelSpeeds();
-  units::velocity::meters_per_second_t averageSpeed = (wheelSpeeds.left + wheelSpeeds.right) / 2;
-  if(averageSpeed > kShiftUpSpeed) {
+  double avgWheelSpeeds = (getLeftVelocity() + getRightVelocity()) / 2;
+  if(avgWheelSpeeds > kShiftUpSpeed) {
     shiftUp();
   }
-  else if(averageSpeed < kShiftDownSpeed) {
+  else if(avgWheelSpeeds < kShiftDownSpeed) {
     shiftDown();
   }
 }

@@ -33,6 +33,8 @@ namespace CanIds {
     constexpr int kLeftMotor4 = 8;
     constexpr int kBottomIntakeMotor = 9;
     constexpr int kTopIntakeMotor = 10;
+    constexpr int kClimbBalanceMotor = 11;
+    constexpr int kElevatorMotor = 13;
     constexpr int kShootMotor1 = 25;
     constexpr int kShootMotor2 = 26;
 }
@@ -40,6 +42,7 @@ namespace CanIds {
 namespace PneumaticIds {
     //constexpr int Id = 0;
     constexpr int kShifterId = 1;
+    constexpr int kClimbReleaseLatch = 14;
 }
 
 namespace DioIds {
@@ -93,3 +96,7 @@ namespace VisionConstants {
     constexpr double kXMax = 100.0;
     constexpr double kFrontCameraId = 1;
 }  // namespace VisionConstants
+
+namespace ClimbConstants {
+    constexpr double kMoveOnGenSwitchPower = 10.0;
+}

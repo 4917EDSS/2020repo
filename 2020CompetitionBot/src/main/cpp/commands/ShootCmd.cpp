@@ -20,13 +20,13 @@ AddRequirements({intakeSub});
 
 // Called when the command is initially scheduled.
 void ShootCmd::Initialize() {
-  m_shooterSub->setSpeed(0.6);
-  m_intakeSub->setIntake(-1);
+  m_shooterSub->setSpeed(1.0);
+  m_intakeSub->setIntake(-1.0);
 }
   void ShootCmd::Execute() {
     double diff = targetspeed - m_shooterSub->getSpeed();
     double feed = targetspeed / MAX_RPM;
-    m_shooterSub->setSpeed(diff * P + feed);
+    // m_shooterSub->setSpeed(diff * P + feed);
     //P and MAX_RPM are arbitrary values for now.
 }
 
