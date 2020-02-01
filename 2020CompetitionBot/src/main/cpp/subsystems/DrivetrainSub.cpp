@@ -66,6 +66,9 @@ void DrivetrainSub::Periodic() {
   }
 
   m_drive.Feed();
+
+  frc::SmartDashboard::PutNumber("RawEnc R", getRightEncoderRaw());
+  frc::SmartDashboard::PutNumber("RawEnc L", getLeftEncoderRaw());
 }
 
 void DrivetrainSub::setDrivetrainEncoderZero(){
@@ -135,6 +138,17 @@ double DrivetrainSub::getRightEncoder()
 double DrivetrainSub::getLeftEncoder()
 {
     return (m_leftMotor1.GetEncoder().GetPosition()*kEncoderTicksToMm);
+}
+
+
+double DrivetrainSub::getRightEncoderRaw()
+{
+  return (m_rightMotor1.GetEncoder().GetPosition());
+}
+
+double DrivetrainSub::getLeftEncoderRaw()
+{
+  return (m_leftMotor1.GetEncoder().GetPosition());
 }
 
 void DrivetrainSub::autoShift() {
