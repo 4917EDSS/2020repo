@@ -36,4 +36,5 @@ class VisionAlignmentCmd
   private:
   VisionSub* m_visionSub;
   DrivetrainSub* m_drivetrainSub;
+  bool m_isAligned;
 };

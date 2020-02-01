@@ -23,16 +23,18 @@
  */
 
 namespace CanIds {
-    constexpr int kLeftMotor1CanId = 5;
-    constexpr int kLeftMotor2CanId = 6;
-    constexpr int kLeftMotor3CanId = 7;
-    constexpr int kLeftMotor4CanId = 8;
-    constexpr int kRightMotor1CanId = 1;
-    constexpr int kRightMotor2CanId = 2;
-    constexpr int kRightMotor3CanId = 3;
-    constexpr int kRightMotor4CanId = 4;
-    constexpr int kTopIntakeMotor = 10;
-    constexpr int kBottomIntakeMotor = 9;
+    constexpr int kLeftMotor1 = 5;
+    constexpr int kLeftMotor2 = 6;
+    constexpr int kLeftMotor3 = 7;
+    constexpr int kLeftMotor4 = 8;
+    constexpr int kRightMotor1 = 1;
+    constexpr int kRightMotor2 = 2;
+    constexpr int kRightMotor3 = 3;
+    constexpr int kRightMotor4 = 4;
+    constexpr int kFrontIntakeMotor = 10;
+    constexpr int kInteriorIntakeMotor = 9;
+    constexpr int kShootMotor1 = 25;
+    constexpr int kShootMotor2 = 26;
 }
 
 namespace PneumaticIds {
@@ -89,4 +91,5 @@ constexpr int kDriverControllerPort = 1;
 namespace VisionConstants {
     constexpr double kXAllignmentTolerence = 0.1;
     constexpr double kXMax = 100.0;
+    constexpr double kFrontCameraId = 1;
 }  // namespace VisionConstants
