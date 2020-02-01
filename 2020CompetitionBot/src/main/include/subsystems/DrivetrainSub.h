@@ -38,6 +38,9 @@ class DrivetrainSub : public frc2::SubsystemBase {
   double getRightEncoder();
   double getLeftEncoderRaw();
   double getRightEncoderRaw();
+  double getLeftVelocity();
+  double getRightVelocity();
+  
   // Subsystem methods go here.
 
   /**

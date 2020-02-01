@@ -29,7 +29,7 @@ void ShooterSub::Periodic() {
 //Sets speed of all motors
 void ShooterSub::setSpeed(double speed) {
   m_motor1.Set(speed);
-  m_motor2.Set(speed);
+  m_motor2.Set(-speed);
 }
 
 // Gets maximum absolute speeds of both motors
