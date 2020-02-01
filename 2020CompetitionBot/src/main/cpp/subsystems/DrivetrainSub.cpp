@@ -17,14 +17,14 @@ constexpr units::velocity::meters_per_second_t kShiftUpSpeed = 3.0_mps;
 constexpr units::velocity::meters_per_second_t kShiftDownSpeed = 1.0_mps;
 
 DrivetrainSub::DrivetrainSub() 
-  : m_leftMotor1{CanIds::kLeftMotor1CanId, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
-    m_leftMotor2{CanIds::kLeftMotor2CanId, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
-    m_leftMotor3{CanIds::kLeftMotor3CanId, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
-    m_leftMotor4{CanIds::kLeftMotor4CanId, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
-    m_rightMotor1{CanIds::kRightMotor1CanId, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
-    m_rightMotor2{CanIds::kRightMotor2CanId, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
-    m_rightMotor3{CanIds::kRightMotor3CanId, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
-    m_rightMotor4{CanIds::kRightMotor4CanId, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
+  : m_leftMotor1{CanIds::kLeftMotor1, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
+    m_leftMotor2{CanIds::kLeftMotor2, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
+    m_leftMotor3{CanIds::kLeftMotor3, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
+    m_leftMotor4{CanIds::kLeftMotor4, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
+    m_rightMotor1{CanIds::kRightMotor1, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
+    m_rightMotor2{CanIds::kRightMotor2, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
+    m_rightMotor3{CanIds::kRightMotor3, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
+    m_rightMotor4{CanIds::kRightMotor4, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
     m_gyro{frc::SPI::kMXP},
     m_odometry{frc::Rotation2d(units::degree_t(getHeading()))},
     m_shifter{PneumaticIds::kShifterId},
