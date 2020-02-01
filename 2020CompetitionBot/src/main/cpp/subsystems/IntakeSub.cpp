@@ -9,9 +9,9 @@
 #include "Constants.h"
 
 IntakeSub::IntakeSub() 
-    : m_frontIntakeMotor{ctre::phoenix::motorcontrol::can::WPI_VictorSPX(CanIds::kFrontIntakeMotor)},
-      m_interiorIntakeMotor{ctre::phoenix::motorcontrol::can::WPI_VictorSPX(CanIds::kInteriorIntakeMotor)},
-      m_magazineFullSensor{frc::DigitalInput(DioIds::kMagazineFullSensor)} {
+    : m_frontIntakeMotor{CanIds::kFrontIntakeMotor},
+      m_interiorIntakeMotor{CanIds::kInteriorIntakeMotor},
+      m_magazineFullSensor{DioIds::kMagazineFullSensor} {
     
 }
 //positive takes balls in negative takes balls to shooter 

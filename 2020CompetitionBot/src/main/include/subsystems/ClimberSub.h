@@ -11,6 +11,7 @@
 #include <frc/Solenoid.h>
 #include <rev/CANSparkMax.h>
 #include <rev/CANSparkMaxLowLevel.h>
+#include <ctre/Phoenix.h>
 
 class ClimberSub : public frc2::SubsystemBase {
  public:
@@ -22,9 +23,12 @@ class ClimberSub : public frc2::SubsystemBase {
   void Periodic();
   void togglePosition(bool position);
   void setWinchSpeed(double speed);
+  void moveOnGenSwitch(double power);
+
  private:
-  rev::CANSparkMax m_elevatorMotor1;
-  frc::Solenoid m_climbReleaseLatch;
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
+  rev::CANSparkMax m_elevatorMotor1;
+  frc::Solenoid m_climbReleaseLatch; 
+  ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_climbBalanceMotor;
 };
