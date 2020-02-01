@@ -35,6 +35,7 @@ namespace CanIds {
     constexpr int kTopIntakeMotor = 10;
     constexpr int kClimbBalanceMotor = 11;
     constexpr int kElevatorMotor = 13;
+    constexpr int kControlPanelMotor = 14;
     constexpr int kShootMotor1 = 25;
     constexpr int kShootMotor2 = 26;
     constexpr int kFeederMotor = 27;
@@ -43,7 +44,8 @@ namespace CanIds {
 namespace PneumaticIds {
     //constexpr int Id = 0;
     constexpr int kShifterId = 1;
-    constexpr int kClimbReleaseLatch = 14;
+    constexpr int kControlPanelFlipper = 2;
+    constexpr int kClimbReleaseLatch = 3;
 }
 
 namespace DioIds {
