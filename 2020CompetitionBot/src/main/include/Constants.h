@@ -23,14 +23,14 @@
  */
 
 namespace CanIds {
-    constexpr int kLeftMotor1CanId = 1;
-    constexpr int kLeftMotor2CanId = 3;
-    constexpr int kLeftMotor3CanId = 5;
-    constexpr int kLeftMotor4CanId = 7;
-    constexpr int kRightMotor1CanId = 2;
-    constexpr int kRightMotor2CanId = 4;
-    constexpr int kRightMotor3CanId = 6;
-    constexpr int kRightMotor4CanId = 8;
+    constexpr int kLeftMotor1CanId = 5;
+    constexpr int kLeftMotor2CanId = 6;
+    constexpr int kLeftMotor3CanId = 7;
+    constexpr int kLeftMotor4CanId = 8;
+    constexpr int kRightMotor1CanId = 1;
+    constexpr int kRightMotor2CanId = 2;
+    constexpr int kRightMotor3CanId = 3;
+    constexpr int kRightMotor4CanId = 4;
     constexpr int kFrontIntakeMotor = 9;
     constexpr int kInteriorIntakeMotor = 10;
 }
@@ -86,3 +86,7 @@ namespace OIConstants {
 constexpr int kDriverControllerPort = 1;
 }  // namespace OIConstants
 
+namespace VisionConstants {
+    constexpr double kXAllignmentTolerence = 0.1;
+    constexpr double kXMax = 100.0;
+}  // namespace VisionConstants

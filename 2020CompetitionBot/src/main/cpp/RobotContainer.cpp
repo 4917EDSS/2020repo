@@ -19,7 +19,7 @@
 #include <frc2/command/SequentialCommandGroup.h>
 #include <frc2/command/button/JoystickButton.h>
 #include <frc2/command/RunCommand.h>
-
+#include "commands/DriveWithJoystickCmd.h"
 #include "commands/ShootCmd.h"
 #include "commands/IntakeCmd.h"
 #include "Constants.h"
@@ -61,13 +61,7 @@ RobotContainer::RobotContainer() {
   // Configure the button bindings
   configureButtonBindings();
   autoChooserSetup();
-  m_drivetrainSub.SetDefaultCommand(frc2::RunCommand(
-  [this] {
-    m_drivetrainSub.ArcadeDrive(
-        m_driverController.GetY(frc::GenericHID::kLeftHand),
-        m_driverController.GetX(frc::GenericHID::kRightHand));
-  },
-  {&m_drivetrainSub}));
+m_drivetrainSub.SetDefaultCommand(DriveWithJoystickCmd(&m_drivetrainSub, &m_driverController));
 }
 
 void RobotContainer::autoChooserSetup(){
@@ -112,6 +106,15 @@ void RobotContainer::configureButtonBindings() {
   frc2::JoystickButton climbWinchBtn(&m_operatorController, kClimbWinchBtn);
   climbWinchBtn.WhenHeld(ClimbWinchCmd(&m_climberSub));
 
+  m_driverController.SetXChannel(0);
+  m_driverController.SetYChannel(1);
+  m_driverController.SetZChannel(2);
+  m_driverController.SetThrottleChannel(3);
+
+  m_operatorController.SetXChannel(0);
+  m_operatorController.SetYChannel(1);
+  m_operatorController.SetZChannel(2);
+  m_operatorController.SetThrottleChannel(3);
 }
 
 frc2::Command* RobotContainer::getAutonomousCommand() {

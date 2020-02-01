@@ -5,20 +5,19 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#pragma once
+#include "subsystems/VisionSub.h"
+#include <networktables/NetworkTableInstance.h>
 
-#include <frc2/command/SubsystemBase.h>
+VisionSub::VisionSub() {}
 
-class IntakeSub : public frc2::SubsystemBase {
- public:
-  IntakeSub();
+// This method will be called once per scheduler run
+void VisionSub::Periodic() {}
 
-  /**
-   * Will be called periodically whenever the CommandScheduler runs.
-   */
-  void Periodic();
+double VisionSub::getVisionTarget(int camera) {
+  return nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tx", 0.0);
+}
 
- private:
-  // Components (e.g. motor controllers and sensors) should generally be
-  // declared private and exposed only through public methods.
-};
+double VisionSub::getVerticalOffset(int camera){
+	return nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ty", 0.0);
+}
+

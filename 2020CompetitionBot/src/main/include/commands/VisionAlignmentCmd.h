@@ -9,8 +9,9 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-
+#include "subsystems/VisionSub.h"
 #include "subsystems/DrivetrainSub.h"
+
 
 /**
  * An example command.
@@ -19,10 +20,10 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class LeftMotorTwoTurnsCmd
-    : public frc2::CommandHelper<frc2::CommandBase, LeftMotorTwoTurnsCmd> {
+class VisionAlignmentCmd
+    : public frc2::CommandHelper<frc2::CommandBase, VisionAlignmentCmd> {
  public:
-  LeftMotorTwoTurnsCmd(DrivetrainSub *drivetrainSub);
+  VisionAlignmentCmd(VisionSub* visionSub, DrivetrainSub* drivetrainSub);
 
   void Initialize() override;
 
@@ -32,11 +33,7 @@ class LeftMotorTwoTurnsCmd
 
   bool IsFinished() override;
 
-private:
-  const double kTicksPerTurn = 0.0257125;
-  const double kInitialPower = 0.05;
-  
-  DrivetrainSub *m_drivetrainSubPtr;
-  double m_turnsAchieved = 0;
-
+  private:
+  VisionSub* m_visionSub;
+  DrivetrainSub* m_drivetrainSub;
 };

@@ -5,9 +5,23 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "IntakeSub.h"
+#pragma once
 
-IntakeSub::IntakeSub() {}
+#include <frc2/command/SubsystemBase.h>
 
-// This method will be called once per scheduler run
-void IntakeSub::Periodic() {}
+class VisionSub : public frc2::SubsystemBase {
+ public:
+  VisionSub();
+
+  /**
+   * Will be called periodically whenever the CommandScheduler runs.
+   */
+  void Periodic();
+  double getVisionTarget(int camera);
+  double getVerticalOffset(int camera);
+
+ private:
+  // Components (e.g. motor controllers and sensors) should generally be
+  // declared private and exposed only through public methods.
+  
+};
