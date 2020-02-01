@@ -49,6 +49,8 @@ DrivetrainSub::DrivetrainSub()
 
   frc::SmartDashboard::PutNumber("drive power", 0);
   frc::SmartDashboard::PutBoolean("autoshifter", m_isAutoShiftEnabled);
+
+  arcadeDrive(0.2, 0);
 }
 
 // This method will be called once per scheduler run
@@ -70,15 +72,17 @@ void DrivetrainSub::setDrivetrainEncoderZero(){
   m_rightMotor1.GetEncoder().SetPosition(0);
   m_rightMotor2.GetEncoder().SetPosition(0);
   m_rightMotor3.GetEncoder().SetPosition(0);
+  m_rightMotor4.GetEncoder().SetPosition(0);
 
   m_leftMotor1.GetEncoder().SetPosition(0);
   m_leftMotor2.GetEncoder().SetPosition(0);
   m_leftMotor3.GetEncoder().SetPosition(0);
+  m_leftMotor4.GetEncoder().SetPosition(0);
 }
 
 void DrivetrainSub::arcadeDrive(double fwd, double rot) {
   m_drive.ArcadeDrive(fwd, rot);
-  //printf("fwd=%4.2f rot=%4.2f\n", fwd, rot);
+  printf("fwd=%4.2f rot=%4.2f\n", fwd, rot);
 }
 
 void DrivetrainSub::tankDriveVolts(units::volt_t left, units::volt_t right) {

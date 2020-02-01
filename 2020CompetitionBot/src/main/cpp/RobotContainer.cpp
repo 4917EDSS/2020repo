@@ -19,7 +19,7 @@
 #include <frc2/command/SequentialCommandGroup.h>
 #include <frc2/command/button/JoystickButton.h>
 #include <frc2/command/RunCommand.h>
-
+#include "commands/DriveWithJoystickCmd.h"
 #include "commands/ShootCmd.h"
 #include "commands/IntakeCmd.h"
 #include "Constants.h"
@@ -59,13 +59,7 @@ RobotContainer::RobotContainer() {
   // Configure the button bindings
   configureButtonBindings();
   autoChooserSetup();
-  m_drivetrainSub.SetDefaultCommand(frc2::RunCommand(
-  [this] {
-    m_drivetrainSub.arcadeDrive(
-          m_driverController.GetY(),
-          m_driverController.GetZ());
-  },
-  {&m_drivetrainSub}));
+m_drivetrainSub.SetDefaultCommand(DriveWithJoystickCmd(&m_drivetrainSub, &m_driverController));
 }
 
 void RobotContainer::autoChooserSetup(){
