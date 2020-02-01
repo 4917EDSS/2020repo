@@ -12,7 +12,7 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "RobotContainer.h"
 
-constexpr float kEncoderTicksToM = .030928;
+constexpr float kEncoderTicksToM = 5.0/(-164.32);
 constexpr units::velocity::meters_per_second_t kShiftUpSpeed = 3.0_mps;
 constexpr units::velocity::meters_per_second_t kShiftDownSpeed = 1.0_mps;
 
