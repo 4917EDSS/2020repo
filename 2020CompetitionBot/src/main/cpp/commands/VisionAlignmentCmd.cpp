@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands\VisionAlignmentCmd.h"
+#include "commands/VisionAlignmentCmd.h"
 
 VisionAlignmentCmd::VisionAlignmentCmd(VisionSub* visionSub, DrivetrainSub* drivetrainSub) :
   m_visionSub(visionSub),
