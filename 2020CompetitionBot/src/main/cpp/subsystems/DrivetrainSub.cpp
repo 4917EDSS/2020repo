@@ -37,15 +37,15 @@ DrivetrainSub::DrivetrainSub()
   m_shifter.Set(false);
   setDrivetrainEncoderZero();
 
-  m_rightMotor1.SetSmartCurrentLimit(50);
-  m_rightMotor2.SetSmartCurrentLimit(50);
-  m_rightMotor3.SetSmartCurrentLimit(50);
-  m_rightMotor4.SetSmartCurrentLimit(50);
+  m_rightMotor1.SetSmartCurrentLimit(DriveConstants::kSmartCurrentLimit);
+  m_rightMotor2.SetSmartCurrentLimit(DriveConstants::kSmartCurrentLimit);
+  m_rightMotor3.SetSmartCurrentLimit(DriveConstants::kSmartCurrentLimit);
+  m_rightMotor4.SetSmartCurrentLimit(DriveConstants::kSmartCurrentLimit);
 
-  m_leftMotor1.SetSmartCurrentLimit(50);
-  m_leftMotor2.SetSmartCurrentLimit(50);
-  m_leftMotor3.SetSmartCurrentLimit(50);
-  m_leftMotor4.SetSmartCurrentLimit(50);
+  m_leftMotor1.SetSmartCurrentLimit(DriveConstants::kSmartCurrentLimit);
+  m_leftMotor2.SetSmartCurrentLimit(DriveConstants::kSmartCurrentLimit);
+  m_leftMotor3.SetSmartCurrentLimit(DriveConstants::kSmartCurrentLimit);
+  m_leftMotor4.SetSmartCurrentLimit(DriveConstants::kSmartCurrentLimit);
 
 
   frc::SmartDashboard::PutNumber("drive power", 0);
