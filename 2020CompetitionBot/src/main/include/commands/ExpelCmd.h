@@ -7,23 +7,26 @@
 
 #pragma once
 
-#include <frc2/command/SubsystemBase.h>
-#include <ctre/Phoenix.h>
+#include <frc2/command/CommandBase.h>
+#include <frc2/command/CommandHelper.h>
 
-class ShooterSub : public frc2::SubsystemBase {
+/**
+ * An example command.
+ *
+ * <p>Note that this extends CommandHelper, rather extending CommandBase
+ * directly; this is crucially important, or else the decorator functions in
+ * Command will *not* work!
+ */
+class ExpelCmd
+    : public frc2::CommandHelper<frc2::CommandBase, ExpelCmd> {
  public:
-  ShooterSub();
+  ExpelCmd();
 
-  /**
-   * Will be called periodically whenever the CommandScheduler runs.
-   */
-  void Periodic() override;
-  void setSpeed(double speed);
-  double getSpeed();
+  void Initialize() override;
 
- private:
-  // Components (e.g. motor controllers and sensors) should generally be
-  // declared private and exposed only through public methods.
-  WPI_TalonFX m_motor1;
-  WPI_TalonFX m_motor2;
+  void Execute() override;
+
+  void End(bool interrupted) override;
+
+  bool IsFinished() override;
 };

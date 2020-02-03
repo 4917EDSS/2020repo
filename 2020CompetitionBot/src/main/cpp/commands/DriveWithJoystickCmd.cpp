@@ -5,20 +5,26 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/IntakeCmd.h"
+#include <frc/Joystick.h>
+#include "commands/DriveWithJoystickCmd.h"
 
-IntakeCmd::IntakeCmd(IntakeSub* subsystem) : m_intakeSub(subsystem){
+DriveWithJoystickCmd::DriveWithJoystickCmd(DrivetrainSub* drivetrainSub, frc::Joystick* joystick) : m_drivetrainSub(drivetrainSub), m_joystick(joystick){
   // Use addRequirements() here to declare subsystem dependencies.
-AddRequirements({subsystem});
+  AddRequirements({drivetrainSub});
 }
 
 // Called when the command is initially scheduled.
-void IntakeCmd::Initialize() {
-  m_intakeSub->setIntake(1);
-}
+void DriveWithJoystickCmd::Initialize() {}
+
+// Called repeatedly when this Command is scheduled to run
+void DriveWithJoystickCmd::Execute() {
+  m_drivetrainSub->arcadeDrive(
+          m_joystick->GetY(),
+          -m_joystick->GetZ());
+          }
 
 // Called once the command ends or is interrupted.
-void IntakeCmd::End(bool interrupted) {
-  m_intakeSub->setIntake(0);
+void DriveWithJoystickCmd::End(bool interrupted) {}
 
-}
+// Returns true when the command should end.
+bool DriveWithJoystickCmd::IsFinished() { return false; }

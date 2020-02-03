@@ -31,9 +31,18 @@ class DrivetrainSub : public frc2::SubsystemBase {
   void Periodic() override;
   void setDrivetrainEncoderZero();
   void drive(double lSpeed, double rSpeed);
+  void shiftUp();
+  void shiftDown();
+  bool isShifterInHighGear();
   void autoShift();
-  double getLeftEncoder();
-  double getRightEncoder();
+  double getEncorderTicksToM();
+  double getLeftEncoderDistanceM();
+  double getRightEncoderDistanceM();
+  double getLeftEncoderRaw();
+  double getRightEncoderRaw();
+  double getLeftVelocity();
+  double getRightVelocity();
+  
   // Subsystem methods go here.
 
   /**

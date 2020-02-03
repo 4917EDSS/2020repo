@@ -9,10 +9,7 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include "subsystems/VisionSub.h"
 #include "subsystems/DrivetrainSub.h"
-
-
 /**
  * An example command.
  *
@@ -20,10 +17,10 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class VisionAlignmentCmd
-    : public frc2::CommandHelper<frc2::CommandBase, VisionAlignmentCmd> {
+class DriveWithJoystickCmd
+    : public frc2::CommandHelper<frc2::CommandBase, DriveWithJoystickCmd> {
  public:
-  VisionAlignmentCmd(VisionSub* visionSub, DrivetrainSub* drivetrainSub);
+  DriveWithJoystickCmd(DrivetrainSub* drivetrainSub, frc::Joystick* controller);
 
   void Initialize() override;
 
@@ -34,7 +31,6 @@ class VisionAlignmentCmd
   bool IsFinished() override;
 
   private:
-  VisionSub* m_visionSub;
   DrivetrainSub* m_drivetrainSub;
-  bool m_isAligned;
+  Joystick* m_joystick;
 };

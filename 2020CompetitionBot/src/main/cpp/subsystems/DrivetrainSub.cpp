@@ -12,19 +12,20 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "RobotContainer.h"
 
-constexpr float kEncoderTicksToMm = 30.928;
-constexpr units::velocity::meters_per_second_t kShiftUpSpeed = 3.0_mps;
-constexpr units::velocity::meters_per_second_t kShiftDownSpeed = 1.0_mps;
+constexpr float kEncoderTicksToMLowGear = 5.0/(164.328);
+constexpr float kEncoderTicksToMHighGear = 5.0/(102.264);
+constexpr double kShiftUpSpeed = 3.0;
+constexpr double kShiftDownSpeed = 1.0;
 
 DrivetrainSub::DrivetrainSub() 
-  : m_leftMotor1{CanIds::kLeftMotor1CanId, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
-    m_leftMotor2{CanIds::kLeftMotor2CanId, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
-    m_leftMotor3{CanIds::kLeftMotor3CanId, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
-    m_leftMotor4{CanIds::kLeftMotor4CanId, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
-    m_rightMotor1{CanIds::kRightMotor1CanId, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
-    m_rightMotor2{CanIds::kRightMotor2CanId, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
-    m_rightMotor3{CanIds::kRightMotor3CanId, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
-    m_rightMotor4{CanIds::kRightMotor4CanId, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
+  : m_leftMotor1{CanIds::kLeftMotor1, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
+    m_leftMotor2{CanIds::kLeftMotor2, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
+    m_leftMotor3{CanIds::kLeftMotor3, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
+    m_leftMotor4{CanIds::kLeftMotor4, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
+    m_rightMotor1{CanIds::kRightMotor1, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
+    m_rightMotor2{CanIds::kRightMotor2, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
+    m_rightMotor3{CanIds::kRightMotor3, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
+    m_rightMotor4{CanIds::kRightMotor4, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
     m_gyro{frc::SPI::kMXP},
     m_odometry{frc::Rotation2d(units::degree_t(getHeading()))},
     m_shifter{PneumaticIds::kShifterId},
@@ -49,14 +50,16 @@ DrivetrainSub::DrivetrainSub()
 
   frc::SmartDashboard::PutNumber("drive power", 0);
   frc::SmartDashboard::PutBoolean("autoshifter", m_isAutoShiftEnabled);
+
+  arcadeDrive(0.2, 0);
 }
 
 // This method will be called once per scheduler run
 void DrivetrainSub::Periodic() {
 
   m_odometry.Update(frc::Rotation2d(units::degree_t(getHeading())),
-                    units::meter_t(getLeftEncoder()),
-                    units::meter_t(getRightEncoder()));
+                    units::meter_t(getLeftEncoderDistanceM()),
+                    units::meter_t(getRightEncoderDistanceM()));
 
   m_isAutoShiftEnabled = frc::SmartDashboard::GetBoolean("autoshifter", m_isAutoShiftEnabled);
   if(m_isAutoShiftEnabled) {
@@ -64,21 +67,43 @@ void DrivetrainSub::Periodic() {
   }
 
   m_drive.Feed();
+
+  frc::SmartDashboard::PutNumber("RawEnc R", getRightEncoderRaw());
+  frc::SmartDashboard::PutNumber("RawEnc L", getLeftEncoderRaw());
+  frc::SmartDashboard::PutNumber("CnvrtdEnc R", getRightEncoderDistanceM());
+  frc::SmartDashboard::PutNumber("CnvrtdEnc L", getLeftEncoderDistanceM());
+  frc::SmartDashboard::PutNumber("MtrVlcty R", getRightVelocity());
+  frc::SmartDashboard::PutNumber("MtrVlcty L", getRightVelocity());
+  frc::SmartDashboard::PutBoolean("High Gear", isShifterInHighGear());
 }
 
 void DrivetrainSub::setDrivetrainEncoderZero(){
   m_rightMotor1.GetEncoder().SetPosition(0);
   m_rightMotor2.GetEncoder().SetPosition(0);
   m_rightMotor3.GetEncoder().SetPosition(0);
+  m_rightMotor4.GetEncoder().SetPosition(0);
 
   m_leftMotor1.GetEncoder().SetPosition(0);
   m_leftMotor2.GetEncoder().SetPosition(0);
   m_leftMotor3.GetEncoder().SetPosition(0);
+  m_leftMotor4.GetEncoder().SetPosition(0);
 }
 
 void DrivetrainSub::arcadeDrive(double fwd, double rot) {
   m_drive.ArcadeDrive(fwd, rot);
   //printf("fwd=%4.2f rot=%4.2f\n", fwd, rot);
+}
+
+void DrivetrainSub::shiftUp() {
+   m_shifter.Set(false);
+}
+
+void DrivetrainSub::shiftDown() {
+  m_shifter.Set(true);
+}
+
+bool DrivetrainSub::isShifterInHighGear() {
+  return m_shifter.Get();
 }
 
 void DrivetrainSub::tankDriveVolts(units::volt_t left, units::volt_t right) {
@@ -87,7 +112,7 @@ void DrivetrainSub::tankDriveVolts(units::volt_t left, units::volt_t right) {
 }
 
 double DrivetrainSub::getAverageEncoderDistance() {
-  return (getLeftEncoder() + getRightEncoder()) / 2.0;
+  return (getLeftEncoderDistanceM() + getRightEncoderDistanceM()) / 2.0;
 }
 
 void DrivetrainSub::setMaxOutput(double maxOutput) {
@@ -105,8 +130,8 @@ double DrivetrainSub::getTurnRate() {
 frc::Pose2d DrivetrainSub::getPose() { return m_odometry.GetPose(); }
 
 frc::DifferentialDriveWheelSpeeds DrivetrainSub::getWheelSpeeds() {
-  return {units::meters_per_second_t(getLeftEncoder()),
-          units::meters_per_second_t(getRightEncoder())};
+  return {units::meters_per_second_t(getLeftEncoderDistanceM()),
+          units::meters_per_second_t(getRightEncoderDistanceM())};
 }
 
 void DrivetrainSub::resetOdometry(frc::Pose2d pose) {
@@ -115,23 +140,62 @@ void DrivetrainSub::resetOdometry(frc::Pose2d pose) {
                            frc::Rotation2d(units::degree_t(getHeading())));
 }
 
-double DrivetrainSub::getRightEncoder()
-{
-  return (m_rightMotor1.GetEncoder().GetPosition()*kEncoderTicksToMm);
+// Returns the conversion factor for converting motor encoder ticks to meters.
+// This method takes into account which gear we are in.s
+double DrivetrainSub::getEncorderTicksToM() {
+  double conversionFactor;
+
+  if(isShifterInHighGear()) {
+    conversionFactor = kEncoderTicksToMHighGear;
+  }
+  else {
+    conversionFactor = kEncoderTicksToMLowGear;
+  }
+  return conversionFactor;
 }
 
-double DrivetrainSub::getLeftEncoder()
+// Get the distance from the left and right encoders.  Distance is in meters.
+// These methods take into account which gear we are in.
+double DrivetrainSub::getLeftEncoderDistanceM()
 {
-    return (m_leftMotor1.GetEncoder().GetPosition()*kEncoderTicksToMm);
+    return (getLeftEncoderRaw() * getEncorderTicksToM());
 }
+
+double DrivetrainSub::getRightEncoderDistanceM()
+{
+  return (getRightEncoderRaw() * getEncorderTicksToM());
+}
+
+// Get the raw left and right encoder values.  Returns encorder ticks.
+double DrivetrainSub::getLeftEncoderRaw()
+{
+  return (-m_leftMotor1.GetEncoder().GetPosition());
+}
+
+double DrivetrainSub::getRightEncoderRaw()
+{
+  return (m_rightMotor1.GetEncoder().GetPosition());
+}
+
+double DrivetrainSub::getLeftVelocity()
+{
+  auto encoder = m_leftMotor1.GetEncoder();
+  return (encoder.GetVelocity() * encoder.GetCountsPerRevolution() * getEncorderTicksToM() / 60.0 );
+}
+double DrivetrainSub::getRightVelocity()
+{
+  auto encoder = m_rightMotor1.GetEncoder();
+  return (encoder.GetVelocity() * encoder.GetCountsPerRevolution() * getEncorderTicksToM() / 60.0 );
+}
+
+
 
 void DrivetrainSub::autoShift() {
-  frc::DifferentialDriveWheelSpeeds wheelSpeeds = getWheelSpeeds();
-  units::velocity::meters_per_second_t averageSpeed = (wheelSpeeds.left + wheelSpeeds.right) / 2;
-  if(averageSpeed > kShiftUpSpeed) {
-    m_shifter.Set(true);
+  double avgWheelSpeeds = (getLeftVelocity() + getRightVelocity()) / 2;
+  if(avgWheelSpeeds > kShiftUpSpeed) {
+    shiftUp();
   }
-  else if(averageSpeed < kShiftDownSpeed) {
-    m_shifter.Set(false);
+  else if(avgWheelSpeeds < kShiftDownSpeed) {
+    shiftDown();
   }
 }

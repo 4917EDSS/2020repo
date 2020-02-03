@@ -9,9 +9,7 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include "subsystems/VisionSub.h"
-#include "subsystems/DrivetrainSub.h"
-
+#include "subsystems/ClimberSub.h"
 
 /**
  * An example command.
@@ -20,21 +18,20 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class VisionAlignmentCmd
-    : public frc2::CommandHelper<frc2::CommandBase, VisionAlignmentCmd> {
+class ClimbBalanceCmd
+    : public frc2::CommandHelper<frc2::CommandBase, ClimbBalanceCmd> {
  public:
-  VisionAlignmentCmd(VisionSub* visionSub, DrivetrainSub* drivetrainSub);
+  ClimbBalanceCmd(ClimberSub* climbSub, bool isRight);
 
   void Initialize() override;
 
   void Execute() override;
 
-  void End(bool interrupted) override;
+  void End();
 
   bool IsFinished() override;
 
   private:
-  VisionSub* m_visionSub;
-  DrivetrainSub* m_drivetrainSub;
-  bool m_isAligned;
+  ClimberSub* m_climbSub;
+  bool m_isRight;
 };
