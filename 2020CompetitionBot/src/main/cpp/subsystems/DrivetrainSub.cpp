@@ -12,7 +12,7 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "RobotContainer.h"
 
-constexpr float kEncoderTicksToMLowGear = 5.0/(164.328);
+constexpr float kEncoderTicksToMLowGear = 5.0/(160.162);
 constexpr float kEncoderTicksToMHighGear = 5.0/(102.264);
 constexpr double kShiftUpSpeed = 3.0;
 constexpr double kShiftDownSpeed = 1.0;
