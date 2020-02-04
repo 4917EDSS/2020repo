@@ -20,7 +20,7 @@ AddRequirements({intakeSub});
 
 // Called when the command is initially scheduled.
 void ShootCmd::Initialize() {
-  m_shooterSub->setSpeed(1.0);
+  m_shooterSub->setSpeed(0.3);
   m_intakeSub->setIntake(-1.0);
 }
   void ShootCmd::Execute() {

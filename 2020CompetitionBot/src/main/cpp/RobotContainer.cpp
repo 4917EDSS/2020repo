@@ -69,7 +69,13 @@ RobotContainer::RobotContainer() {
   // Configure the button bindings
   configureButtonBindings();
   autoChooserSetup();
-m_drivetrainSub.SetDefaultCommand(DriveWithJoystickCmd(&m_drivetrainSub, &m_driverController));
+  frc::SmartDashboard::PutNumber("flywheelSpeed", 0.0);
+  m_drivetrainSub.SetDefaultCommand(DriveWithJoystickCmd(&m_drivetrainSub, &m_driverController));
+  m_shooterSub.SetDefaultCommand(frc2::RunCommand(
+    [this] {
+      m_shooterSub.setSpeed(frc::SmartDashboard::GetNumber("flywheelSpeed", 0.0));
+    },
+  {&m_shooterSub}));
 }
 
 void RobotContainer::autoChooserSetup(){

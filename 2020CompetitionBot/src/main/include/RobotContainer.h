@@ -21,7 +21,6 @@
 constexpr int DRIVER_JOYSTICK_PORT=0;
 constexpr int OPERATOR_JOYSTICK_PORT=1;
 
-
 /**
  * This class is where the bulk of the robot should be declared.  Since
  * Command-based is a "declarative" paradigm, very little robot logic should

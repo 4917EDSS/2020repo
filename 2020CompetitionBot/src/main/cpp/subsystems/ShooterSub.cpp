@@ -15,21 +15,20 @@ ShooterSub::ShooterSub()
   : m_motor1(CanIds::kShootMotor1), 
     m_motor2(CanIds::kShootMotor2) {
   // Implementation of subsystem constructor goes here.
+  frc::SmartDashboard::PutNumber("shooterspeed", 0.0);
 }
 
 void ShooterSub::Periodic() {
   // Implementation of subsystem periodic method goes here.
-  double speedToSet = frc::SmartDashboard::GetNumber("shooterspeed", 0);
-  setSpeed(speedToSet);
-  //frc::SmartDashboard::PutNumber("motorSpeed", getSpeed());
+  frc::SmartDashboard::PutNumber("motorSpeed", getSpeed());
   frc::SmartDashboard::PutNumber("motorCurrent1", m_motor1.GetOutputCurrent());
   frc::SmartDashboard::PutNumber("motorCurrent2", m_motor2.GetOutputCurrent());
 }
 
 //Sets speed of all motors
 void ShooterSub::setSpeed(double speed) {
-  m_motor1.Set(speed);
-  m_motor2.Set(-speed);
+  m_motor1.Set(-speed);
+  m_motor2.Set(speed);
 }
 
 // Gets maximum absolute speeds of both motors
