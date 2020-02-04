@@ -5,7 +5,9 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+#include <frc/smartdashboard/SmartDashboard.h>
 #include "commands/VisionAlignmentCmd.h"
+
 
 VisionAlignmentCmd::VisionAlignmentCmd(VisionSub* visionSub, DrivetrainSub* drivetrainSub) :
   m_visionSub(visionSub),
@@ -18,12 +20,16 @@ VisionAlignmentCmd::VisionAlignmentCmd(VisionSub* visionSub, DrivetrainSub* driv
 
 // Called when the command is initially scheduled.
 void VisionAlignmentCmd::Initialize() {
+  frc::SmartDashboard::PutNumber("FrontVisionTargetX", 0);
+
   m_drivetrainSub->shiftDown();
 }
 
 // Called repeatedly when this Command is scheduled to run
 void VisionAlignmentCmd::Execute() {
   double x = m_visionSub->getVisionTarget(VisionConstants::kFrontCameraId);
+
+  frc::SmartDashboard::PutNumber("FrontVisionTargetX", x);
  
   if (x > VisionConstants::kXAllignmentTolerence || x < -(VisionConstants::kXAllignmentTolerence)) { 
     if (x > VisionConstants::kXMax) {

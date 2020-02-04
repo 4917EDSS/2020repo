@@ -5,6 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+#include <frc/smartdashboard/SmartDashboard.h>
 #include "commands/ClimbBalanceCmd.h"
 #include "Constants.h"
 
@@ -12,14 +13,17 @@ ClimbBalanceCmd::ClimbBalanceCmd(ClimberSub* climbSub, bool isRight) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({climbSub});
 
+  frc::SmartDashboard::PutNumber("MoveOnGenSwitchPower", ClimbConstants::kMoveOnGenSwitchPower);
+
   m_isRight = isRight;
 }
 
 // Called when the command is initially scheduled.
 // We just turn the power on and leave it until command is interrupted calling End
 void ClimbBalanceCmd::Initialize() {
+
   // Determine the power to apply to motor
-  double p = ClimbConstants::kMoveOnGenSwitchPower;
+  double p = frc::SmartDashboard::GetNumber("MoveOnGenSwitchPower", ClimbConstants::kMoveOnGenSwitchPower);
   if (m_isRight) {
     p = -p;
   }
