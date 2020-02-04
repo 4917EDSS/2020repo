@@ -26,7 +26,7 @@ void ShootCmd::Initialize() {
   void ShootCmd::Execute() {
     double diff = targetspeed - m_shooterSub->getSpeed();
     double feed = targetspeed / MAX_RPM;
-    // m_shooterSub->setSpeed(diff * P + feed);
+     m_shooterSub->setSpeed(diff * P + feed);
     //P and MAX_RPM are arbitrary values for now.
 }
 
