@@ -19,11 +19,13 @@ class ShooterSub : public frc2::SubsystemBase {
    */
   void Periodic() override;
   void setSpeed(double speed);
+  void setFeedSpeed(double feedSpeed);
   double getSpeed();
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
-  WPI_TalonFX m_motor1;
-  WPI_TalonFX m_motor2;
+  WPI_TalonFX m_shooterMotor1;
+  WPI_TalonFX m_shooterMotor2;
+  ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_feederMotor;
 };

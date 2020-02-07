@@ -12,8 +12,9 @@
 
 
 ShooterSub::ShooterSub()
-  : m_motor1(CanIds::kShootMotor1), 
-    m_motor2(CanIds::kShootMotor2) {
+  : m_shooterMotor1(CanIds::kShootMotor1), 
+    m_shooterMotor2(CanIds::kShootMotor2), 
+    m_feederMotor(CanIds::kFeederMotor){
   // Implementation of subsystem constructor goes here.
   frc::SmartDashboard::PutNumber("shooterspeed", 0.0);
 }
@@ -21,20 +22,24 @@ ShooterSub::ShooterSub()
 void ShooterSub::Periodic() {
   // Implementation of subsystem periodic method goes here.
   frc::SmartDashboard::PutNumber("motorSpeed", getSpeed());
-  frc::SmartDashboard::PutNumber("motorCurrent1", m_motor1.GetOutputCurrent());
-  frc::SmartDashboard::PutNumber("motorCurrent2", m_motor2.GetOutputCurrent());
+  frc::SmartDashboard::PutNumber("motorCurrent1", m_shooterMotor1.GetOutputCurrent());
+  frc::SmartDashboard::PutNumber("motorCurrent2", m_shooterMotor2.GetOutputCurrent());
 }
 
 //Sets speed of all motors
 void ShooterSub::setSpeed(double speed) {
-  m_motor1.Set(-speed);
-  m_motor2.Set(speed);
+  m_shooterMotor1.Set(-speed);
+  m_shooterMotor2.Set(speed);
+}
+
+void ShooterSub::setFeedSpeed(double feedSpeed) {
+  m_feederMotor.Set(feedSpeed);
 }
 
 // Gets maximum absolute speeds of both motors
 double ShooterSub::getSpeed() {
-  double motor1Speed =  m_motor1.GetSensorCollection().GetIntegratedSensorVelocity();
-  double motor2Speed =  m_motor2.GetSensorCollection().GetIntegratedSensorVelocity();
+  double motor1Speed =  m_shooterMotor1.GetSensorCollection().GetIntegratedSensorVelocity();
+  double motor2Speed =  m_shooterMotor2.GetSensorCollection().GetIntegratedSensorVelocity();
   double overallSpeed = std::max(std::abs(motor1Speed), std::abs(motor2Speed));
 
   printf ("ShooterSub::getSpeed - overallSpeed=%4.2f ; falcon1Speed=%4.2f ; falcon2Speed=%4.2f\n"  , motor1Speed, motor2Speed, overallSpeed);

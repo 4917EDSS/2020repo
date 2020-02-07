@@ -119,7 +119,7 @@ void RobotContainer::configureButtonBindings() {
   //Operator Commands...
 
   frc2::JoystickButton shooterBtn(&m_operatorController, kShooterBtn);
-  shooterBtn.WhenHeld(ShootCmd(&m_shooterSub, &m_intakeSub, 3000));
+  shooterBtn.WhenHeld(ShootCmd(&m_shooterSub, &m_intakeSub));
 
   frc2::JoystickButton climbBalanceRightBtn(&m_driverController, kClimbBalanceRight);
   climbBalanceRightBtn.WhenHeld(ClimbBalanceCmd(&m_climberSub, true));
