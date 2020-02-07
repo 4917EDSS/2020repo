@@ -17,6 +17,12 @@ void IntakeCmd::Initialize() {
   m_intakeSub->setIntake(1);
 }
 
+void IntakeCmd::Execute() {
+  if(m_intakeSub->getBallIntakeSensor()) {
+    // When intake sensor is true, intake until first ball sensor is false then true again
+  }
+}
+
 // Called once the command ends or is interrupted.
 void IntakeCmd::End(bool interrupted) {
   m_intakeSub->setIntake(0);

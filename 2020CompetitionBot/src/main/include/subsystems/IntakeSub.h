@@ -16,6 +16,8 @@ class IntakeSub : public frc2::SubsystemBase {
   IntakeSub();
   // negative speed sends balls to shooter positive takes them to magazine 
   void setIntake(double speed);
+  bool getBallIntakeSensor();
+  bool getFirstBallSensor();
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
@@ -25,5 +27,6 @@ class IntakeSub : public frc2::SubsystemBase {
 
   ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_topIntakeMotor;
   ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_bottomIntakeMotor;
-  frc::DigitalInput m_magazineFullSensor;
+  frc::DigitalInput m_firstBallSensor;
+  frc::DigitalInput m_ballIntakeSensor;
 };

@@ -24,8 +24,7 @@ class IntakeCmd
   IntakeCmd(IntakeSub* subsystem);
 
   void Initialize() override;
-
-
+  void Execute() override;
   void End(bool interrupted) override;
 
 
