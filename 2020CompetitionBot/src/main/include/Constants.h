@@ -37,6 +37,7 @@ namespace CanIds {
     constexpr int kElevatorMotor = 13;
     constexpr int kShootMotor1 = 25;
     constexpr int kShootMotor2 = 26;
+    constexpr int kFeederMotor = 27;
 }
 
 namespace PneumaticIds {
@@ -94,8 +95,8 @@ constexpr int kDriverControllerPort = 1;
 }  // namespace OIConstants
 
 namespace VisionConstants {
-    constexpr double kXAllignmentTolerence = 0.1;
-    constexpr double kXMax = 100.0;
+    constexpr double kXAllignmentTolerence = 0.01;
+    constexpr double kXMax = 30.0;
     constexpr double kFrontCameraId = 1;
 }  // namespace VisionConstants
 

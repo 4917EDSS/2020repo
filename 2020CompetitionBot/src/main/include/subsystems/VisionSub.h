@@ -17,8 +17,10 @@ class VisionSub : public frc2::SubsystemBase {
    * Will be called periodically whenever the CommandScheduler runs.
    */
   void Periodic();
-  double getVisionTarget(int camera);
-  double getVerticalOffset(int camera);
+  double getVisionTarget();
+  double getVerticalOffset();
+  void setFarVisionPipeline();
+  void setShortVisionPipeline();
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be

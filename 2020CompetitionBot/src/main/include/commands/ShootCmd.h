@@ -22,7 +22,7 @@ class ShootCmd
     : public frc2::CommandHelper<frc2::CommandBase, ShootCmd> {
  public:
 
-  ShootCmd(ShooterSub* subsystem, IntakeSub* intakeSub, double targetspeed);
+  ShootCmd(ShooterSub* subsystem, IntakeSub* intakeSub);
 
   void Initialize() override;
   void Execute() override;
@@ -31,7 +31,9 @@ class ShootCmd
   private:
   ShooterSub* m_shooterSub;
   IntakeSub* m_intakeSub;
-  double targetspeed;
+  double m_targetSpeed;
+  double powers[5];
+  int index=0;
 
 
 };
