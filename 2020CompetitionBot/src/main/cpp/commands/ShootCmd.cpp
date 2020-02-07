@@ -22,6 +22,7 @@ AddRequirements({intakeSub});
 void ShootCmd::Initialize() {
   m_shooterSub->setSpeed(0.3);
   m_intakeSub->setIntake(-1.0);
+  m_shooterSub->setFeedSpeed(1.0);
 }
   void ShootCmd::Execute() {
     double diff = targetspeed - m_shooterSub->getSpeed();
@@ -34,4 +35,5 @@ void ShootCmd::Initialize() {
 void ShootCmd::End(bool interrupted) {
     m_shooterSub->setSpeed(0);
     m_intakeSub->setIntake(0);
+    m_shooterSub->setFeedSpeed(0);
 }
