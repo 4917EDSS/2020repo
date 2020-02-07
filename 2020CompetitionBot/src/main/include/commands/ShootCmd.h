@@ -32,6 +32,8 @@ class ShootCmd
   ShooterSub* m_shooterSub;
   IntakeSub* m_intakeSub;
   double targetspeed;
+  double powers[5];
+  int index=0;
 
 
 };

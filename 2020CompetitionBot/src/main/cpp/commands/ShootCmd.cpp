@@ -1,5 +1,5 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
+/* cpyright (c) 2019 FIRST. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
@@ -7,8 +7,9 @@
 
 #include "commands/ShootCmd.h"
 
-constexpr double P=0.001;
-constexpr double MAX_RPM=5000;
+constexpr double kP=0.001;
+constexpr double kSpeedTolerance=10;
+constexpr double kMaxRPM=5000;
 
 
 ShootCmd::ShootCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, double targetspeed) : m_shooterSub(shooterSub), m_intakeSub(intakeSub), targetspeed(targetspeed){
@@ -24,10 +25,25 @@ void ShootCmd::Initialize() {
   m_intakeSub->setIntake(-1.0);
 }
   void ShootCmd::Execute() {
+    //kP, kSpeedTolerance, and kMaxRPM are arbitrary values for now.
+    if(index < 5){
     double diff = targetspeed - m_shooterSub->getSpeed();
-    double feed = targetspeed / MAX_RPM;
-     m_shooterSub->setSpeed(diff * P + feed);
-    //P and MAX_RPM are arbitrary values for now.
+    double feed = targetspeed / kMaxRPM;
+    double speed=diff*kP+feed;
+    m_shooterSub->setSpeed(speed);
+    if(m_shooterSub->getSpeed() >= targetspeed-kSpeedTolerance and m_shooterSub->getSpeed() <= targetspeed+kSpeedTolerance){
+        powers[index]=speed;
+        index+=1;
+}
+}
+    else {
+      double sum=0;
+      for(int i=0; i < 5; i++) {
+        sum+=powers[i];
+}
+      double avg=sum/5.0;
+      m_shooterSub->setSpeed(avg);
+    }
 }
 
 // Called once the command ends or is interrupted.
