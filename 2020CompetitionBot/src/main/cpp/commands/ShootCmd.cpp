@@ -9,9 +9,10 @@
 
 constexpr double P=0.001;
 constexpr double MAX_RPM=5000;
+constexpr double kMeasuredTargetSpeed = 3000;
 
 
-ShootCmd::ShootCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, double targetspeed) : m_shooterSub(shooterSub), m_intakeSub(intakeSub), targetspeed(targetspeed){
+ShootCmd::ShootCmd(ShooterSub* shooterSub, IntakeSub* intakeSub) : m_shooterSub(shooterSub), m_intakeSub(intakeSub) {
 
   // Use addRequirements() here to declare subsystem dependencies.
 AddRequirements({shooterSub});
@@ -23,10 +24,13 @@ void ShootCmd::Initialize() {
   m_shooterSub->setSpeed(0.3);
   m_intakeSub->setIntake(-1.0);
   m_shooterSub->setFeedSpeed(1.0);
+  m_targetSpeed = kMeasuredTargetSpeed;
 }
-  void ShootCmd::Execute() {
-    double diff = targetspeed - m_shooterSub->getSpeed();
-    double feed = targetspeed / MAX_RPM;
+
+  void ShootCmd::Execute() {      
+    // We need to change the target speed based on how close the target is (using the y value on limelight)
+    double diff = m_targetSpeed - m_shooterSub->getSpeed();
+    double feed = m_targetSpeed / MAX_RPM;
      m_shooterSub->setSpeed(diff * P + feed);
     //P and MAX_RPM are arbitrary values for now.
 }
