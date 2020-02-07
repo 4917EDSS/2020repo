@@ -13,11 +13,18 @@ VisionSub::VisionSub() {}
 // This method will be called once per scheduler run
 void VisionSub::Periodic() {}
 
-double VisionSub::getVisionTarget(int camera) {
+void VisionSub::setFarVisionPipeline() {
+  nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 2.0);
+}
+
+void VisionSub::setShortVisionPipeline() {
+  nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 1.0);
+}
+
+double VisionSub::getVisionTarget() {
   return nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tx", 0.0);
 }
 
-double VisionSub::getVerticalOffset(int camera){
+double VisionSub::getVerticalOffset(){
 	return nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("ty", 0.0);
 }
-

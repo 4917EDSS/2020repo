@@ -106,9 +106,9 @@ bool DrivetrainSub::isShifterInHighGear() {
   return m_shifter.Get();
 }
 
-void DrivetrainSub::tankDriveVolts(units::volt_t left, units::volt_t right) {
-  m_leftMotors.SetVoltage(left);
-  m_rightMotors.SetVoltage(-right);
+void DrivetrainSub::tankDriveVolts(double left, double right) {
+  m_leftMotors.Set(left);
+  m_rightMotors.Set(-right);
 }
 
 double DrivetrainSub::getAverageEncoderDistance() {

@@ -28,6 +28,7 @@
 #include "commands/ClimbWinchCmd.h"
 #include "commands/VisionAlignmentCmd.h"
 #include "commands/ClimbBalanceCmd.h"
+#include "subsystems/VisionSub.h"
 /*
  * ON LOGITECH F310 CONTROLLER:
  * X = 1            (Blue)
@@ -61,7 +62,8 @@ constexpr int kShiftUpBtn=5;
 constexpr int kShiftDownBtn=6;
 constexpr int kClimbBalanceLeft=7;
 constexpr int kClimbBalanceRight=8;
-constexpr int kFrontCameraAlignment=9;
+constexpr int kFarCameraAlignment=9;
+constexpr int kShortCameraAlignment=10;
 
 RobotContainer::RobotContainer() {
   // Initialize all of your commands and subsystems here
@@ -108,6 +110,12 @@ void RobotContainer::configureButtonBindings() {
   },
   {&m_drivetrainSub}));
 
+  frc2::JoystickButton farCameraAlignmentBtn(&m_driverController, kFarCameraAlignment);
+  farCameraAlignmentBtn.WhenPressed(VisionAlignmentCmd(&m_visionSub, &m_drivetrainSub, true));
+
+  frc2::JoystickButton shortCameraAlignmentBtn(&m_driverController, kShortCameraAlignment);
+  shortCameraAlignmentBtn.WhenPressed(VisionAlignmentCmd(&m_visionSub, &m_drivetrainSub, false));
+
   //Operator Commands...
 
   frc2::JoystickButton shooterBtn(&m_operatorController, kShooterBtn);
@@ -118,9 +126,6 @@ void RobotContainer::configureButtonBindings() {
 
   frc2::JoystickButton climbBalanceLeftBtn(&m_driverController, kClimbBalanceLeft);
   climbBalanceLeftBtn.WhenHeld(ClimbBalanceCmd(&m_climberSub, false));
-
-  frc2::JoystickButton frontCameraAlignmentBtn(&m_driverController, kFrontCameraAlignment);
-  frontCameraAlignmentBtn.WhenPressed(VisionAlignmentCmd(&m_visionSub, &m_drivetrainSub));
 
   frc2::JoystickButton intakeBtn(&m_operatorController, kIntakeBtn);
   intakeBtn.WhenHeld(IntakeCmd(&m_intakeSub));
