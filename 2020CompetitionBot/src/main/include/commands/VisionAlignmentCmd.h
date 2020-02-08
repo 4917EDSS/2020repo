@@ -13,13 +13,6 @@
 #include "subsystems/DrivetrainSub.h"
 
 
-/**
- * An example command.
- *
- * <p>Note that this extends CommandHelper, rather extending CommandBase
- * directly; this is crucially important, or else the decorator functions in
- * Command will *not* work!
- */
 class VisionAlignmentCmd
     : public frc2::CommandHelper<frc2::CommandBase, VisionAlignmentCmd> {
  public:
@@ -33,9 +26,10 @@ class VisionAlignmentCmd
 
   bool IsFinished() override;
 
-  private:
+ private:
   VisionSub* m_visionSub;
   DrivetrainSub* m_drivetrainSub;
   bool m_isAligned;
   bool m_isFar;
+  double m_lastX;
 };
