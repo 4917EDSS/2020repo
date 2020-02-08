@@ -7,14 +7,17 @@
 
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "commands/VisionAlignmentCmd.h"
-#include "subsystems/VisionSub.h"
 
 constexpr double kP = 0.5;
+constexpr double maxPower = 0.5;
+constexpr double minPower = 0.05;
+constexpr double maxEndVelocity = 0.5;  // In degrees per iteration 
 
 VisionAlignmentCmd::VisionAlignmentCmd(VisionSub* visionSub, DrivetrainSub* drivetrainSub, bool isFar) :
   m_visionSub(visionSub),
   m_drivetrainSub(drivetrainSub),
-  m_isFar(isFar)
+  m_isFar(isFar),
+  m_lastX(0)
 {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({visionSub});
@@ -24,6 +27,7 @@ VisionAlignmentCmd::VisionAlignmentCmd(VisionSub* visionSub, DrivetrainSub* driv
 // Called when the command is initially scheduled.
 
 void VisionAlignmentCmd::Initialize() {
+  printf("vision started");
   m_drivetrainSub->shiftDown();
   m_isAligned = false;
   if(m_isFar) {
@@ -37,11 +41,32 @@ void VisionAlignmentCmd::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void VisionAlignmentCmd::Execute() {
   double x = m_visionSub->getVisionTarget();
+  bool isNegative = false;
 
   frc::SmartDashboard::PutNumber("FrontVisionTargetX", x);
+
+  if(x < 0) {
+    isNegative = true;
+    x *= -1.0;  
+  }
+
   double power = (x / VisionConstants::kXMax) * kP;
-  if (x > VisionConstants::kXAllignmentTolerence || x < -(VisionConstants::kXAllignmentTolerence)) { 
-    m_drivetrainSub->tankDriveVolts((-power), (power));
+  power += minPower;
+  if(power > maxPower) {
+    power = maxPower;
+  }
+
+  if(isNegative == true) {
+    power *= -1.0;  
+  }
+
+  printf("vision x=%f power=%f\n", x, power);
+  double currentVelocity = (x - m_lastX);
+  m_lastX = x;
+  if((fabs(x) > VisionConstants::kXAllignmentTolerence) 
+      || (fabs(currentVelocity) > maxEndVelocity))
+  { 
+      m_drivetrainSub->tankDriveVolts((-power), (power));
 
   } else {
     m_isAligned = true;
@@ -52,6 +77,7 @@ void VisionAlignmentCmd::Execute() {
 // Called once the command ends or is interrupted.
 void VisionAlignmentCmd::End(bool interrupted) {
   m_drivetrainSub->tankDriveVolts(0.0, 0.0);
+  printf("vision ended");
 }
 
 // Returns true when the command should end.

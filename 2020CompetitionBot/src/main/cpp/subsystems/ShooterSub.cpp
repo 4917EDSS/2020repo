@@ -42,8 +42,6 @@ double ShooterSub::getSpeed() {
   double motor2Speed =  m_shooterMotor2.GetSensorCollection().GetIntegratedSensorVelocity();
   double overallSpeed = std::max(std::abs(motor1Speed), std::abs(motor2Speed));
 
-  printf ("ShooterSub::getSpeed - overallSpeed=%4.2f ; falcon1Speed=%4.2f ; falcon2Speed=%4.2f\n"  , motor1Speed, motor2Speed, overallSpeed);
-
   return overallSpeed;
 }
   

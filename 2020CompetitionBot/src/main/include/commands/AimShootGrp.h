@@ -7,29 +7,14 @@
 
 #pragma once
 
-#include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+#include <frc2/command/SequentialCommandGroup.h>
 #include "subsystems/VisionSub.h"
 #include "subsystems/DrivetrainSub.h"
 
-
-class VisionAlignmentCmd
-    : public frc2::CommandHelper<frc2::CommandBase, VisionAlignmentCmd> {
+class AimShootGrp
+    : public frc2::CommandHelper<frc2::SequentialCommandGroup,
+                                 AimShootGrp> {
  public:
-  VisionAlignmentCmd(VisionSub* visionSub, DrivetrainSub* drivetrainSub, bool m_isFar);
-
-  void Initialize() override;
-
-  void Execute() override;
-
-  void End(bool interrupted) override;
-
-  bool IsFinished() override;
-
- private:
-  VisionSub* m_visionSub;
-  DrivetrainSub* m_drivetrainSub;
-  bool m_isAligned;
-  bool m_isFar;
-  double m_lastX;
+  AimShootGrp(VisionSub* visionSub, DrivetrainSub* drivetrainSub, bool isFar);
 };
