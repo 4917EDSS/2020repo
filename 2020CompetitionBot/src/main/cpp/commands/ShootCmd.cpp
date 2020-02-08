@@ -6,11 +6,14 @@
 /*----------------------------------------------------------------------------*/
 
 #include "commands/ShootCmd.h"
+#include <frc/smartdashboard/SmartDashboard.h>
+#include <frc/RobotController.h>
 
-constexpr double kP=0.001;
+constexpr double kP = 0.0001;
+constexpr double kD = 0.00001 ;//13.3067
 constexpr double kSpeedTolerance=10;
-constexpr double kMaxRPM=5000;
-constexpr double kMeasuredTargetSpeed = 3000;
+constexpr double kMaxRPM=21750;
+constexpr double kMeasuredTargetSpeed = 15030;
 
 
 ShootCmd::ShootCmd(ShooterSub* shooterSub, IntakeSub* intakeSub) : m_shooterSub(shooterSub), m_intakeSub(intakeSub) {
@@ -22,16 +25,28 @@ ShootCmd::ShootCmd(ShooterSub* shooterSub, IntakeSub* intakeSub) : m_shooterSub(
 
 // Called when the command is initially scheduled.
 void ShootCmd::Initialize() {
-  m_shooterSub->setSpeed(0.3);
-  m_intakeSub->setIntake(-1.0);
+  m_intakeSub->setMagazineIntakePower(-1.0);
   m_shooterSub->setFeedSpeed(1.0);
   m_targetSpeed = kMeasuredTargetSpeed;
+  m_lastDiff = 0.0; 
+  m_lastTime = frc::RobotController::GetFPGATime();
 }
 
 
 void ShootCmd::Execute() {
+  double currentDiff = m_targetSpeed - m_shooterSub->getSpeed();
+  double feed = m_targetSpeed / kMaxRPM;
+  uint64_t currentTime = frc::RobotController::GetFPGATime();
+  double speedDiff = (currentDiff - m_lastDiff)/(currentTime - m_lastTime);
+  double speed = (currentDiff*kP) + (speedDiff*kD) + feed;
+  printf ("- speedDiff*kD=%f ; currentD=%f ; currentT=%f ; lastT=%f ; lastD=%f ;\n" , speedDiff, currentDiff, currentTime, m_lastTime, m_lastDiff);
+  m_shooterSub->setSpeed(speed);
+  m_lastDiff = currentDiff;
+  m_lastTime = currentTime;
+
+ 
   // We need to change the target speed based on how close the target is (using the y value on limelight)
-  if(index < 5){
+   /* if(index < 5){
     double diff = m_targetSpeed - m_shooterSub->getSpeed();
     double feed = m_targetSpeed / kMaxRPM;
   //kP, kSpeedTolerance, and kMaxRPM are arbitrary values for now.
@@ -52,12 +67,12 @@ void ShootCmd::Execute() {
     }
     double avg=sum/5.0;
     m_shooterSub->setSpeed(avg);
-  }
+  }*/
 }
 
 // Called once the command ends or is interrupted.
 void ShootCmd::End(bool interrupted) {
     m_shooterSub->setSpeed(0);
-    m_intakeSub->setIntake(0);
+    m_intakeSub->setMagazineIntakePower(0);
     m_shooterSub->setFeedSpeed(0);
 }

@@ -36,6 +36,7 @@ namespace CanIds {
     constexpr int kClimbBalanceMotor = 11;
     constexpr int kElevatorMotor = 13;
     constexpr int kControlPanelMotor = 14;
+    constexpr int kFrontRollerIntakeMotor = 15;
     constexpr int kShootMotor1 = 25;
     constexpr int kShootMotor2 = 26;
     constexpr int kFeederMotor = 27;
@@ -49,8 +50,8 @@ namespace PneumaticIds {
 }
 
 namespace DioIds {
-    constexpr int kFirstBallSensor = 1;
-    constexpr int kBallIntakeSensor = 2;
+    constexpr int kFrontIntakeSensor = 1;
+    constexpr int kMagazineFullSensor = 2;
 }
 
 namespace DriveConstants {

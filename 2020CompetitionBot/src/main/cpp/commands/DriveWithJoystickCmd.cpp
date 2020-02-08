@@ -5,8 +5,10 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+#include <cmath>
 #include <frc/Joystick.h>
 #include "commands/DriveWithJoystickCmd.h"
+constexpr int kSensativityPower=2;
 
 DriveWithJoystickCmd::DriveWithJoystickCmd(DrivetrainSub* drivetrainSub, frc::Joystick* joystick) : m_drivetrainSub(drivetrainSub), m_joystick(joystick){
   // Use addRequirements() here to declare subsystem dependencies.
@@ -18,10 +20,22 @@ void DriveWithJoystickCmd::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void DriveWithJoystickCmd::Execute() {
-  m_drivetrainSub->arcadeDrive(
-          m_joystick->GetY(),
-          -m_joystick->GetZ());
-          }
+  double y=m_joystick->GetY();
+  double SignY=-1.0;
+  if (y >= 0) {
+   SignY=1.0;
+  }
+  y=pow(y,kSensativityPower);
+  y=fabs(y)*SignY;
+  double z=-m_joystick->GetZ();
+  double SignZ=-1.0;
+  if (z >= 0) {
+   SignZ=1.0;
+  }
+  z=pow(z,kSensativityPower);
+  z=fabs(z)*SignZ;
+  m_drivetrainSub->arcadeDrive(y,z);
+ }
 
 // Called once the command ends or is interrupted.
 void DriveWithJoystickCmd::End(bool interrupted) {}
