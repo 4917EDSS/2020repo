@@ -35,7 +35,7 @@ class DrivetrainSub : public frc2::SubsystemBase {
   void shiftDown();
   bool isShifterInHighGear();
   void autoShift();
-  double getEncorderTicksToM();
+  double getEncoderRotationsToM();
   double getLeftEncoderDistanceM();
   double getRightEncoderDistanceM();
   double getLeftEncoderRaw();
@@ -159,5 +159,4 @@ class DrivetrainSub : public frc2::SubsystemBase {
   frc::DifferentialDriveOdometry m_odometry;
 
   frc::Solenoid m_shifter;
-  bool m_isAutoShiftEnabled;
 };
