@@ -7,10 +7,11 @@
 
 #include "commands/ShootCmd.h"
 #include <frc/smartdashboard/SmartDashboard.h>
+#include <frc/RobotController.h>
 
 constexpr double kP = 0.0001;
-constexpr double kD = 0.1 ;/*13306.7;
-*/constexpr double kSpeedTolerance=10;
+constexpr double kD = 0.00001 ;//13.3067
+constexpr double kSpeedTolerance=10;
 constexpr double kMaxRPM=21750;
 constexpr double kMeasuredTargetSpeed = 15030;
 
@@ -28,23 +29,20 @@ void ShootCmd::Initialize() {
   m_shooterSub->setFeedSpeed(1.0);
   m_targetSpeed = kMeasuredTargetSpeed;
   m_lastDiff = 0.0; 
-  m_lastTime = frc::GetTime();
+  m_lastTime = frc::RobotController::GetFPGATime();
 }
 
 
 void ShootCmd::Execute() {
   double currentDiff = m_targetSpeed - m_shooterSub->getSpeed();
   double feed = m_targetSpeed / kMaxRPM;
-  double currentTime = frc::GetTime();
+  uint64_t currentTime = frc::RobotController::GetFPGATime();
   double speedDiff = (currentDiff - m_lastDiff)/(currentTime - m_lastTime);
   double speed = (currentDiff*kP) + (speedDiff*kD) + feed;
-  frc::SmartDashboard::PutNumber("speedDiff*kD", speedDiff*kD);
+  printf ("- speedDiff*kD=%f ; currentD=%f ; currentT=%f ; lastT=%f ; lastD=%f ;\n" , speedDiff, currentDiff, currentTime, m_lastTime, m_lastDiff);
   m_shooterSub->setSpeed(speed);
   m_lastDiff = currentDiff;
   m_lastTime = currentTime;
-
-
-
 
  
   // We need to change the target speed based on how close the target is (using the y value on limelight)

@@ -33,7 +33,7 @@ class ShootCmd
   IntakeSub* m_intakeSub;
   double m_targetSpeed;
   double m_lastDiff;
-  double m_lastTime;
+  uint64_t m_lastTime;
   double powers[5];
   int index=0;
 
