@@ -7,7 +7,6 @@
 
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "commands/VisionAlignmentCmd.h"
-#include "subsystems/VisionSub.h"
 
 constexpr double kP = 0.5;
 constexpr double maxPower = 0.5;
