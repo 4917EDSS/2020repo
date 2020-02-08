@@ -10,6 +10,10 @@
 #include <frc2/command/SubsystemBase.h>
 #include <ctre/Phoenix.h>
 #include <frc/DigitalInput.h>
+#include <frc/Encoder.h>
+#include <frc/AnalogInput.h>
+
+constexpr double ktargetDistance = 7;
 
 class IntakeSub : public frc2::SubsystemBase {
  public:
@@ -19,6 +23,11 @@ class IntakeSub : public frc2::SubsystemBase {
   void setMagazineIntakePower(double power);
   bool getFrontIntakeSensor();
   bool getMagazineFullSensor();
+  bool getPowerCellSensor1();
+  bool getPowerCellSensor2();
+  bool getPowerCellSensor3();
+  bool getPowerCellSensor4();
+
   
 
   /**
@@ -31,6 +40,11 @@ class IntakeSub : public frc2::SubsystemBase {
   ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_topIntakeMotor;
   ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_bottomIntakeMotor;
   frc::DigitalInput m_frontIntakeSensor;
-  frc::DigitalInput m_magazineFullSensor;
-  
+  frc::DigitalInput m_PowerCellSensor1;
+  frc::DigitalInput m_PowerCellSensor2;
+  frc::DigitalInput m_PowerCellSensor3;
+  frc::DigitalInput m_PowerCellSensor4;
+  // frc::DigitalInput m_magazineFullSensor;
+
+
 };

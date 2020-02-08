@@ -32,4 +32,11 @@ class IntakeCmd
 private:
   IntakeSub* m_intakeSub;
   int m_state;
+  double m_startingEncDistance;
+
+  /*
+  state 0: No ball inside the intake
+  state 1: 1 ball in intake, banana not full
+  state 2: 1 ball in intake, banana full
+  */
 };

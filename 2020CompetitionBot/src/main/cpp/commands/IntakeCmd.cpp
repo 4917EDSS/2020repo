@@ -7,7 +7,7 @@
 
 #include "commands/IntakeCmd.h"
 
-IntakeCmd::IntakeCmd(IntakeSub* subsystem) : m_intakeSub(subsystem), m_state(0) {
+IntakeCmd::IntakeCmd(IntakeSub* subsystem) : m_intakeSub(subsystem), m_state(0), m_startingEncDistance(0) { // Sensors need to be added to the command (PowerCellSensor1-4)
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({subsystem});
 }
@@ -18,26 +18,35 @@ void IntakeCmd::Initialize() {
 }
 
 void IntakeCmd::Execute() {
+  if (!m_intakeSub->getMagazineFullSensor() && !m_intakeSub->getFrontIntakeSensor())
+    m_state = 0;
   switch (m_state)
   {
-  case 0:
+  case 0: // state 0, waiting for a new ball to come into the robot. Magazine isn't full
     if(m_intakeSub->getFrontIntakeSensor()) {
        m_intakeSub->setMagazineIntakePower(1.0);
+      //  m_startingEncDistance = m_intakeSub->getEncoderDistance();
       m_state = 1;
     }
     break;
+  case 1:// state 1, currently in the process of storing the ball inside the magazine. 
+    if (m_intakeSub->getFrontIntakeSensor() && !m_intakeSub->getMagazineFullSensor()) {
+      // double currentEncDistance = m_intakeSub->getEncoderDistance();
+      m_intakeSub->setMagazineIntakePower(1.0);
+      // if ((currentEncDistance - m_startingEncDistance) >= ktargetDistance) {
+      //   m_intakeSub->setMagazineIntakePower(0.0);
+      // }
+    }
+    if (m_intakeSub->getMagazineFullSensor())
+      m_state = 2;
+    break;
+  case 2:
+    if (m_intakeSub->getMagazineFullSensor()) {
+      m_intakeSub->setMagazineIntakePower(0.0);
+    }
   
   default:
     break;
-  }
-  if(m_intakeSub->getFrontIntakeSensor()) {
-    if(!m_intakeSub->getMagazineFullSensor()) {
-      // Move the ball in 1 position
-    }
-    else {
-    
-    }
-    
   }
 }
 
