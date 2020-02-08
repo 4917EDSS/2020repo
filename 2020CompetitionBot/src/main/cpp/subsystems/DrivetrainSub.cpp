@@ -6,15 +6,14 @@
 /*----------------------------------------------------------------------------*/
 
 #include "subsystems/DrivetrainSub.h"
-
 #include <frc/geometry/Rotation2d.h>
 #include <frc/kinematics/DifferentialDriveWheelSpeeds.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "RobotContainer.h"
 
-constexpr float kEncoderTicksToMLowGear = 5.0/(160.162);
-constexpr float kEncoderTicksToMHighGear = 5.0/(102.264);
-constexpr double kShiftUpSpeed = 3.0;
+constexpr float kEncoderRotationsToMLowGear = 5.0/(160.162);
+constexpr float kEncoderRotationsToMHighGear = 5.0/(102.264);
+constexpr double kShiftUpSpeed = 2.5;
 constexpr double kShiftDownSpeed = 1.0;
 
 DrivetrainSub::DrivetrainSub() 
@@ -28,13 +27,12 @@ DrivetrainSub::DrivetrainSub()
     m_rightMotor4{CanIds::kRightMotor4, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
     m_gyro{frc::SPI::kMXP},
     m_odometry{frc::Rotation2d(units::degree_t(getHeading()))},
-    m_shifter{PneumaticIds::kShifterId},
-    m_isAutoShiftEnabled{false} {
+    m_shifter{PneumaticIds::kShifterId} {
 
 // TODO: Do we need encoder to be on the output shaft vs on the motor?
 // Set the distance per pulse for the encoders
 // WARNING!  This value can get erased during brownouts.  Safer to do the conversion in the getLeftEncoder and getRightEncoder functions TODO.
-  m_shifter.Set(false);
+   m_shifter.Set(false);
   setDrivetrainEncoderZero();
 
   m_rightMotor1.SetSmartCurrentLimit(DriveConstants::kSmartCurrentLimit);
@@ -49,7 +47,6 @@ DrivetrainSub::DrivetrainSub()
 
 
   frc::SmartDashboard::PutNumber("drive power", 0);
-  frc::SmartDashboard::PutBoolean("autoshifter", m_isAutoShiftEnabled);
 
   arcadeDrive(0.2, 0);
 }
@@ -61,10 +58,6 @@ void DrivetrainSub::Periodic() {
                     units::meter_t(getLeftEncoderDistanceM()),
                     units::meter_t(getRightEncoderDistanceM()));
 
-  m_isAutoShiftEnabled = frc::SmartDashboard::GetBoolean("autoshifter", m_isAutoShiftEnabled);
-  if(m_isAutoShiftEnabled) {
-    autoShift();
-  }
 
   m_drive.Feed();
 
@@ -73,7 +66,7 @@ void DrivetrainSub::Periodic() {
   frc::SmartDashboard::PutNumber("CnvrtdEnc R", getRightEncoderDistanceM());
   frc::SmartDashboard::PutNumber("CnvrtdEnc L", getLeftEncoderDistanceM());
   frc::SmartDashboard::PutNumber("MtrVlcty R", getRightVelocity());
-  frc::SmartDashboard::PutNumber("MtrVlcty L", getRightVelocity());
+  frc::SmartDashboard::PutNumber("MtrVlcty L", getLeftVelocity());
   frc::SmartDashboard::PutBoolean("High Gear", isShifterInHighGear());
 }
 
@@ -106,9 +99,9 @@ bool DrivetrainSub::isShifterInHighGear() {
   return m_shifter.Get();
 }
 
-void DrivetrainSub::tankDriveVolts(units::volt_t left, units::volt_t right) {
-  m_leftMotors.SetVoltage(left);
-  m_rightMotors.SetVoltage(-right);
+void DrivetrainSub::tankDriveVolts(double left, double right) {
+  m_leftMotors.Set(left);
+  m_rightMotors.Set(-right);
 }
 
 double DrivetrainSub::getAverageEncoderDistance() {
@@ -142,14 +135,14 @@ void DrivetrainSub::resetOdometry(frc::Pose2d pose) {
 
 // Returns the conversion factor for converting motor encoder ticks to meters.
 // This method takes into account which gear we are in.s
-double DrivetrainSub::getEncorderTicksToM() {
+double DrivetrainSub::getEncoderRotationsToM() {
   double conversionFactor;
 
   if(isShifterInHighGear()) {
-    conversionFactor = kEncoderTicksToMHighGear;
+    conversionFactor = kEncoderRotationsToMHighGear;
   }
   else {
-    conversionFactor = kEncoderTicksToMLowGear;
+    conversionFactor = kEncoderRotationsToMLowGear;
   }
   return conversionFactor;
 }
@@ -158,15 +151,15 @@ double DrivetrainSub::getEncorderTicksToM() {
 // These methods take into account which gear we are in.
 double DrivetrainSub::getLeftEncoderDistanceM()
 {
-    return (getLeftEncoderRaw() * getEncorderTicksToM());
+    return (getLeftEncoderRaw() * getEncoderRotationsToM());
 }
 
 double DrivetrainSub::getRightEncoderDistanceM()
 {
-  return (getRightEncoderRaw() * getEncorderTicksToM());
+  return (getRightEncoderRaw() * getEncoderRotationsToM());
 }
 
-// Get the raw left and right encoder values.  Returns encorder ticks.
+// Get the raw left and right encoder values.  Returns rotations.
 double DrivetrainSub::getLeftEncoderRaw()
 {
   return (-m_leftMotor1.GetEncoder().GetPosition());
@@ -180,14 +173,14 @@ double DrivetrainSub::getRightEncoderRaw()
 double DrivetrainSub::getLeftVelocity()
 {
   auto encoder = m_leftMotor1.GetEncoder();
-  return (encoder.GetVelocity() * encoder.GetCountsPerRevolution() * getEncorderTicksToM() / 60.0 );
+  
+  return (encoder.GetVelocity() * getEncoderRotationsToM() / 60.0 );
 }
 double DrivetrainSub::getRightVelocity()
-{
+{ 
   auto encoder = m_rightMotor1.GetEncoder();
-  return (encoder.GetVelocity() * encoder.GetCountsPerRevolution() * getEncorderTicksToM() / 60.0 );
+  return (encoder.GetVelocity() * getEncoderRotationsToM() / 60.0 );
 }
-
 
 
 void DrivetrainSub::autoShift() {

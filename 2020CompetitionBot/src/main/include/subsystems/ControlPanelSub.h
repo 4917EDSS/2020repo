@@ -8,29 +8,23 @@
 #pragma once
 
 #include <frc2/command/SubsystemBase.h>
-#include <ctre/Phoenix.h>
-#include <frc/DigitalInput.h>
+#include <rev/CANSparkMax.h>
+#include <rev/CANSparkMaxLowLevel.h>
+#include <frc/Solenoid.h>
 
-class IntakeSub : public frc2::SubsystemBase {
+class ControlPanelSub : public frc2::SubsystemBase {
  public:
-  IntakeSub();
-  // negative speed sends balls to shooter positive takes them to magazine 
-  void setFrontRollerIntakePower(double power);
-  void setMagazineIntakePower(double power);
-  bool getFrontIntakeSensor();
-  bool getMagazineFullSensor();
-  
+  ControlPanelSub();
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */
   void Periodic();
-
+  void togglePosition(bool position);
+  void setWheelSpeed(double speed);
  private:
-  ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_frontRollerIntakeMotor;
-  ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_topIntakeMotor;
-  ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_bottomIntakeMotor;
-  frc::DigitalInput m_frontIntakeSensor;
-  frc::DigitalInput m_magazineFullSensor;
-  
+   rev::CANSparkMax m_controlPanelMotor;
+   frc::Solenoid m_controlPanelFlipper;
+  // Components (e.g. motor controllers and sensors) should generally be
+  // declared private and exposed only through public methods.
 };

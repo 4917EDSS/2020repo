@@ -9,9 +9,11 @@
 #include "Constants.h"
 
 IntakeSub::IntakeSub() 
-    : m_topIntakeMotor{ctre::phoenix::motorcontrol::can::WPI_VictorSPX(CanIds::kTopIntakeMotor)},
+    : m_frontRollerIntakeMotor{ctre::phoenix::motorcontrol::can::WPI_VictorSPX(CanIds::kFrontRollerIntakeMotor)},
+      m_topIntakeMotor{ctre::phoenix::motorcontrol::can::WPI_VictorSPX(CanIds::kTopIntakeMotor)},
       m_bottomIntakeMotor{ctre::phoenix::motorcontrol::can::WPI_VictorSPX(CanIds::kBottomIntakeMotor)},
-      m_magazineFullSensor{frc::DigitalInput(DioIds::kMagazineFullSensor)} {
+      m_magazineFullSensor{frc::DigitalInput(DioIds::kMagazineFullSensor)},
+      m_frontIntakeSensor{frc::DigitalInput(DioIds::kFrontIntakeSensor)} {
     
 }
 //positive takes balls in negative takes balls to shooter 
@@ -19,12 +21,23 @@ IntakeSub::IntakeSub()
 // This method will be called once per scheduler run
 void IntakeSub::Periodic() {}
 
-void IntakeSub::setIntake(double speed) {
-    m_topIntakeMotor.Set(ControlMode::PercentOutput, -speed);
+void IntakeSub::setFrontRollerIntakePower(double power) {
+    m_frontRollerIntakeMotor.Set(ControlMode::PercentOutput, power);
 
-    m_bottomIntakeMotor.Set(ControlMode::PercentOutput, speed);
 }
 
+void IntakeSub::setMagazineIntakePower(double power) {
+    m_topIntakeMotor.Set(ControlMode::PercentOutput, -power);
+    m_bottomIntakeMotor.Set(ControlMode::PercentOutput, power);
+}
+
+bool IntakeSub::getFrontIntakeSensor(){
+    return m_frontIntakeSensor.Get();
+}
+
+bool IntakeSub::getMagazineFullSensor(){
+    return m_magazineFullSensor.Get();
+}
 //Ball enters robot through the gap in bumper
 //Motors on rollers suck the ball into robot
 //Ball enters shooter

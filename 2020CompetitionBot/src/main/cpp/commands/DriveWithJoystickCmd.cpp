@@ -35,7 +35,7 @@ void DriveWithJoystickCmd::Execute() {
   z=pow(z,kSensativityPower);
   z=fabs(z)*SignZ;
   m_drivetrainSub->arcadeDrive(y,z);
-          }
+ }
 
 // Called once the command ends or is interrupted.
 void DriveWithJoystickCmd::End(bool interrupted) {}

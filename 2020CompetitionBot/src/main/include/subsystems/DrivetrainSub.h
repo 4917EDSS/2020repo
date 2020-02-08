@@ -35,7 +35,7 @@ class DrivetrainSub : public frc2::SubsystemBase {
   void shiftDown();
   bool isShifterInHighGear();
   void autoShift();
-  double getEncorderTicksToM();
+  double getEncoderRotationsToM();
   double getLeftEncoderDistanceM();
   double getRightEncoderDistanceM();
   double getLeftEncoderRaw();
@@ -59,7 +59,7 @@ class DrivetrainSub : public frc2::SubsystemBase {
    * @param left the commanded left output
    * @param right the commanded right output
    */
-  void tankDriveVolts(units::volt_t left, units::volt_t right);
+  void tankDriveVolts(double left, double right);
   /**
    * Resets the drive encoders to currently read a position of 0.
    */
@@ -159,5 +159,4 @@ class DrivetrainSub : public frc2::SubsystemBase {
   frc::DifferentialDriveOdometry m_odometry;
 
   frc::Solenoid m_shifter;
-  bool m_isAutoShiftEnabled;
 };

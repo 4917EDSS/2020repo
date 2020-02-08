@@ -21,7 +21,7 @@ ShooterSub::ShooterSub()
 
 void ShooterSub::Periodic() {
   // Implementation of subsystem periodic method goes here.
-  frc::SmartDashboard::PutNumber("motorSpeed", getSpeed());
+  frc::SmartDashboard::PutNumber("ShooterSpeed", getSpeed());
   frc::SmartDashboard::PutNumber("motorCurrent1", m_shooterMotor1.GetOutputCurrent());
   frc::SmartDashboard::PutNumber("motorCurrent2", m_shooterMotor2.GetOutputCurrent());
 }

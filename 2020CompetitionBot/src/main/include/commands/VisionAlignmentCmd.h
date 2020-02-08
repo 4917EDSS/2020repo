@@ -23,7 +23,7 @@
 class VisionAlignmentCmd
     : public frc2::CommandHelper<frc2::CommandBase, VisionAlignmentCmd> {
  public:
-  VisionAlignmentCmd(VisionSub* visionSub, DrivetrainSub* drivetrainSub);
+  VisionAlignmentCmd(VisionSub* visionSub, DrivetrainSub* drivetrainSub, bool m_isFar);
 
   void Initialize() override;
 
@@ -37,4 +37,5 @@ class VisionAlignmentCmd
   VisionSub* m_visionSub;
   DrivetrainSub* m_drivetrainSub;
   bool m_isAligned;
+  bool m_isFar;
 };
