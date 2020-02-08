@@ -18,10 +18,8 @@ void DriveWithJoystickCmd::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void DriveWithJoystickCmd::Execute() {
-  m_drivetrainSub->arcadeDrive(
-          m_joystick->GetY(),
-          -m_joystick->GetZ());
-          }
+  m_drivetrainSub->arcadeDrive(m_joystick->GetY(), -m_joystick->GetZ());
+}
 
 // Called once the command ends or is interrupted.
 void DriveWithJoystickCmd::End(bool interrupted) {}

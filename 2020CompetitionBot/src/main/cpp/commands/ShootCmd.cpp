@@ -24,7 +24,7 @@ ShootCmd::ShootCmd(ShooterSub* shooterSub, IntakeSub* intakeSub) : m_shooterSub(
 
 // Called when the command is initially scheduled.
 void ShootCmd::Initialize() {
-  m_intakeSub->setIntake(-1.0);
+  m_intakeSub->setMagazineIntakePower(-1.0);
   m_shooterSub->setFeedSpeed(1.0);
   m_targetSpeed = kMeasuredTargetSpeed;
   m_lastDiff = 0.0; 
@@ -75,6 +75,6 @@ void ShootCmd::Execute() {
 // Called once the command ends or is interrupted.
 void ShootCmd::End(bool interrupted) {
     m_shooterSub->setSpeed(0);
-    m_intakeSub->setIntake(0);
+    m_intakeSub->setMagazineIntakePower(0);
     m_shooterSub->setFeedSpeed(0);
 }
