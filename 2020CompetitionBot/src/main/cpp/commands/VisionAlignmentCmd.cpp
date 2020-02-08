@@ -41,7 +41,7 @@ void VisionAlignmentCmd::Execute() {
   frc::SmartDashboard::PutNumber("FrontVisionTargetX", x);
   double power = (x / VisionConstants::kXMax) * kP;
   if (x > VisionConstants::kXAllignmentTolerence || x < -(VisionConstants::kXAllignmentTolerence)) { 
-      m_drivetrainSub->tankDriveVolts((-power), (power));
+    m_drivetrainSub->tankDriveVolts((-power), (power));
 
   } else {
     m_isAligned = true;
