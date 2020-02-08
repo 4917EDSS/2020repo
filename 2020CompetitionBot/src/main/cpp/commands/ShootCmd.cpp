@@ -10,8 +10,8 @@
 #include <frc/RobotController.h>
 
 constexpr double kP = 0.0001;
-constexpr double kD = 0.00001 ;//13.3067
-constexpr double kSpeedTolerance=10;
+constexpr double kD = 2.0;
+constexpr double kSpeedTolerance=30;
 constexpr double kMaxRPM=21750;
 constexpr double kMeasuredTargetSpeed = 15030;
 
@@ -39,7 +39,7 @@ void ShootCmd::Execute() {
   uint64_t currentTime = frc::RobotController::GetFPGATime();
   double speedDiff = (currentDiff - m_lastDiff)/(currentTime - m_lastTime);
   double speed = (currentDiff*kP) + (speedDiff*kD) + feed;
-  printf ("- speedDiff*kD=%f ; currentD=%f ; currentT=%f ; lastT=%f ; lastD=%f ;\n" , speedDiff, currentDiff, currentTime, m_lastTime, m_lastDiff);
+  printf ("- speedDiff*kD=%f ; currentD=%f ; timediff=%llu ; lastD=%f ;\n" , speedDiff*kD, currentDiff, currentTime - m_lastTime, m_lastDiff);
   m_shooterSub->setSpeed(speed);
   m_lastDiff = currentDiff;
   m_lastTime = currentTime;
