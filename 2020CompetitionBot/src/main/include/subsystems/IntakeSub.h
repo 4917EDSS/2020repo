@@ -22,7 +22,6 @@ class IntakeSub : public frc2::SubsystemBase {
   void setFrontRollerIntakePower(double power);
   void setMagazineIntakePower(double power);
   bool getFrontIntakeSensor();
-  bool getMagazineFullSensor();
   bool getPowerCellSensor1();
   bool getPowerCellSensor2();
   bool getPowerCellSensor3();
