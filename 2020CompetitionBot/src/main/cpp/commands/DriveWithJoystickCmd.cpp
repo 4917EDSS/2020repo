@@ -8,6 +8,7 @@
 #include <cmath>
 #include <frc/Joystick.h>
 #include "commands/DriveWithJoystickCmd.h"
+#include "subsystems/DrivetrainSub.h"
 constexpr int kSensativityPower=2;
 
 DriveWithJoystickCmd::DriveWithJoystickCmd(DrivetrainSub* drivetrainSub, frc::Joystick* joystick) : m_drivetrainSub(drivetrainSub), m_joystick(joystick){
@@ -35,6 +36,7 @@ void DriveWithJoystickCmd::Execute() {
   z=pow(z,kSensativityPower);
   z=fabs(z)*SignZ;
   m_drivetrainSub->arcadeDrive(y,z);
+  m_drivetrainSub->autoShift();
  }
 
 // Called once the command ends or is interrupted.

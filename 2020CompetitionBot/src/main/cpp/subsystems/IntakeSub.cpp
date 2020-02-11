@@ -39,9 +39,6 @@ bool IntakeSub::getFrontIntakeSensor() {
     return m_frontIntakeSensor.Get();
 }
 
-bool IntakeSub::getMagazineFullSensor() {
-    return false;
-}
 // These need to be added to IntakeCmd
 bool IntakeSub::getPowerCellSensor1() {
     return m_PowerCellSensor1.Get();

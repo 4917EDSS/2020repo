@@ -18,40 +18,30 @@ void IntakeCmd::Initialize() {
 }
 
 void IntakeCmd::Execute() {
-  if (!m_intakeSub->getMagazineFullSensor() && !m_intakeSub->getFrontIntakeSensor())
-    m_state = 0;
+  //if (!m_intakeSub->getPowerCellSensor4() && !m_intakeSub->getFrontIntakeSensor())
+    //m_state = 0;
   switch (m_state)
   {
   case 0: // state 0, waiting for a new ball to come into the robot. Magazine isn't full
     if(m_intakeSub->getFrontIntakeSensor()) {
-       m_intakeSub->setMagazineIntakePower(1.0);
-      //  m_startingEncDistance = m_intakeSub->getEncoderDistance();
+      m_intakeSub->setMagazineIntakePower(1.0);
       m_state = 1;
     }
     break;
-  case 1:// state 1, currently in the process of storing the ball inside the magazine. 
-    if (m_intakeSub->getFrontIntakeSensor() && !m_intakeSub->getMagazineFullSensor()) {
-      // double currentEncDistance = m_intakeSub->getEncoderDistance();
-      m_intakeSub->setMagazineIntakePower(1.0);
-      // if ((currentEncDistance - m_startingEncDistance) >= ktargetDistance) {
-      //   m_intakeSub->setMagazineIntakePower(0.0);
-      // }
-    }
-    if (m_intakeSub->getMagazineFullSensor())
-      m_state = 2;
+  case 1: // state 1, currently in the process of storing the ball inside the magazine. 
+  if(m_intakeSub->getFrontIntakeSensor() == false) {
+        m_intakeSub->setMagazineIntakePower(0.0);
+      }
     break;
   case 2:
-    if (m_intakeSub->getMagazineFullSensor()) {
-      m_intakeSub->setMagazineIntakePower(0.0);
-    }
-  
-  default:
+  break;
+  default: m_intakeSub->setMagazineIntakePower(0.0);
     break;
   }
 }
 
 bool IntakeCmd::IsFinished() { 
-  if(m_intakeSub->getFrontIntakeSensor() && m_intakeSub->getMagazineFullSensor()) {
+  if(m_intakeSub->getFrontIntakeSensor() && m_intakeSub->getPowerCellSensor4()) {
     return true;
   }
   return false; 

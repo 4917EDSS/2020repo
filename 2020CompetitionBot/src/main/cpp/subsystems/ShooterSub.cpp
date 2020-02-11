@@ -44,4 +44,3 @@ double ShooterSub::getSpeed() {
 
   return overallSpeed;
 }
-  
