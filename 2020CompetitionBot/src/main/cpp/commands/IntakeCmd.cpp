@@ -29,10 +29,13 @@ void IntakeCmd::Execute() {
     }
     break;
   case 1: // state 1, currently in the process of storing the ball inside the magazine. 
+  if(m_intakeSub->getFrontIntakeSensor() == false) {
+        m_intakeSub->setMagazineIntakePower(0.0);
+      }
     break;
   case 2:
   break;
-  default:
+  default: m_intakeSub->setMagazineIntakePower(0.0);
     break;
   }
 }

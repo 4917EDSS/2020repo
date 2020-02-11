@@ -88,15 +88,15 @@ void DrivetrainSub::arcadeDrive(double fwd, double rot) {
 }
 
 void DrivetrainSub::shiftUp() {
-   m_shifter.Set(false);
+   m_shifter.Set(true);
 }
 
 void DrivetrainSub::shiftDown() {
-  m_shifter.Set(true);
+  m_shifter.Set(false);
 }
 
 bool DrivetrainSub::isShifterInHighGear() {
-  return m_shifter.Get();
+  return !m_shifter.Get();
 }
 
 void DrivetrainSub::tankDriveVolts(double left, double right) {
@@ -174,7 +174,7 @@ double DrivetrainSub::getLeftVelocity()
 {
   auto encoder = m_leftMotor1.GetEncoder();
   
-  return (encoder.GetVelocity() * getEncoderRotationsToM() / 60.0 );
+  return (-encoder.GetVelocity() * getEncoderRotationsToM() / 60.0 );
 }
 double DrivetrainSub::getRightVelocity()
 { 
@@ -185,6 +185,9 @@ double DrivetrainSub::getRightVelocity()
 
 void DrivetrainSub::autoShift() {
   double avgWheelSpeeds = (getLeftVelocity() + getRightVelocity()) / 2;
+  if(avgWheelSpeeds < 0) {
+    avgWheelSpeeds *= -1.0;
+  }
   if(avgWheelSpeeds > kShiftUpSpeed) {
     shiftUp();
   }
