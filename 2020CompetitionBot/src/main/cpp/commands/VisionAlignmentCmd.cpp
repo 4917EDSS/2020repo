@@ -45,17 +45,20 @@ void VisionAlignmentCmd::Execute() {
 
   frc::SmartDashboard::PutNumber("FrontVisionTargetX", x);
 
+  // Get rid of negative to facilitate math.  We'll add it back at the end.
   if(x < 0) {
     isNegative = true;
     x *= -1.0;  
   }
 
+  //turn proportionally 
   double power = (x / VisionConstants::kXMax) * kP;
   power += minPower;
   if(power > maxPower) {
     power = maxPower;
   }
 
+  //adds back negative
   if(isNegative == true) {
     power *= -1.0;  
   }

@@ -12,8 +12,8 @@
 // NOTE:  Consider using this command inline, rather than writing a subclass.
 // For more information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-AimShootGrp::AimShootGrp(VisionSub* visionSub, DrivetrainSub* drivetrainSub, bool isFar) { 
+AimShootGrp::AimShootGrp(VisionSub* visionSub, DrivetrainSub* drivetrainSub, bool isFar, ShooterSub* shooterSub, IntakeSub* intakeSub) { 
   // Add your commands here, e.g.
-AddCommands(AimSpinFlywheelGrp(visionSub, drivetrainSub, isFar)/*, ShootCmd()*/); //need to add shoot Cmd with it's parameters
+  AddCommands(AimSpinFlywheelGrp(visionSub, drivetrainSub, isFar), ShootCmd(shooterSub, intakeSub));
   // AddCommands(FooCommand(), BarCommand());
 }

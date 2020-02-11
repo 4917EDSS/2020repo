@@ -16,8 +16,6 @@
 AimSpinFlywheelGrp::AimSpinFlywheelGrp(VisionSub* visionSub, DrivetrainSub* drivetrainSub, bool isFar)
     : CommandHelper(
           // The deadline command
-          VisionAlignmentCmd (visionSub, drivetrainSub, isFar)){
-  // Add your commands here, e.g.
-  //AddCommands(Spin flywheel command) not actually a real command
-  // AddCommands(FooCommand(), BarCommand());
+          VisionAlignmentCmd(visionSub, drivetrainSub, isFar)) {
+  //AddCommands(Spin flywheel command) replace with real command when it gets made
 }

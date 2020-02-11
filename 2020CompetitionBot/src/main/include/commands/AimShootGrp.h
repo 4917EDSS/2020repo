@@ -11,10 +11,12 @@
 #include <frc2/command/SequentialCommandGroup.h>
 #include "subsystems/VisionSub.h"
 #include "subsystems/DrivetrainSub.h"
+#include "subsystems/IntakeSub.h"
+#include "subsystems/ShooterSub.h"
 
 class AimShootGrp
     : public frc2::CommandHelper<frc2::SequentialCommandGroup,
                                  AimShootGrp> {
  public:
-  AimShootGrp(VisionSub* visionSub, DrivetrainSub* drivetrainSub, bool isFar);
+  AimShootGrp(VisionSub* visionSub, DrivetrainSub* drivetrainSub, bool isFar, ShooterSub* shooterSub, IntakeSub* intakeSub);
 };

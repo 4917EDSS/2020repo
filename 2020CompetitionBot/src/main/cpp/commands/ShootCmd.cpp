@@ -11,8 +11,8 @@
 
 constexpr double kP = 0.0001;
 constexpr double kD = 2.0;
-constexpr double kSpeedTolerance=30;
-constexpr double kMaxRPM=21750;
+constexpr double kSpeedTolerance = 30;
+constexpr double kMaxRPM = 21750;
 constexpr double kMeasuredTargetSpeed = 15030;
 
 
