@@ -96,7 +96,7 @@ void DrivetrainSub::shiftDown() {
 }
 
 bool DrivetrainSub::isShifterInHighGear() {
-  return !m_shifter.Get();
+  return m_shifter.Get();
 }
 
 void DrivetrainSub::tankDriveVolts(double left, double right) {
