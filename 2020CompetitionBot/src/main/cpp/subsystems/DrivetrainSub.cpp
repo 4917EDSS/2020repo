@@ -13,8 +13,9 @@
 
 constexpr float kEncoderRotationsToMLowGear = 5.0/(160.162);
 constexpr float kEncoderRotationsToMHighGear = 5.0/(102.264);
-constexpr double kShiftUpSpeed = 2.5;
-constexpr double kShiftDownSpeed = 1.0;
+//Metres per second, not velocity
+constexpr double kShiftUpSpeed = 2.35;
+constexpr double kShiftDownSpeed = 1.15;
 
 DrivetrainSub::DrivetrainSub() 
   : m_leftMotor1{CanIds::kLeftMotor1, rev::CANSparkMaxLowLevel::MotorType::kBrushless},

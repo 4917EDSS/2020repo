@@ -22,6 +22,9 @@
 
 #include "Constants.h"
 
+constexpr double kMinimumForwardPower = 0.12;
+constexpr double kMinimumTurningPower = 0.17;
+
 class DrivetrainSub : public frc2::SubsystemBase {
  public:
   DrivetrainSub();

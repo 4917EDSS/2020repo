@@ -10,7 +10,7 @@
 
 constexpr double kP = 0.5;
 constexpr double kMaxPower = 0.5;
-constexpr double kMinPower = 0.05;
+constexpr double kMinPower = kMinimumTurningPower;
 constexpr double kMaxEndVelocity = 0.1;  // In degrees per iteration 
 
 VisionAlignmentCmd::VisionAlignmentCmd(VisionSub* visionSub, DrivetrainSub* drivetrainSub, bool isFar) :
