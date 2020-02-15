@@ -5,6 +5,8 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+#include <frc/smartdashboard/SmartDashboard.h>
+
 #include "subsystems/IntakeSub.h"
 #include "Constants.h"
 
@@ -12,18 +14,19 @@ IntakeSub::IntakeSub()
     : m_frontRollerIntakeMotor{CanIds::kFrontRollerIntakeMotor},
       m_topIntakeMotor{CanIds::kTopIntakeMotor},
       m_bottomIntakeMotor{CanIds::kBottomIntakeMotor},
-      m_frontIntakeSensor{frc::DigitalInput(DioIds::kFrontIntakeSensor)}, 
-    //   m_magazineFullSensor{frc::DigitalInput(DioIds::kMagazineFullSensor)}
-      m_PowerCellSensor1{frc::DigitalInput(DioIds::kPowerCellSensor1)},
-      m_PowerCellSensor2{frc::DigitalInput(DioIds::kPowerCellSensor2)},
-      m_PowerCellSensor3{frc::DigitalInput(DioIds::kPowerCellSensor3)},
-      m_PowerCellSensor4{frc::DigitalInput(DioIds::kPowerCellSensor4)}     {
+      m_frontIntakeSensor{DioIds::kFrontIntakeSensor}, 
+      m_PowerCellSensor1{DioIds::kPowerCellSensor1},
+      m_PowerCellSensor2{DioIds::kPowerCellSensor2},
+      m_PowerCellSensor3{DioIds::kPowerCellSensor3},
+      m_PowerCellSensor4{DioIds::kPowerCellSensor4}     {
     
 }
 //positive takes balls in negative takes balls to shooter 
 
 // This method will be called once per scheduler run
-void IntakeSub::Periodic() {}
+void IntakeSub::Periodic() {
+    frc::SmartDashboard::PutBoolean("Intake Sensor", getFrontIntakeSensor());
+}
 
 void IntakeSub::setFrontRollerIntakePower(double power) {
     m_frontRollerIntakeMotor.Set(ControlMode::PercentOutput, power);
@@ -36,22 +39,22 @@ void IntakeSub::setMagazineIntakePower(double power) {
 }
 
 bool IntakeSub::getFrontIntakeSensor() {
-    return m_frontIntakeSensor.Get();
+    return !m_frontIntakeSensor.Get();
 }
 
 // These need to be added to IntakeCmd
 bool IntakeSub::getPowerCellSensor1() {
-    return m_PowerCellSensor1.Get();
+    return !m_PowerCellSensor1.Get();
 }
 
 bool IntakeSub::getPowerCellSensor2() {
-    return m_PowerCellSensor2.Get();
+    return !m_PowerCellSensor2.Get();
 }
 
 bool IntakeSub::getPowerCellSensor3() {
-    return m_PowerCellSensor3.Get();
+    return !m_PowerCellSensor3.Get();
 }
 
 bool IntakeSub::getPowerCellSensor4() {
-    return m_PowerCellSensor4.Get();
+    return !m_PowerCellSensor4.Get();
 }

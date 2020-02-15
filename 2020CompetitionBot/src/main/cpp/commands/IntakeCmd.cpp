@@ -18,8 +18,6 @@ void IntakeCmd::Initialize() {
 }
 
 void IntakeCmd::Execute() {
-  //if (!m_intakeSub->getPowerCellSensor4() && !m_intakeSub->getFrontIntakeSensor())
-    //m_state = 0;
   switch (m_state)
   {
   case 0: // state 0, waiting for a new ball to come into the robot. Magazine isn't full
@@ -29,9 +27,10 @@ void IntakeCmd::Execute() {
     }
     break;
   case 1: // state 1, currently in the process of storing the ball inside the magazine. 
-  if(m_intakeSub->getFrontIntakeSensor() == false) {
-        m_intakeSub->setMagazineIntakePower(0.0);
-      }
+    if(!m_intakeSub->getFrontIntakeSensor()) {
+      m_intakeSub->setMagazineIntakePower(0.0);
+      m_state = 0;
+    }
     break;
   case 2:
   break;
@@ -42,6 +41,7 @@ void IntakeCmd::Execute() {
 
 bool IntakeCmd::IsFinished() { 
   if(m_intakeSub->getFrontIntakeSensor() && m_intakeSub->getPowerCellSensor4()) {
+    // There are 5 powercells in the robot 
     return true;
   }
   return false; 
