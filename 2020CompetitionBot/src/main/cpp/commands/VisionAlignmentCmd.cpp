@@ -9,9 +9,9 @@
 #include "commands/VisionAlignmentCmd.h"
 
 constexpr double kP = 0.5;
-constexpr double maxPower = 0.5;
-constexpr double minPower = 0.05;
-constexpr double maxEndVelocity = 0.5;  // In degrees per iteration 
+constexpr double kMaxPower = 0.5;
+constexpr double kMinPower = 0.05;
+constexpr double kMaxEndVelocity = 0.1;  // In degrees per iteration 
 
 VisionAlignmentCmd::VisionAlignmentCmd(VisionSub* visionSub, DrivetrainSub* drivetrainSub, bool isFar) :
   m_visionSub(visionSub),
@@ -29,7 +29,6 @@ VisionAlignmentCmd::VisionAlignmentCmd(VisionSub* visionSub, DrivetrainSub* driv
 void VisionAlignmentCmd::Initialize() {
   printf("vision started");
   m_drivetrainSub->shiftDown();
-  m_isAligned = false;
   if(m_isFar) {
     m_visionSub->setFarVisionPipeline();
   }
@@ -53,26 +52,21 @@ void VisionAlignmentCmd::Execute() {
 
   //turn proportionally 
   double power = (x / VisionConstants::kXMax) * kP;
-  power += minPower;
-  if(power > maxPower) {
-    power = maxPower;
+  power += kMinPower;
+  if(power > kMaxPower) {
+    power = kMaxPower;
   }
 
   //adds back negative
-  if(isNegative == true) {
+  if(isNegative) {
     power *= -1.0;  
   }
 
   printf("vision x=%f power=%f\n", x, power);
-  double currentVelocity = (x - m_lastX);
-  m_lastX = x;
-  if((fabs(x) > VisionConstants::kXAllignmentTolerence) 
-      || (fabs(currentVelocity) > maxEndVelocity))
+  if(fabs(x) > VisionConstants::kXAllignmentTolerence)
   { 
-      m_drivetrainSub->tankDriveVolts((-power), (power));
-
+    m_drivetrainSub->tankDriveVolts((-power), (power));
   } else {
-    m_isAligned = true;
     m_drivetrainSub->tankDriveVolts(0.0, 0.0);
   }
 }
@@ -85,5 +79,13 @@ void VisionAlignmentCmd::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool VisionAlignmentCmd::IsFinished() { 
- return m_isAligned;
+  double x = m_visionSub->getVisionTarget();
+  double currentVelocity = (x - m_lastX);
+  m_lastX = x;
+  if((fabs(x) < VisionConstants::kXAllignmentTolerence) && (fabs(currentVelocity) < kMaxEndVelocity)) {
+    return true;
+  }
+  else {
+    return false;
+  }
 }
