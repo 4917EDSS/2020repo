@@ -4,12 +4,20 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-
+#include <frc/smartdashboard/SmartDashboard.h>
 #include "subsystems/ControlPanelSub.h"
 #include "Constants.h"
 
-ControlPanelSub::ControlPanelSub() : m_controlPanelMotor(CanIds::kControlPanelMotor, rev::CANSparkMaxLowLevel::MotorType::kBrushless),
-                                     m_controlPanelFlipper(PneumaticIds::kControlPanelFlipper){
+
+ControlPanelSub::ControlPanelSub() 
+    : m_controlPanelMotor(CanIds::kControlPanelMotor),
+      m_controlPanelFlipper(PneumaticIds::kControlPanelFlipper){
+
+    m_colourMatcher.AddColorMatch(ControlPanelConstants::kBlueTarget);
+    m_colourMatcher.AddColorMatch(ControlPanelConstants::kGreenTarget);
+    m_colourMatcher.AddColorMatch(ControlPanelConstants::kRedTarget);
+    m_colourMatcher.AddColorMatch(ControlPanelConstants::kYellowTarget);
+
 }
 
 // This method will be called once per scheduler run
@@ -19,7 +27,35 @@ void ControlPanelSub::togglePosition(bool position){
     m_controlPanelFlipper.Set(position);
 }
 
-void ControlPanelSub::setWheelSpeed(double speed){
+void ControlPanelSub::setWheelPower(double speed){
     m_controlPanelMotor.Set(speed);
+}
+
+frc::Color ControlPanelSub::getColour(){
+    frc::Color detectedColour = m_colourSensor.GetColor();
+
+    std::string colourString;
+    double confidence = 0.0;
+    frc::Color matchedColour = m_colourMatcher.MatchClosestColor(detectedColour, confidence);
+
+    if (matchedColour == ControlPanelConstants::kBlueTarget) {
+      colourString = "Blue";
+    } else if (matchedColour == ControlPanelConstants::kRedTarget) {
+      colourString = "Red";
+    } else if (matchedColour == ControlPanelConstants::kGreenTarget) {
+      colourString = "Green";
+    } else if (matchedColour == ControlPanelConstants::kYellowTarget) {
+      colourString = "Yellow";
+    } else {
+      colourString = "Unknown";
+    }
+
+    frc::SmartDashboard::PutNumber("Red", detectedColour.red);
+    frc::SmartDashboard::PutNumber("Green", detectedColour.green);
+    frc::SmartDashboard::PutNumber("Blue", detectedColour.blue);
+    frc::SmartDashboard::PutNumber("Confidence", confidence);
+    frc::SmartDashboard::PutString("Detected Color", colourString);
+
+    return matchedColour;
 }
 

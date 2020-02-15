@@ -9,6 +9,7 @@
 #include <frc/trajectory/constraint/DifferentialDriveKinematicsConstraint.h>
 #include <units/units.h>
 #include <wpi/math>
+#include <frc/util/color.h>
 
 #pragma once
 
@@ -88,17 +89,17 @@ namespace DriveConstants {
 }  // namespace DriveConstants
 
 namespace AutoConstants {
-constexpr auto kMaxSpeed = 3_mps;
-constexpr auto kMaxAcceleration = 3_mps_sq;
+    constexpr auto kMaxSpeed = 3_mps;
+    constexpr auto kMaxAcceleration = 3_mps_sq;
 
-// Reasonable baseline values for a RAMSETE follower in units of meters and
-// seconds
-constexpr double kRamseteB = 2;
-constexpr double kRamseteZeta = 0.7;
+    // Reasonable baseline values for a RAMSETE follower in units of meters and
+    // seconds
+    constexpr double kRamseteB = 2;
+    constexpr double kRamseteZeta = 0.7;
 }  // namespace AutoConstants
 
 namespace OIConstants {
-constexpr int kDriverControllerPort = 1;
+    constexpr int kDriverControllerPort = 1;
 }  // namespace OIConstants
 
 namespace VisionConstants {
@@ -109,4 +110,12 @@ namespace VisionConstants {
 
 namespace ClimbConstants {
     constexpr double kMoveOnGenSwitchPower = 10.0;
+}
+
+namespace ControlPanelConstants {
+    constexpr frc::Color kBlueTarget = frc::Color(0.143, 0.427, 0.429);
+    constexpr frc::Color kGreenTarget = frc::Color(0.197, 0.561, 0.240);
+    constexpr frc::Color kRedTarget = frc::Color(0.473, 0.369, 0.154);
+    constexpr frc::Color kYellowTarget = frc::Color(0.361, 0.524, 0.113);
+    constexpr double kMaxWheelSpeed = 0.2;
 }
