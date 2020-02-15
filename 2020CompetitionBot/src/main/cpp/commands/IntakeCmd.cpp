@@ -14,6 +14,7 @@ IntakeCmd::IntakeCmd(IntakeSub* subsystem) : m_intakeSub(subsystem), m_state(0),
 
 // Called when the command is initially scheduled.
 void IntakeCmd::Initialize() {
+  m_state = 0;
   m_intakeSub->setFrontRollerIntakePower(1.0);
 }
 
@@ -34,7 +35,7 @@ void IntakeCmd::Execute() {
     break;
   case 2:
   break;
-  default: m_intakeSub->setMagazineIntakePower(0.0);
+    default: m_intakeSub->setMagazineIntakePower(0.0);
     break;
   }
 }
