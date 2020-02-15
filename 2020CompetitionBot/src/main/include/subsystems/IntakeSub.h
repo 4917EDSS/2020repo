@@ -43,7 +43,4 @@ class IntakeSub : public frc2::SubsystemBase {
   frc::DigitalInput m_PowerCellSensor2;
   frc::DigitalInput m_PowerCellSensor3;
   frc::DigitalInput m_PowerCellSensor4;
-  // frc::DigitalInput m_magazineFullSensor;
-
-
 };

@@ -32,9 +32,9 @@ namespace CanIds {
     constexpr int kLeftMotor2 = 6;
     constexpr int kLeftMotor3 = 7;
     constexpr int kLeftMotor4 = 8;
-    constexpr int kBottomIntakeMotor = 9;
+    constexpr int kBottomIntakeMotor = 11;
     constexpr int kTopIntakeMotor = 10;
-    constexpr int kClimbBalanceMotor = 11;
+    constexpr int kClimbBalanceMotor = 9;
     constexpr int kElevatorMotor = 13;
     constexpr int kControlPanelMotor = 14;
     constexpr int kFrontRollerIntakeMotor = 15;
@@ -51,12 +51,11 @@ namespace PneumaticIds {
 }
 
 namespace DioIds {
-    constexpr int kFrontIntakeSensor = 1;
-    constexpr int kMagazineFullSensor = 2;
-    constexpr int kPowerCellSensor1 = 3;
-    constexpr int kPowerCellSensor2 = 4;
-    constexpr int kPowerCellSensor3 = 5;
-    constexpr int kPowerCellSensor4 = 6;
+    constexpr int kFrontIntakeSensor = 0;
+    constexpr int kPowerCellSensor1 = 1;
+    constexpr int kPowerCellSensor2 = 2;
+    constexpr int kPowerCellSensor3 = 3;
+    constexpr int kPowerCellSensor4 = 4;
 
 }
 
