@@ -7,9 +7,11 @@
 
 #pragma once
 
+#include <frc/util/color.h>
+#include <rev/ColorSensorV3.h>
+#include <rev/ColorMatch.h>
 #include <frc2/command/SubsystemBase.h>
-#include <rev/CANSparkMax.h>
-#include <rev/CANSparkMaxLowLevel.h>
+#include <ctre/Phoenix.h>
 #include <frc/Solenoid.h>
 
 class ControlPanelSub : public frc2::SubsystemBase {
@@ -21,9 +23,15 @@ class ControlPanelSub : public frc2::SubsystemBase {
    */
   void Periodic();
   void togglePosition(bool position);
-  void setWheelSpeed(double speed);
+  void setWheelPower(double speed);
+  frc::Color getColour();
+
  private:
-   rev::CANSparkMax m_controlPanelMotor;
+    static constexpr auto i2cPort = frc::I2C::Port::kOnboard;
+    rev::ColorSensorV3 m_colourSensor{i2cPort};
+    rev::ColorMatch m_colourMatcher;
+
+   ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_controlPanelMotor;
    frc::Solenoid m_controlPanelFlipper;
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.

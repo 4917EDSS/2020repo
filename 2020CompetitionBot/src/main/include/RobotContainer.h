@@ -15,6 +15,7 @@
 #include "subsystems/DrivetrainSub.h"
 #include "subsystems/ShooterSub.h"
 #include "subsystems/ClimberSub.h"
+#include "subsystems/ControlPanelSub.h"
 #include "commands/ClimbReleaseCmd.h"
 #include "subsystems/VisionSub.h"
 
@@ -41,6 +42,7 @@ class RobotContainer {
   IntakeSub m_intakeSub;
   ShooterSub m_shooterSub;
   ClimberSub m_climberSub;
+  ControlPanelSub m_controlPanelSub;
   frc::SendableChooser<frc2::Command*> m_autoChooser;
   frc2::Command* m_autonomousCommand;
   VisionSub m_visionSub;
