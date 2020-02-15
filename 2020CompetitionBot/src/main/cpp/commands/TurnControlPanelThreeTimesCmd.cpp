@@ -17,7 +17,6 @@ TurnControlPanelThreeTimesCmd::TurnControlPanelThreeTimesCmd(ControlPanelSub* co
 
 // Called when the command is initially scheduled.
 void TurnControlPanelThreeTimesCmd::Initialize() {
-  m_controlPanelSub->togglePosition(true);
   // we probably have to wait before we read the colour
   m_startingColour = m_controlPanelSub->getColour();
   m_controlPanelSub->setWheelPower(ControlPanelConstants::kMaxWheelSpeed);

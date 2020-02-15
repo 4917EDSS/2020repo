@@ -29,6 +29,7 @@
 #include "commands/VisionAlignmentCmd.h"
 #include "commands/ClimbBalanceCmd.h"
 #include "commands/TurnControlPanelThreeTimesCmd.h"
+#include "commands/FlipUpCtrlPanelArmCmd.h"
 #include "subsystems/VisionSub.h"
 /*
  * ON LOGITECH F310 CONTROLLER:
@@ -58,7 +59,7 @@ constexpr int kShooterBtn=2;
 constexpr int kClimbReleaseBtn=3;
 constexpr int kClimbWinchBtn=4;
 constexpr int kTurnControlPanelThreeTimes=5;
-constexpr int kTurnControlPannelToColour=6;
+constexpr int kTurnControlPahnelToColour=6;
 
 //Driver Buttons
 constexpr int kShiftUpBtn=5;
@@ -139,11 +140,11 @@ void RobotContainer::configureButtonBindings() {
   frc2::JoystickButton climbWinchBtn(&m_operatorController, kClimbWinchBtn);
   climbWinchBtn.WhenHeld(ClimbWinchCmd(&m_climberSub));
 
-  frc2::JoystickButton turnControlPannelThreeTimesBtn(&m_operatorController, kTurnControlPanelThreeTimes);
-  turnControlPannelThreeTimesBtn.WhenPressed(TurnControlPanelThreeTimesCmd(&m_controlPanelSub));
+  frc2::JoystickButton turnControlPanelThreeTimesBtn(&m_operatorController, kTurnControlPanelThreeTimes);
+  turnControlPanelThreeTimesBtn.WhenPressed(frc2::SequentialCommandGroup{FlipUpCtrlPanelArmCmd(&m_controlPanelSub), TurnControlPanelThreeTimesCmd(&m_controlPanelSub)});
 
-  // frc2::JoystickButton turnControlPannelToColourBtn(&m_operatorController, kTurnControlPannelToColour);
-  // turnControlPannelToColourBtn.WhenPressed(TurnControlPannelToColourCmd());
+  // frc2::JoystickButton turnControlPanelToColourBtn(&m_operatorController, kTurnControlPanelToColour);
+  // turnControlPanelToColourBtn.WhenPressed(TurnControlPanelToColourCmd());
 
   m_driverController.SetXChannel(0);
   m_driverController.SetYChannel(1);
