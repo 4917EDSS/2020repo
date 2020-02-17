@@ -10,6 +10,7 @@
 #include <frc/kinematics/DifferentialDriveWheelSpeeds.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "RobotContainer.h"
+#include <iostream>
 
 constexpr float kEncoderRotationsToMLowGear = 5.0/(160.162);
 constexpr float kEncoderRotationsToMHighGear = 5.0/(102.264);
@@ -69,6 +70,7 @@ void DrivetrainSub::Periodic() {
   frc::SmartDashboard::PutNumber("MtrVlcty R", getRightVelocity());
   frc::SmartDashboard::PutNumber("MtrVlcty L", getLeftVelocity());
   frc::SmartDashboard::PutBoolean("High Gear", isShifterInHighGear());
+  std::cout << getPose().Translation().X() << " " << getPose().Translation().Y() << " " << getPose().Rotation().Degrees() << "\n";
 }
 
 void DrivetrainSub::setDrivetrainEncoderZero(){
@@ -121,11 +123,13 @@ double DrivetrainSub::getTurnRate() {
   return m_gyro.GetRate() * (DriveConstants::kGyroReversed ? -1.0 : 1.0);
 }
 
-frc::Pose2d DrivetrainSub::getPose() { return m_odometry.GetPose(); }
+frc::Pose2d DrivetrainSub::getPose() { 
+  return m_odometry.GetPose(); 
+}
 
 frc::DifferentialDriveWheelSpeeds DrivetrainSub::getWheelSpeeds() {
-  return {units::meters_per_second_t(getLeftEncoderDistanceM()),
-          units::meters_per_second_t(getRightEncoderDistanceM())};
+  return {units::meters_per_second_t(getLeftVelocity()),
+          units::meters_per_second_t(getRightVelocity()) };
 }
 
 void DrivetrainSub::resetOdometry(frc::Pose2d pose) {

@@ -63,7 +63,8 @@ namespace DriveConstants {
     constexpr bool kLeftEncoderReversed = false;
     constexpr bool RightEncoderReversed = true;
 
-    constexpr auto kTrackwidth = 0.69_m;
+    constexpr auto kTrackwidth = 0.67_m; //this is the human measured constant
+    //this is the characterized number: 0.797108131
     extern const frc::DifferentialDriveKinematics kDriveKinematics;
 
     constexpr int kEncoderCPR = 1024;
@@ -75,22 +76,17 @@ namespace DriveConstants {
 
     constexpr bool kGyroReversed = true;
 
-    // These are example values only - DO NOT USE THESE FOR YOUR OWN ROBOT!
-    // These characterization values MUST be determined either experimentally or
-    // theoretically for *your* robot's drive. The Robot Characterization
-    // Toolsuite provides a convenient tool for obtaining these values for your
-    // robot.
-    constexpr auto ks = 0.22_V;
-    constexpr auto kv = 1.98 * 1_V * 1_s / 1_m;
-    constexpr auto ka = 0.2 * 1_V * 1_s * 1_s / 1_m;
+    constexpr auto ks = 0.102_V;
+    constexpr auto kv = 3.95 * 1_V * 1_s / 1_m;
+    constexpr auto ka = 0.428 * 1_V * 1_s * 1_s / 1_m;
 
     // Example value only - as above, this must be tuned for your drive!
-    constexpr double kPDriveVel = 8.5;
+    constexpr double kPDriveVel = 1.73;
 }  // namespace DriveConstants
 
 namespace AutoConstants {
-    constexpr auto kMaxSpeed = 3_mps;
-    constexpr auto kMaxAcceleration = 3_mps_sq;
+    constexpr auto kMaxSpeed = 2.93_mps;
+    constexpr auto kMaxAcceleration = 7_mps_sq;
 
     // Reasonable baseline values for a RAMSETE follower in units of meters and
     // seconds
