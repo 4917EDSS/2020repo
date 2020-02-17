@@ -39,7 +39,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends TimedRobot {
 
   static private double WHEEL_DIAMETER = 0.1905;
-  static private double GEARING = 12;
+  static private double GEARING = 15;
   static private int PIDIDX = 0;
 
   Joystick stick;
@@ -128,7 +128,8 @@ public class Robot extends TimedRobot {
     //
 
     double encoderConstant =
-        (1 / GEARING) * WHEEL_DIAMETER * Math.PI;
+        5.0/(160.162);  // Our encoder value
+        //(1 / GEARING) * WHEEL_DIAMETER * Math.PI;
 
     leftEncoderPosition = ()
         -> leftEncoder.getPosition() * encoderConstant;
