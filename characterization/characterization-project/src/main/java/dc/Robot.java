@@ -75,35 +75,35 @@ public class Robot extends TimedRobot {
 
     leftMaster = new CANSparkMax(5, MotorType.kBrushless);
     leftMaster.setInverted(true);
-    leftMaster.setIdleMode(IdleMode.kBrake);
+    leftMaster.setIdleMode(IdleMode.kCoast);
 
     leftEncoder = leftMaster.getEncoder();
 
     rightMaster = new CANSparkMax(1, MotorType.kBrushless);
     rightMaster.setInverted(true);
-    rightMaster.setIdleMode(IdleMode.kBrake);
+    rightMaster.setIdleMode(IdleMode.kCoast);
 
     rightEncoder = rightMaster.getEncoder();
 
     CANSparkMax leftSlave0 = new CANSparkMax(6, MotorType.kBrushless);
     leftSlave0.follow(leftMaster);
-    leftSlave0.setIdleMode(IdleMode.kBrake);
+    leftSlave0.setIdleMode(IdleMode.kCoast);
     CANSparkMax leftSlave1 = new CANSparkMax(7, MotorType.kBrushless);
     leftSlave1.follow(leftMaster);
-    leftSlave1.setIdleMode(IdleMode.kBrake);
+    leftSlave1.setIdleMode(IdleMode.kCoast);
     CANSparkMax leftSlave2 = new CANSparkMax(8, MotorType.kBrushless);
     leftSlave2.follow(leftMaster);
-    leftSlave2.setIdleMode(IdleMode.kBrake);
+    leftSlave2.setIdleMode(IdleMode.kCoast);
 
     CANSparkMax rightSlave0 = new CANSparkMax(2, MotorType.kBrushless);
     rightSlave0.follow(rightMaster);
-    rightSlave0.setIdleMode(IdleMode.kBrake);
+    rightSlave0.setIdleMode(IdleMode.kCoast);
     CANSparkMax rightSlave1 = new CANSparkMax(3, MotorType.kBrushless);
     rightSlave1.follow(rightMaster);
-    rightSlave1.setIdleMode(IdleMode.kBrake);
+    rightSlave1.setIdleMode(IdleMode.kCoast);
     CANSparkMax rightSlave2 = new CANSparkMax(4, MotorType.kBrushless);
     rightSlave2.follow(rightMaster);
-    rightSlave2.setIdleMode(IdleMode.kBrake);
+    rightSlave2.setIdleMode(IdleMode.kCoast);
 
     //
     // Configure gyro
