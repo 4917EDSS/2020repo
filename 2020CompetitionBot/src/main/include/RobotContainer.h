@@ -53,4 +53,5 @@ class RobotContainer {
 
   void autoChooserSetup();
   void configureButtonBindings();
+  void generateTrajectories();
 };

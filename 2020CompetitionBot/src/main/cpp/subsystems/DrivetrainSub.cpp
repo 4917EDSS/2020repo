@@ -59,8 +59,6 @@ void DrivetrainSub::Periodic() {
   m_odometry.Update(frc::Rotation2d(units::degree_t(getHeading())),
                     units::meter_t(getLeftEncoderDistanceM()),
                     units::meter_t(getRightEncoderDistanceM()));
-
-
   m_drive.Feed();
 
   frc::SmartDashboard::PutNumber("RawEnc R", getRightEncoderRaw());
@@ -70,7 +68,7 @@ void DrivetrainSub::Periodic() {
   frc::SmartDashboard::PutNumber("MtrVlcty R", getRightVelocity());
   frc::SmartDashboard::PutNumber("MtrVlcty L", getLeftVelocity());
   frc::SmartDashboard::PutBoolean("High Gear", isShifterInHighGear());
-  std::cout << getPose().Translation().X() << " " << getPose().Translation().Y() << " " << getPose().Rotation().Degrees() << "\n";
+  //std::cout << getPose().Translation().X() << " " << getPose().Translation().Y() << " " << getPose().Rotation().Radians() << "\n";
 }
 
 void DrivetrainSub::setDrivetrainEncoderZero(){
@@ -124,7 +122,7 @@ double DrivetrainSub::getTurnRate() {
 }
 
 frc::Pose2d DrivetrainSub::getPose() { 
-  return m_odometry.GetPose(); 
+  return m_odometry.GetPose(); //At 0 degrees, forward is positive x, left is positive y (location is relative to the center of the robot)
 }
 
 frc::DifferentialDriveWheelSpeeds DrivetrainSub::getWheelSpeeds() {

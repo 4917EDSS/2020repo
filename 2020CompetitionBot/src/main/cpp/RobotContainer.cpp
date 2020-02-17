@@ -31,6 +31,8 @@
 #include "commands/TurnControlPanelThreeTimesCmd.h"
 #include "commands/FlipUpCtrlPanelArmCmd.h"
 #include "subsystems/VisionSub.h"
+
+
 /*
  * ON LOGITECH F310 CONTROLLER:
  * X = 1            (Blue)
@@ -83,6 +85,21 @@ RobotContainer::RobotContainer() {
     },
   {&m_shooterSub}));
 }
+
+void RobotContainer::generateTrajectories() {
+  frc::DifferentialDriveVoltageConstraint autoVoltageConstraint(
+    frc::SimpleMotorFeedforward < units::meters > (
+      DriveConstants::ks, DriveConstants::kv, DriveConstants:: ka),
+        DriveConstants::kDriveKinematics, 10_V);
+        frc::TrajectoryConfig config(AutoConstants::kMaxSpeed, AutoConstants::kMaxAcceleration);
+        config.SetKinematics(DriveConstants::kDriveKinematics);
+        config.AddConstraint(autoVoltageConstraint);
+        auto exampleTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
+          frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
+          {frc::Translation2d(1_m, 1_m), frc::Translation2d(2_m, -1_m)},
+          frc::Pose2d(3_m, 0_m, frc::Rotation2d(0_deg)),
+          config);
+          }
 
 void RobotContainer::autoChooserSetup(){
   m_autoChooser.AddOption("SecondAuto", new IntakeCmd(&m_intakeSub));
