@@ -14,7 +14,8 @@
 ShooterSub::ShooterSub()
   : m_shooterMotor1(CanIds::kShootMotor1), 
     m_shooterMotor2(CanIds::kShootMotor2), 
-    m_feederMotor(CanIds::kFeederMotor){
+    m_feederMotor(CanIds::kFeederMotor), 
+    m_hoodMotor(CanIds::kHoodMotor){
       m_shooterMotor1.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor);
       m_shooterMotor2.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor);
       m_shooterMotor1.ConfigVelocityMeasurementPeriod(ctre::phoenix::motorcontrol::VelocityMeasPeriod::Period_5Ms);
@@ -36,6 +37,15 @@ void ShooterSub::Periodic() {
 void ShooterSub::setSpeed(double speed) {
   m_shooterMotor1.Set(-speed);
   m_shooterMotor2.Set(speed);
+}
+
+
+void ShooterSub::setHoodSpeed(double hoodSpeed) {
+  m_hoodMotor.Set(hoodSpeed);
+}
+
+double ShooterSub::getHoodEncoder() {
+  return 0.0;
 }
 
 // Gets maximum absolute speeds of both motors

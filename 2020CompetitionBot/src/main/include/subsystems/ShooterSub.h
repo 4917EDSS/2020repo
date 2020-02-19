@@ -20,6 +20,8 @@ class ShooterSub : public frc2::SubsystemBase {
   void Periodic() override;
   void setSpeed(double speed);
   void setFeedSpeed(double feedSpeed);
+  void setHoodSpeed(double hoodSpeed);
+  double getHoodEncoder();
   int getSpeed();
 
  private:
@@ -28,4 +30,5 @@ class ShooterSub : public frc2::SubsystemBase {
   WPI_TalonFX m_shooterMotor1;
   WPI_TalonFX m_shooterMotor2;
   ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_feederMotor;
+  ctre::phoenix::motorcontrol::can::WPI_TalonSRX m_hoodMotor;
 };

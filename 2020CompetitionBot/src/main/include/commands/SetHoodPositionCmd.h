@@ -9,6 +9,7 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+#include "subsystems/ShooterSub.h"
 
 /**
  * An example command.
@@ -20,7 +21,7 @@
 class SetHoodPositionCmd
     : public frc2::CommandHelper<frc2::CommandBase, SetHoodPositionCmd> {
  public:
-  SetHoodPositionCmd();
+  SetHoodPositionCmd(ShooterSub* shooterSub, double targetPosition);
 
   void Initialize() override;
 
@@ -29,4 +30,7 @@ class SetHoodPositionCmd
   void End(bool interrupted) override;
 
   bool IsFinished() override;
+ private:
+  ShooterSub* m_shooterSub;
+  double m_targetPosition;
 };
