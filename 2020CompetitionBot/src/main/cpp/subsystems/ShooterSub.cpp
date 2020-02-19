@@ -14,7 +14,8 @@
 ShooterSub::ShooterSub()
   : m_shooterMotor1(CanIds::kShootMotor1), 
     m_shooterMotor2(CanIds::kShootMotor2), 
-    m_feederMotor(CanIds::kFeederMotor){
+    m_feederMotor(CanIds::kFeederMotor), 
+    m_hoodMotor(CanIds::kHoodMotor){
   // Implementation of subsystem constructor goes here.
   frc::SmartDashboard::PutNumber("shooterspeed", 0.0);
 }
@@ -34,6 +35,14 @@ void ShooterSub::setSpeed(double speed) {
 
 void ShooterSub::setFeedSpeed(double feedSpeed) {
   m_feederMotor.Set(feedSpeed);
+}
+
+void ShooterSub::setHoodSpeed(double hoodSpeed) {
+  m_hoodMotor.Set(hoodSpeed);
+}
+
+double ShooterSub::getHoodEncoder() {
+  return 0.0;
 }
 
 // Gets maximum absolute speeds of both motors

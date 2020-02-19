@@ -41,6 +41,7 @@ namespace CanIds {
     constexpr int kShootMotor1 = 25;
     constexpr int kShootMotor2 = 26;
     constexpr int kFeederMotor = 27;
+    constexpr int kHoodMotor=20;
 }
 
 namespace PneumaticIds {
