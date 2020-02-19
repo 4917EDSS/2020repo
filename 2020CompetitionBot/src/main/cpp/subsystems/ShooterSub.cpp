@@ -15,6 +15,12 @@ ShooterSub::ShooterSub()
   : m_shooterMotor1(CanIds::kShootMotor1), 
     m_shooterMotor2(CanIds::kShootMotor2), 
     m_feederMotor(CanIds::kFeederMotor){
+      m_shooterMotor1.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor);
+      m_shooterMotor2.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor);
+      m_shooterMotor1.ConfigVelocityMeasurementPeriod(ctre::phoenix::motorcontrol::VelocityMeasPeriod::Period_5Ms);
+      m_shooterMotor1.ConfigVelocityMeasurementWindow(4);
+      m_shooterMotor2.ConfigVelocityMeasurementPeriod(ctre::phoenix::motorcontrol::VelocityMeasPeriod::Period_5Ms);
+      m_shooterMotor2.ConfigVelocityMeasurementWindow(4);
   // Implementation of subsystem constructor goes here.
   frc::SmartDashboard::PutNumber("shooterspeed", 0.0);
 }
@@ -32,15 +38,10 @@ void ShooterSub::setSpeed(double speed) {
   m_shooterMotor2.Set(speed);
 }
 
-void ShooterSub::setFeedSpeed(double feedSpeed) {
-  m_feederMotor.Set(feedSpeed);
-}
-
 // Gets maximum absolute speeds of both motors
-double ShooterSub::getSpeed() {
-  double motor1Speed =  m_shooterMotor1.GetSensorCollection().GetIntegratedSensorVelocity();
-  double motor2Speed =  m_shooterMotor2.GetSensorCollection().GetIntegratedSensorVelocity();
-  double overallSpeed = std::max(std::abs(motor1Speed), std::abs(motor2Speed));
-
+int ShooterSub::getSpeed() {
+  int motor1Speed =  m_shooterMotor1.GetSelectedSensorVelocity();
+  int motor2Speed =  m_shooterMotor2.GetSelectedSensorVelocity();
+  int overallSpeed = std::max(std::abs(motor1Speed), std::abs(motor2Speed));
   return overallSpeed;
 }

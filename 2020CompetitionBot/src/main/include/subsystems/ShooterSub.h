@@ -20,7 +20,7 @@ class ShooterSub : public frc2::SubsystemBase {
   void Periodic() override;
   void setSpeed(double speed);
   void setFeedSpeed(double feedSpeed);
-  double getSpeed();
+  int getSpeed();
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be

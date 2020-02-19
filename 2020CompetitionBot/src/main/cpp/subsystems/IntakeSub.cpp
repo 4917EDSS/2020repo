@@ -13,7 +13,6 @@
 IntakeSub::IntakeSub() 
     : m_frontRollerIntakeMotor{CanIds::kFrontRollerIntakeMotor},
       m_topIntakeMotor{CanIds::kTopIntakeMotor},
-      m_bottomIntakeMotor{CanIds::kBottomIntakeMotor},
       m_frontIntakeSensor{DioIds::kFrontIntakeSensor}, 
       m_PowerCellSensor1{DioIds::kPowerCellSensor1},
       m_PowerCellSensor2{DioIds::kPowerCellSensor2},
@@ -34,8 +33,7 @@ void IntakeSub::setFrontRollerIntakePower(double power) {
 }
 
 void IntakeSub::setMagazineIntakePower(double power) {
-    m_topIntakeMotor.Set(ControlMode::PercentOutput, -power);
-    m_bottomIntakeMotor.Set(ControlMode::PercentOutput, power);
+    m_topIntakeMotor.Set(ControlMode::PercentOutput, power);
 }
 
 bool IntakeSub::getFrontIntakeSensor() {

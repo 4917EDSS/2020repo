@@ -37,7 +37,6 @@ class IntakeSub : public frc2::SubsystemBase {
  private:
   ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_frontRollerIntakeMotor;
   ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_topIntakeMotor;
-  ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_bottomIntakeMotor;
   frc::DigitalInput m_frontIntakeSensor;
   frc::DigitalInput m_PowerCellSensor1;
   frc::DigitalInput m_PowerCellSensor2;
