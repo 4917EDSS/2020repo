@@ -25,7 +25,7 @@ ShootCmd::ShootCmd(ShooterSub* shooterSub, IntakeSub* intakeSub) : m_shooterSub(
 
 // Called when the command is initially scheduled.
 void ShootCmd::Initialize() {
-  m_intakeSub->setMagazineIntakePower(-1.0);
+  m_intakeSub->setMagazineIntakePower(-0.5);
   m_intakeSub->setFrontRollerIntakePower(1.0);
   m_targetSpeed = kMeasuredTargetSpeed;
   m_lastDiff = 0.0; 

@@ -16,6 +16,7 @@ IntakeCmd::IntakeCmd(IntakeSub* subsystem) : m_intakeSub(subsystem), m_state(0),
 void IntakeCmd::Initialize() {
   m_state = 0;
   m_intakeSub->setFrontRollerIntakePower(1.0);
+  m_intakeSub->setMagazineIntakePower(1.0);
 }
 
 void IntakeCmd::Execute() {
