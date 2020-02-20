@@ -31,6 +31,7 @@
 #include "commands/ClimbBalanceCmd.h"
 #include "commands/TurnControlPanelThreeTimesCmd.h"
 #include "commands/FlipUpCtrlPanelArmCmd.h"
+#include "commands/TurnControlPanelToColourCmd.h"
 #include "subsystems/VisionSub.h"
 
 
@@ -62,7 +63,7 @@ constexpr int kShooterBtn=2;
 constexpr int kClimbReleaseBtn=3;
 constexpr int kClimbWinchBtn=4;
 constexpr int kTurnControlPanelThreeTimes=5;
-constexpr int kTurnControlPahnelToColour=6;
+constexpr int kTurnControlPanelToColour=6;
 
 //Driver Buttons
 constexpr int kShiftUpBtn=5;
@@ -164,8 +165,8 @@ void RobotContainer::configureButtonBindings() {
   frc2::JoystickButton turnControlPanelThreeTimesBtn(&m_operatorController, kTurnControlPanelThreeTimes);
   turnControlPanelThreeTimesBtn.WhenPressed(frc2::SequentialCommandGroup{FlipUpCtrlPanelArmCmd(&m_controlPanelSub), TurnControlPanelThreeTimesCmd(&m_controlPanelSub)});
 
-  // frc2::JoystickButton turnControlPanelToColourBtn(&m_operatorController, kTurnControlPanelToColour);
-  // turnControlPanelToColourBtn.WhenPressed(TurnControlPanelToColourCmd());
+   frc2::JoystickButton turnControlPanelToColourBtn(&m_operatorController, kTurnControlPanelToColour);
+   turnControlPanelToColourBtn.WhenPressed(TurnControlPanelToColourCmd());
 
   m_driverController.SetXChannel(0);
   m_driverController.SetYChannel(1);

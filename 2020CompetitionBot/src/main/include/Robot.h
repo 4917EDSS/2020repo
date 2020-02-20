@@ -24,6 +24,7 @@ class Robot : public frc::TimedRobot {
   void TeleopPeriodic() override;
   void TestPeriodic() override;
 
+  char targetColour;
  private:
   // Have it null by default so that if testing teleop it
   // doesn't have undefined behavior and potentially crash.

@@ -81,15 +81,19 @@ gameData = frc::DriverStation::GetInstance().GetGameSpecificMessage();
     switch (gameData[0]) {
       case 'B': 
         frc::SmartDashboard::PutString("Target Colour", "Blue");
+        targetColour = 'B';
         break;
       case 'R': 
         frc::SmartDashboard::PutString("Target Colour", "Red");
+         targetColour = 'R';
         break;
       case 'G': 
         frc::SmartDashboard::PutString("Target Colour", "Green");
+        targetColour = 'G';
         break;
       case 'Y':
         frc::SmartDashboard::PutString("Target Colour", "Yellow");
+         targetColour = 'Y';
         break;
       default:
         frc::SmartDashboard::PutString("Target Colour", "____");
