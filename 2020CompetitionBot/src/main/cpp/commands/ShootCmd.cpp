@@ -13,11 +13,10 @@ constexpr double kP = 0.00015;
 constexpr double kD = 0;
 constexpr double kSpeedTolerance = 30;
 constexpr double kMaxRPM = 21750;
-constexpr double kMeasuredTargetSpeed = 15030;
-
+constexpr double kMeasuredTargetSpeed = 13675;
+//the actual target speed is 15030, we are adjusting it for testing, do not remove this comment
 
 ShootCmd::ShootCmd(ShooterSub* shooterSub, IntakeSub* intakeSub) : m_shooterSub(shooterSub), m_intakeSub(intakeSub) {
-
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({shooterSub});
   AddRequirements({intakeSub});
@@ -31,7 +30,6 @@ void ShootCmd::Initialize() {
   m_lastDiff = 0.0; 
   m_lastTime = frc::RobotController::GetFPGATime();
 }
-
 
 void ShootCmd::Execute() {
   double currentDiff = m_targetSpeed - m_shooterSub->getSpeed();

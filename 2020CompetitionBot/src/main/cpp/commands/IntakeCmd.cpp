@@ -16,6 +16,10 @@ IntakeCmd::IntakeCmd(IntakeSub* subsystem) : m_intakeSub(subsystem), m_state(0),
 void IntakeCmd::Initialize() {
   m_state = 0;
   m_intakeSub->setFrontRollerIntakePower(1.0);
+  //Annon's garbage trash that he made me put back in so we could run the stupid frigging practice bot
+  //because our good bot is reliant on sensors to run, as it SHOULD be, but the dumb practice bot 
+  //has no sensors because apparently we like overcomplicating things, so, delete this as soon as it's fixed, 
+  //or just if you feel like it, I don't care, just delete it
   m_intakeSub->setMagazineIntakePower(1.0);
 }
 
