@@ -22,6 +22,7 @@
 #include "commands/DriveWithJoystickCmd.h"
 #include "commands/ShootCmd.h"
 #include "commands/IntakeCmd.h"
+#include "commands/SetHoodPositionCmd.h"
 #include "Constants.h"
 #include "subsystems/ClimberSub.h"
 #include "commands/ClimbReleaseCmd.h"
@@ -77,6 +78,9 @@ RobotContainer::RobotContainer() {
   // Configure the button bindings
   configureButtonBindings();
   autoChooserSetup();
+  frc::SmartDashboard::PutData("Set Hood 0", new SetHoodPositionCmd(&m_shooterSub,0.0));
+  frc::SmartDashboard::PutData("Set Hood 5", new SetHoodPositionCmd(&m_shooterSub,5.0));
+  frc::SmartDashboard::PutData("Set Hood 10", new SetHoodPositionCmd(&m_shooterSub,10.0));
   frc::SmartDashboard::PutNumber("flywheelSpeed", 0.0);
   m_drivetrainSub.SetDefaultCommand(DriveWithJoystickCmd(&m_drivetrainSub, &m_driverController));
   m_shooterSub.SetDefaultCommand(frc2::RunCommand(
