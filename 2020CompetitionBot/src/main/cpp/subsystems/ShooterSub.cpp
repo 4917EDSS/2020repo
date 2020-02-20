@@ -33,6 +33,7 @@ void ShooterSub::Periodic() {
   frc::SmartDashboard::PutNumber("ShooterSpeed", getSpeed());
   frc::SmartDashboard::PutNumber("motorCurrent1", m_shooterMotor1.GetOutputCurrent());
   frc::SmartDashboard::PutNumber("motorCurrent2", m_shooterMotor2.GetOutputCurrent());
+  frc::SmartDashboard::PutNumber("Hood Encoder Value",getHoodEncoder());
 }
 
 //Sets speed of all motors
@@ -47,7 +48,7 @@ void ShooterSub::setHoodSpeed(double hoodSpeed) {
 }
 
 double ShooterSub::getHoodEncoder() {
-  return m_hoodMotor.GetSelectedSensorPosition();
+  return m_hoodMotor.GetSelectedSensorPosition()*-1;
 }
 
 // Gets maximum absolute speeds of both motors
