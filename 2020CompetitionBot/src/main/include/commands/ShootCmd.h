@@ -37,8 +37,9 @@ class ShootCmd
   double m_lastDiff;
   uint64_t m_lastTime;
   double powers[5];
-  int index=0;
+  int m_index=0;
   double m_integralDiff;
+  double runPID();
 
 
 };
