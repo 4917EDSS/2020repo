@@ -9,8 +9,7 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include "subsystems/ShooterSub.h"
-#include <frc/Joystick.h>
+#include "subsystems/DrivetrainSub.h"
 
 /**
  * An example command.
@@ -19,10 +18,10 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class SetHoodSpeedCmd
-    : public frc2::CommandHelper<frc2::CommandBase, SetHoodSpeedCmd> {
+class DisableAutoShiftCmd
+    : public frc2::CommandHelper<frc2::CommandBase, DisableAutoShiftCmd> {
  public:
-  SetHoodSpeedCmd(ShooterSub* subsystem, frc::Joystick* joystick);
+  DisableAutoShiftCmd(DrivetrainSub* drivetrainSub);
 
   void Initialize() override;
 
@@ -31,8 +30,6 @@ class SetHoodSpeedCmd
   void End(bool interrupted) override;
 
   bool IsFinished() override;
-
- private:
-  ShooterSub* m_shooterSub;
-  frc::Joystick* m_joystick;
+private:
+DrivetrainSub* m_drivetrainSub;
 };

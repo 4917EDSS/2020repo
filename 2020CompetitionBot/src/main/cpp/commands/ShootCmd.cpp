@@ -18,8 +18,7 @@ constexpr double kMeasuredTargetSpeed = 20000;
 
 ShootCmd::ShootCmd(ShooterSub* shooterSub, IntakeSub* intakeSub) : m_shooterSub(shooterSub), m_intakeSub(intakeSub) {
   // Use addRequirements() here to declare subsystem dependencies.
-  AddRequirements({shooterSub});
-  AddRequirements({intakeSub});
+  AddRequirements({shooterSub, intakeSub});
 }
 
 // Called when the command is initially scheduled.

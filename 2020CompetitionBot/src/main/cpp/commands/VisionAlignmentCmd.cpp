@@ -20,8 +20,7 @@ VisionAlignmentCmd::VisionAlignmentCmd(VisionSub* visionSub, DrivetrainSub* driv
   m_lastX(0)
 {
   // Use addRequirements() here to declare subsystem dependencies.
-  AddRequirements({visionSub});
-  AddRequirements({drivetrainSub});
+  AddRequirements({visionSub, drivetrainSub});
 }
 
 // Called when the command is initially scheduled.

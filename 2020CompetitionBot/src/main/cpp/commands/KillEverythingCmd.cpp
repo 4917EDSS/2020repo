@@ -5,27 +5,27 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/SetHoodSpeedCmd.h"
+#include "commands/KillEverythingCmd.h"
 
-SetHoodSpeedCmd::SetHoodSpeedCmd(ShooterSub* shooterSub, frc::Joystick* joystick) : m_shooterSub(shooterSub), m_joystick(joystick) {
-  AddRequirements({shooterSub});
+
+KillEverythingCmd::KillEverythingCmd(ClimberSub* climberSub, ControlPanelSub* controlPanelSub, DrivetrainSub* driveTrainSub, IntakeSub* intakeSub,
+ ShooterSub* shooterSub, VisionSub* visionSub){
+  // Use addRequirements() here to declare subsystem dependencies.
+  AddRequirements({climberSub, controlPanelSub, driveTrainSub, intakeSub, shooterSub, visionSub});
+
+
 }
 
 // Called when the command is initially scheduled.
-void SetHoodSpeedCmd::Initialize() {
-  //m_shooterSub->setHoodSpeed(m_speed);
-}
+void KillEverythingCmd::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void SetHoodSpeedCmd::Execute() {
-  double speed = m_joystick->GetY();
-  m_shooterSub->setHoodSpeed(speed);
-}
+void KillEverythingCmd::Execute() {}
 
 // Called once the command ends or is interrupted.
-void SetHoodSpeedCmd::End(bool interrupted) {
-  m_shooterSub->setHoodSpeed(0);
+void KillEverythingCmd::End(bool interrupted) {
+
 }
 
 // Returns true when the command should end.
-bool SetHoodSpeedCmd::IsFinished() { return false; }
+bool KillEverythingCmd::IsFinished() { return true; }
