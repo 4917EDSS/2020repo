@@ -32,7 +32,7 @@ class DriveWithJoystickCmd
 
   private:
   DrivetrainSub* m_drivetrainSub;
-  Joystick* m_joystick;
+  frc::Joystick* m_joystick;
   double m_forwardPowerPrevious;
   double m_turnPowerPrevious;
 };

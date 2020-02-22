@@ -10,6 +10,7 @@
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 #include "subsystems/ShooterSub.h"
+#include <frc/Joystick.h>
 
 /**
  * An example command.
@@ -21,7 +22,7 @@
 class SetHoodSpeedCmd
     : public frc2::CommandHelper<frc2::CommandBase, SetHoodSpeedCmd> {
  public:
-  SetHoodSpeedCmd(ShooterSub* subsystem, double speed);
+  SetHoodSpeedCmd(ShooterSub* subsystem, frc::Joystick* joystick);
 
   void Initialize() override;
 
@@ -33,5 +34,5 @@ class SetHoodSpeedCmd
 
  private:
   ShooterSub* m_shooterSub;
-  double m_speed;
+  frc::Joystick* m_joystick;
 };
