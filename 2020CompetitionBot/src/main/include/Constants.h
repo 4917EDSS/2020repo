@@ -115,3 +115,8 @@ namespace ControlPanelConstants {
     constexpr frc::Color kYellowTarget = frc::Color(0.361, 0.524, 0.113);
     constexpr double kMaxWheelSpeed = 0.2;
 }
+
+namespace ShooterConstants {
+constexpr double kHighHood = 0.0;
+constexpr double kLowHood = 19152.0;
+}

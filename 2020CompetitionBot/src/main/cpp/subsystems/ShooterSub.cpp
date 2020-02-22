@@ -45,7 +45,7 @@ void ShooterSub::setHoodSpeed(double hoodSpeed) {
 }
 
 double ShooterSub::getHoodEncoder() {
-  return m_hoodMotor.GetSelectedSensorPosition()*-1;
+  return m_hoodMotor.GetSelectedSensorPosition();
 }
 
 // Gets maximum absolute speeds of both motors
