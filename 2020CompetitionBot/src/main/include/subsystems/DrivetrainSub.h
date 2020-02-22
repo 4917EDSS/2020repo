@@ -38,6 +38,8 @@ class DrivetrainSub : public frc2::SubsystemBase {
   void shiftDown();
   bool isShifterInHighGear();
   void autoShift();
+  void disableAutoShift();
+  void enableAutoShift();
   double getEncoderRotationsToM();
   double getLeftEncoderDistanceM();
   double getRightEncoderDistanceM();
