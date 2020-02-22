@@ -137,7 +137,7 @@ class DrivetrainSub : public frc2::SubsystemBase {
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
-
+  bool m_autoShiftEnabled;
   // The motor controllers
   rev::CANSparkMax m_leftMotor1;
   rev::CANSparkMax m_leftMotor2;

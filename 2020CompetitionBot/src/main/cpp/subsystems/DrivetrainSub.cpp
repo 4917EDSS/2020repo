@@ -17,7 +17,6 @@ constexpr float kEncoderRotationsToMHighGear = 5.0/(102.264);
 //Metres per second, not velocity
 constexpr double kShiftUpSpeed = 2.35;
 constexpr double kShiftDownSpeed = 1.15;
-bool AutoShiftEnabled=true;
 
 DrivetrainSub::DrivetrainSub() 
   : m_leftMotor1{CanIds::kLeftMotor1, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
@@ -188,7 +187,7 @@ double DrivetrainSub::getRightVelocity()
 
 
 void DrivetrainSub::autoShift() {
-  if(AutoShiftEnabled) {
+  if(m_autoShiftEnabled) {
     double avgWheelSpeeds = (getLeftVelocity() + getRightVelocity()) / 2;
     if(avgWheelSpeeds < 0) {
       avgWheelSpeeds *= -1.0;
@@ -202,8 +201,8 @@ void DrivetrainSub::autoShift() {
   }
 }
 void DrivetrainSub::disableAutoShift() {
-  AutoShiftEnabled=false;
+  m_autoShiftEnabled=false;
 }
 void DrivetrainSub::enableAutoShift() {
-  AutoShiftEnabled=true;
+  m_autoShiftEnabled=true;
 }

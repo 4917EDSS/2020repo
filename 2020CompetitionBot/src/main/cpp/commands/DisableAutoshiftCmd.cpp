@@ -10,12 +10,11 @@
 
 DisableAutoShiftCmd::DisableAutoShiftCmd(DrivetrainSub* drivetrainSub): m_drivetrainSub(drivetrainSub) {
   // Use addRequirements() here to declare subsystem dependencies.
-  AddRequirements({drivetrainSub});
 }
-
 // Called when the command is initially scheduled.
 void DisableAutoShiftCmd::Initialize() {
   m_drivetrainSub->disableAutoShift();
+  m_drivetrainSub->shiftDown();
 }
 
 // Called repeatedly when this Command is scheduled to run
