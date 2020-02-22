@@ -9,8 +9,12 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+#include "subsystems/ClimberSub.h"
+#include "subsystems/ControlPanelSub.h"
+#include "subsystems/DrivetrainSub.h"
+#include "subsystems/IntakeSub.h"
 #include "subsystems/ShooterSub.h"
-#include <frc/Joystick.h>
+#include "subsystems/VisionSub.h"
 
 /**
  * An example command.
@@ -19,20 +23,18 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class SetHoodSpeedCmd
-    : public frc2::CommandHelper<frc2::CommandBase, SetHoodSpeedCmd> {
+class KillEverythingCmd
+    : public frc2::CommandHelper<frc2::CommandBase, KillEverythingCmd> {
  public:
-  SetHoodSpeedCmd(ShooterSub* subsystem, frc::Joystick* joystick);
+  KillEverythingCmd(ClimberSub* climberSub, ControlPanelSub* controlPanelSub, DrivetrainSub* driveTrainSub,
+   IntakeSub* IntakeSub, ShooterSub* shooterSub, VisionSub* visionSub);
 
   void Initialize() override;
-
   void Execute() override;
-
   void End(bool interrupted) override;
-
   bool IsFinished() override;
 
- private:
-  ShooterSub* m_shooterSub;
-  frc::Joystick* m_joystick;
+  private: 
+
+
 };

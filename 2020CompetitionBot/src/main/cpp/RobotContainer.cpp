@@ -20,9 +20,11 @@
 #include <frc2/command/button/JoystickButton.h>
 #include <frc2/command/RunCommand.h>
 #include "commands/DriveWithJoystickCmd.h"
+#include "commands/DisableAutoShiftCmd.h"
 #include "commands/ShootCmd.h"
 #include "commands/IntakeCmd.h"
 #include "commands/SetHoodPositionCmd.h"
+#include "commands/SetHoodSpeedCmd.h"
 #include "Constants.h"
 #include "subsystems/ClimberSub.h"
 #include "commands/ClimbReleaseCmd.h"
@@ -33,6 +35,7 @@
 #include "commands/FlipUpCtrlPanelArmCmd.h"
 #include "commands/TurnControlPanelToColourCmd.h"
 #include "subsystems/VisionSub.h"
+#include "commands/KillEverythingCmd.h"
 
 
 /*
@@ -64,14 +67,18 @@ constexpr int kClimbReleaseBtn=3;
 constexpr int kClimbWinchBtn=4;
 constexpr int kTurnControlPanelThreeTimes=5;
 constexpr int kTurnControlPanelToColour=6;
+constexpr int kKillEverything1 = 11;
+constexpr int kKillEverything2 = 12;
 
 //Driver Buttons
-constexpr int kShiftUpBtn=5;
-constexpr int kShiftDownBtn=6;
-constexpr int kClimbBalanceLeft=7;
-constexpr int kClimbBalanceRight=8;
+constexpr int kClimbBalanceLeft=5;
+constexpr int kClimbBalanceRight=6;
+constexpr int kDisableAutoShift=8;
 constexpr int kFarCameraAlignment=9;
 constexpr int kShortCameraAlignment=10;
+// See driver
+// constexpr int kKillEverything1 = 11;
+// constexpr int kKillEverything2 = 12;
 
 RobotContainer::RobotContainer() {
   // Initialize all of your commands and subsystems here
@@ -84,11 +91,12 @@ RobotContainer::RobotContainer() {
   frc::SmartDashboard::PutData("Set Hood High", new SetHoodPositionCmd(&m_shooterSub,24000.0));
   frc::SmartDashboard::PutNumber("flywheelSpeed", 0.0);
   m_drivetrainSub.SetDefaultCommand(DriveWithJoystickCmd(&m_drivetrainSub, &m_driverController));
-  m_shooterSub.SetDefaultCommand(frc2::RunCommand(
-    [this] {
-      m_shooterSub.setSpeed(frc::SmartDashboard::GetNumber("flywheelSpeed", 0.0));
-    },
-  {&m_shooterSub}));
+  m_shooterSub.SetDefaultCommand(SetHoodSpeedCmd(&m_shooterSub, &m_operatorController));
+  // m_shooterSub.SetDefaultCommand(frc2::RunCommand(
+  //   [this] {
+  //     m_shooterSub.setSpeed(frc::SmartDashboard::GetNumber("flywheelSpeed", 0.0));
+  //   },
+  // {&m_shooterSub}));
 }
 
 void RobotContainer::generateTrajectories() {
@@ -120,21 +128,8 @@ void RobotContainer::configureButtonBindings() {
 
   //Driver Commands...
 
-  frc2::JoystickButton shiftUpBtn(&m_driverController, kShiftUpBtn);
-  shiftUpBtn.WhenPressed(frc2::InstantCommand(
-  [this] {
-    m_drivetrainSub.shiftUp();
-        
-  },
-  {&m_drivetrainSub}));
-
-   frc2::JoystickButton shiftDownBtn(&m_driverController, kShiftDownBtn);
-  shiftDownBtn.WhenPressed(frc2::InstantCommand(
-  [this] {
-    m_drivetrainSub.shiftDown();
-        
-  },
-  {&m_drivetrainSub}));
+   frc2::JoystickButton disableAutoShiftBtn(&m_driverController, kDisableAutoShift);
+  disableAutoShiftBtn.WhenHeld(DisableAutoShiftCmd(&m_drivetrainSub));
 
   frc2::JoystickButton farCameraAlignmentBtn(&m_driverController, kFarCameraAlignment);
   farCameraAlignmentBtn.WhenPressed(VisionAlignmentCmd(&m_visionSub, &m_drivetrainSub, true));
@@ -142,16 +137,23 @@ void RobotContainer::configureButtonBindings() {
   frc2::JoystickButton shortCameraAlignmentBtn(&m_driverController, kShortCameraAlignment);
   shortCameraAlignmentBtn.WhenPressed(VisionAlignmentCmd(&m_visionSub, &m_drivetrainSub, false));
 
-  //Operator Commands...
+  frc2::JoystickButton killEverythingBtn1d(&m_driverController, kKillEverything1);
+  killEverythingBtn1d.WhenPressed(KillEverythingCmd(&m_climberSub, &m_controlPanelSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub, &m_visionSub));
 
-  frc2::JoystickButton shooterBtn(&m_operatorController, kShooterBtn);
-  shooterBtn.WhenHeld(ShootCmd(&m_shooterSub, &m_intakeSub));
+  frc2::JoystickButton killEverythingBtn2d(&m_driverController, kKillEverything2);
+  killEverythingBtn2d.WhenPressed(KillEverythingCmd(&m_climberSub, &m_controlPanelSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub, &m_visionSub));
 
   frc2::JoystickButton climbBalanceRightBtn(&m_driverController, kClimbBalanceRight);
   climbBalanceRightBtn.WhenHeld(ClimbBalanceCmd(&m_climberSub, true));
 
   frc2::JoystickButton climbBalanceLeftBtn(&m_driverController, kClimbBalanceLeft);
   climbBalanceLeftBtn.WhenHeld(ClimbBalanceCmd(&m_climberSub, false));
+
+
+  //Operator Commands...
+
+  frc2::JoystickButton shooterBtn(&m_operatorController, kShooterBtn);
+  shooterBtn.WhenHeld(ShootCmd(&m_shooterSub, &m_intakeSub));
 
   frc2::JoystickButton intakeBtn(&m_operatorController, kIntakeBtn);
   intakeBtn.WhenHeld(IntakeCmd(&m_intakeSub));
@@ -165,8 +167,14 @@ void RobotContainer::configureButtonBindings() {
   frc2::JoystickButton turnControlPanelThreeTimesBtn(&m_operatorController, kTurnControlPanelThreeTimes);
   turnControlPanelThreeTimesBtn.WhenPressed(frc2::SequentialCommandGroup{FlipUpCtrlPanelArmCmd(&m_controlPanelSub), TurnControlPanelThreeTimesCmd(&m_controlPanelSub)});
 
-   frc2::JoystickButton turnControlPanelToColourBtn(&m_operatorController, kTurnControlPanelToColour);
-   turnControlPanelToColourBtn.WhenPressed(TurnControlPanelToColourCmd());
+  frc2::JoystickButton turnControlPanelToColourBtn(&m_operatorController, kTurnControlPanelToColour);
+  turnControlPanelToColourBtn.WhenPressed(TurnControlPanelToColourCmd());
+
+  frc2::JoystickButton killEverythingBtn1o(&m_operatorController, kKillEverything1);
+  killEverythingBtn1o.WhenPressed(KillEverythingCmd(&m_climberSub, &m_controlPanelSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub, &m_visionSub));
+
+  frc2::JoystickButton killEverythingBtn2o(&m_operatorController, kKillEverything2);
+  killEverythingBtn2o.WhenPressed(KillEverythingCmd(&m_climberSub, &m_controlPanelSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub, &m_visionSub));
 
   m_driverController.SetXChannel(0);
   m_driverController.SetYChannel(1);
