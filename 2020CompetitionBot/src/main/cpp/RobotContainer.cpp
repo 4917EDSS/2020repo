@@ -61,19 +61,22 @@
 
 
 //Operator Buttons
-constexpr int kIntakeBtn=1;
-constexpr int kShooterBtn=2;
+constexpr int kClimbWinchBtn=1;
+constexpr int kIntakeBtn=2;
 constexpr int kClimbReleaseBtn=3;
-constexpr int kClimbWinchBtn=4;
-constexpr int kTurnControlPanelThreeTimes=5;
-constexpr int kTurnControlPanelToColour=6;
+constexpr int kConrolPanelUnfold=4;
+constexpr int kShooterFarBtn=8;
+constexpr int kShooterCloseBtn=7;
+constexpr int kTurnControlPanelToColour=9;
+constexpr int kTurnControlPanelThreeTimes=10;
 constexpr int kKillEverything1 = 11;
 constexpr int kKillEverything2 = 12;
 
 //Driver Buttons
-constexpr int kClimbBalanceLeft=5;
-constexpr int kClimbBalanceRight=6;
-constexpr int kDisableAutoShift=8;
+constexpr int kDisableAutoShift=6;
+constexpr int kClimbBalanceLeft=7;
+constexpr int kClimbBalanceRight=8;
+//Going to integrate the alignment with shooterBtn, just hasn't happened yet
 constexpr int kFarCameraAlignment=9;
 constexpr int kShortCameraAlignment=10;
 // See driver
@@ -152,7 +155,7 @@ void RobotContainer::configureButtonBindings() {
 
   //Operator Commands...
 
-  frc2::JoystickButton shooterBtn(&m_operatorController, kShooterBtn);
+  frc2::JoystickButton shooterBtn(&m_operatorController, kShooterFarBtn);
   shooterBtn.WhenHeld(ShootCmd(&m_shooterSub, &m_intakeSub));
 
   frc2::JoystickButton intakeBtn(&m_operatorController, kIntakeBtn);
