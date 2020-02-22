@@ -74,6 +74,7 @@ void VisionAlignmentCmd::Execute() {
 void VisionAlignmentCmd::End(bool interrupted) {
   m_drivetrainSub->tankDriveVolts(0.0, 0.0);
   printf("vision ended");
+  m_visionSub->setNeutralVisionPipeline();
 }
 
 // Returns true when the command should end.

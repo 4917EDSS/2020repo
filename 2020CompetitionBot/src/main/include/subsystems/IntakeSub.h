@@ -22,12 +22,7 @@ class IntakeSub : public frc2::SubsystemBase {
   void setFrontRollerIntakePower(double power);
   void setMagazineIntakePower(double power);
   bool getFrontIntakeSensor();
-  bool getPowerCellSensor1();
-  bool getPowerCellSensor2();
-  bool getPowerCellSensor3();
-  bool getPowerCellSensor4();
-
-  
+  bool getMagazineFullSensor();
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
@@ -37,9 +32,7 @@ class IntakeSub : public frc2::SubsystemBase {
  private:
   ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_frontRollerIntakeMotor;
   ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_topIntakeMotor;
-  frc::DigitalInput m_frontIntakeSensor;
-  frc::DigitalInput m_PowerCellSensor1;
-  frc::DigitalInput m_PowerCellSensor2;
-  frc::DigitalInput m_PowerCellSensor3;
-  frc::DigitalInput m_PowerCellSensor4;
+  frc::DigitalInput m_frontIntakeSensorL;
+  frc::DigitalInput m_frontIntakeSensorR;
+  frc::DigitalInput m_magazineFullSensor;
 };
