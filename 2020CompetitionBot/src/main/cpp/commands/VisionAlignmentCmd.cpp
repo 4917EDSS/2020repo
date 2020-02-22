@@ -27,6 +27,7 @@ VisionAlignmentCmd::VisionAlignmentCmd(VisionSub* visionSub, DrivetrainSub* driv
 
 void VisionAlignmentCmd::Initialize() {
   printf("vision started");
+  m_lastX = 0;
   m_drivetrainSub->shiftDown();
   if(m_isFar) {
     m_visionSub->setFarVisionPipeline();
