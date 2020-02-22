@@ -7,9 +7,9 @@
 
 #include "commands/IntakeCmd.h"
 
-IntakeCmd::IntakeCmd(IntakeSub* subsystem) : m_intakeSub(subsystem), m_state(0), m_startingEncDistance(0) { // Sensors need to be added to the command (PowerCellSensor1-4)
+IntakeCmd::IntakeCmd(IntakeSub* intakeSub) : m_intakeSub(intakeSub), m_state(0), m_startingEncDistance(0) { // Sensors need to be added to the command (PowerCellSensor1-4)
   // Use addRequirements() here to declare subsystem dependencies.
-  AddRequirements({subsystem});
+  AddRequirements({intakeSub});
 }
 
 // Called when the command is initially scheduled.
