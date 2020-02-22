@@ -23,6 +23,7 @@
 #include "commands/ShootCmd.h"
 #include "commands/IntakeCmd.h"
 #include "commands/SetHoodPositionCmd.h"
+#include "commands/SetHoodSpeedCmd.h"
 #include "Constants.h"
 #include "subsystems/ClimberSub.h"
 #include "commands/ClimbReleaseCmd.h"
@@ -84,11 +85,12 @@ RobotContainer::RobotContainer() {
   frc::SmartDashboard::PutData("Set Hood High", new SetHoodPositionCmd(&m_shooterSub,24000.0));
   frc::SmartDashboard::PutNumber("flywheelSpeed", 0.0);
   m_drivetrainSub.SetDefaultCommand(DriveWithJoystickCmd(&m_drivetrainSub, &m_driverController));
-  m_shooterSub.SetDefaultCommand(frc2::RunCommand(
-    [this] {
-      m_shooterSub.setSpeed(frc::SmartDashboard::GetNumber("flywheelSpeed", 0.0));
-    },
-  {&m_shooterSub}));
+  m_shooterSub.SetDefaultCommand(SetHoodSpeedCmd(&m_shooterSub, &m_operatorController));
+  // m_shooterSub.SetDefaultCommand(frc2::RunCommand(
+  //   [this] {
+  //     m_shooterSub.setSpeed(frc::SmartDashboard::GetNumber("flywheelSpeed", 0.0));
+  //   },
+  // {&m_shooterSub}));
 }
 
 void RobotContainer::generateTrajectories() {
