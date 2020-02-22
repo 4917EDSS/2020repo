@@ -41,7 +41,7 @@ void IntakeCmd::Execute() {
 }
 
 bool IntakeCmd::IsFinished() { 
-  if(m_intakeSub->getFrontIntakeSensor() && m_intakeSub->getPowerCellSensor4()) {
+  if(m_intakeSub->getFrontIntakeSensor() && m_intakeSub->getMagazineFullSensor()) {
     // There are 5 powercells in the robot 
     return true;
   }
