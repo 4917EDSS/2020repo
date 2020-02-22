@@ -5,17 +5,15 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/ShootCmd.h"
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/RobotController.h>
+#include "Constants.h"
+#include "commands/ShootCmd.h"
 
 constexpr double kP = 0.00015;
 constexpr double kI = 0.00025;
 constexpr double kD = 0.0;
 constexpr double kSpeedTolerance = 30.0;
-constexpr double kMaxRPM = 21750.0;
-constexpr double kMeasuredTargetSpeed = 20000.0;
-//the actual target speed is 15030, we are adjusting it for testing, do not remove this comment
 
 ShootCmd::ShootCmd(ShooterSub* shooterSub, IntakeSub* intakeSub) : m_shooterSub(shooterSub), m_intakeSub(intakeSub) {
   // Use addRequirements() here to declare subsystem dependencies.
@@ -26,7 +24,7 @@ ShootCmd::ShootCmd(ShooterSub* shooterSub, IntakeSub* intakeSub) : m_shooterSub(
 void ShootCmd::Initialize() {
   m_intakeSub->setMagazineIntakePower(-0.5);
   m_intakeSub->setFrontRollerIntakePower(1.0);
-  m_targetSpeed = kMeasuredTargetSpeed;
+  m_targetSpeed = ShooterConstants::kFarTargetSpeed;
   m_lastDiff = 0.0; 
   m_lastTime = frc::RobotController::GetFPGATime();
   m_integralDiff = 0.0;
@@ -34,7 +32,7 @@ void ShootCmd::Initialize() {
 
 void ShootCmd::Execute() {
   double currentDiff = m_targetSpeed - m_shooterSub->getSpeed();
-  double feed = m_targetSpeed / kMaxRPM;
+  double feed = m_targetSpeed / ShooterConstants::kMaxRPM;
   uint64_t currentTime = frc::RobotController::GetFPGATime();
   double timeSinceLast = static_cast<double>(currentTime - m_lastTime)/1000000.0;
   double speedDiff = (currentDiff - m_lastDiff)/timeSinceLast;
@@ -54,8 +52,8 @@ void ShootCmd::Execute() {
   // We need to change the target speed based on how close the target is (using the y value on limelight)
    /* if(index < 5){
     double diff = m_targetSpeed - m_shooterSub->getSpeed();
-    double feed = m_targetSpeed / kMaxRPM;
-  //kP, kSpeedTolerance, and kMaxRPM are arbitrary values for now.
+    double feed = m_targetSpeed / ShooterConstants::kMaxRPM;;
+  //kP, kSpeedTolerance, and ShooterConstants::kMaxRPM; are arbitrary values for now.
     double speed=diff*kP+feed;
     m_shooterSub->setSpeed(speed);
     if(m_shooterSub->getSpeed() >= m_targetSpeed-kSpeedTolerance and m_shooterSub->getSpeed() <= m_targetSpeed+kSpeedTolerance){

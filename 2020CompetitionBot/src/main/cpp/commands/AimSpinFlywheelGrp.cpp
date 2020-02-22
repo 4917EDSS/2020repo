@@ -5,17 +5,18 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+#include <frc2/command/InstantCommand.h>
 #include "commands/AimSpinFlywheelGrp.h"
 #include "commands/VisionAlignmentCmd.h"
-
-#include <frc2/command/InstantCommand.h>
+#include "commands/SpinFlywheelCmd.h"
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.
 // For more information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-AimSpinFlywheelGrp::AimSpinFlywheelGrp(VisionSub* visionSub, DrivetrainSub* drivetrainSub, bool isFar)
+AimSpinFlywheelGrp::AimSpinFlywheelGrp(VisionSub* visionSub, DrivetrainSub* drivetrainSub,ShooterSub* shooterSub, bool isFar)
     : CommandHelper(
           // The deadline command
-          VisionAlignmentCmd(visionSub, drivetrainSub, isFar)) {
+          VisionAlignmentCmd(visionSub, drivetrainSub, isFar), 
+          SpinFlywheelCmd(shooterSub, (isFar ? ShooterConstants::kFarTargetSpeed : ShooterConstants::kCloseTargetSpeed))) {
   //AddCommands(Spin flywheel command) replace with real command when it gets made
 }
