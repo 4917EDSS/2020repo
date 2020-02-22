@@ -20,6 +20,7 @@
 #include <frc2/command/button/JoystickButton.h>
 #include <frc2/command/RunCommand.h>
 #include "commands/DriveWithJoystickCmd.h"
+#include "commands/DisableAutoShiftCmd.h"
 #include "commands/ShootCmd.h"
 #include "commands/IntakeCmd.h"
 #include "commands/SetHoodPositionCmd.h"
@@ -67,10 +68,9 @@ constexpr int kTurnControlPanelThreeTimes=5;
 constexpr int kTurnControlPanelToColour=6;
 
 //Driver Buttons
-constexpr int kShiftUpBtn=5;
-constexpr int kShiftDownBtn=6;
-constexpr int kClimbBalanceLeft=7;
-constexpr int kClimbBalanceRight=8;
+constexpr int kClimbBalanceLeft=5;
+constexpr int kClimbBalanceRight=6;
+constexpr int kDisableAutoShift=8;
 constexpr int kFarCameraAlignment=9;
 constexpr int kShortCameraAlignment=10;
 
@@ -122,21 +122,8 @@ void RobotContainer::configureButtonBindings() {
 
   //Driver Commands...
 
-  frc2::JoystickButton shiftUpBtn(&m_driverController, kShiftUpBtn);
-  shiftUpBtn.WhenPressed(frc2::InstantCommand(
-  [this] {
-    m_drivetrainSub.shiftUp();
-        
-  },
-  {&m_drivetrainSub}));
-
-   frc2::JoystickButton shiftDownBtn(&m_driverController, kShiftDownBtn);
-  shiftDownBtn.WhenPressed(frc2::InstantCommand(
-  [this] {
-    m_drivetrainSub.shiftDown();
-        
-  },
-  {&m_drivetrainSub}));
+   frc2::JoystickButton disableAutoShiftBtn(&m_driverController, kDisableAutoShift);
+  disableAutoShiftBtn.WhenHeld(DisableAutoShiftCmd(&m_drivetrainSub));
 
   frc2::JoystickButton farCameraAlignmentBtn(&m_driverController, kFarCameraAlignment);
   farCameraAlignmentBtn.WhenPressed(VisionAlignmentCmd(&m_visionSub, &m_drivetrainSub, true));

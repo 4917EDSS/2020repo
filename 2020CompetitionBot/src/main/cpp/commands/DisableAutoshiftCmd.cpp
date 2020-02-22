@@ -5,20 +5,26 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/DisableAutoshiftCmd.h"
+#include "commands/DisableAutoShiftCmd.h"
+#include "subsystems/DrivetrainSub.h"
 
-DisableAutoshiftCmd::DisableAutoshiftCmd() {
+DisableAutoShiftCmd::DisableAutoShiftCmd(DrivetrainSub* drivetrainSub): m_drivetrainSub(drivetrainSub) {
   // Use addRequirements() here to declare subsystem dependencies.
+  AddRequirements({drivetrainSub});
 }
 
 // Called when the command is initially scheduled.
-void DisableAutoshiftCmd::Initialize() {}
+void DisableAutoShiftCmd::Initialize() {
+  m_drivetrainSub->disableAutoShift();
+}
 
 // Called repeatedly when this Command is scheduled to run
-void DisableAutoshiftCmd::Execute() {}
+void DisableAutoShiftCmd::Execute() {}
 
 // Called once the command ends or is interrupted.
-void DisableAutoshiftCmd::End(bool interrupted) {}
+void DisableAutoShiftCmd::End(bool interrupted) {
+  m_drivetrainSub->enableAutoShift();
+}
 
 // Returns true when the command should end.
-bool DisableAutoshiftCmd::IsFinished() { return false; }
+bool DisableAutoShiftCmd::IsFinished() { return false; }
