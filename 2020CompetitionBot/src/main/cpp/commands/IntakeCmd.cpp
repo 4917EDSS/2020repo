@@ -24,7 +24,7 @@ void IntakeCmd::Initialize() {
 }
 
 void IntakeCmd::Execute() {
-  switch (m_state)
+  /*switch (m_state)
   {
   case 0: // state 0, waiting for a new ball to come into the robot. Magazine isn't full
     if(m_intakeSub->getFrontIntakeSensor()) {
@@ -42,7 +42,7 @@ void IntakeCmd::Execute() {
   break;
     default: m_intakeSub->setMagazineIntakePower(0.0);
     break;
-  }
+  }*/
 }
 
 bool IntakeCmd::IsFinished() { 
