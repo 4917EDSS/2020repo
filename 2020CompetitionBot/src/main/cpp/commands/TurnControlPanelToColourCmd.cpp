@@ -20,17 +20,17 @@ void TurnControlPanelToColourCmd::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void TurnControlPanelToColourCmd::Execute() {
-    if (matchedColour == ControlPanelConstants::kBlueTarget) {
-      colourString = "Blue";
-    } else if (matchedColour == ControlPanelConstants::kRedTarget) {
-      colourString = "Red";
-    } else if (matchedColour == ControlPanelConstants::kGreenTarget) {
-      colourString = "Green";
-    } else if (matchedColour == ControlPanelConstants::kYellowTarget) {
-      colourString = "Yellow";
-    } else {
-      colourString = "Unknown";
-    }
+    // if (matchedColour == ControlPanelConstants::kBlueTarget) {
+    //   colourString = "Blue";
+    // } else if (matchedColour == ControlPanelConstants::kRedTarget) {
+    //   colourString = "Red";
+    // } else if (matchedColour == ControlPanelConstants::kGreenTarget) {
+    //   colourString = "Green";
+    // } else if (matchedColour == ControlPanelConstants::kYellowTarget) {
+    //   colourString = "Yellow";
+    // } else {
+    //   colourString = "Unknown";
+    // }
 }
 
 // Called once the command ends or is interrupted.
