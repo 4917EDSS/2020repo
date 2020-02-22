@@ -5,36 +5,79 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+#include <rev/ColorSensorV3.h>
+#include <rev/ColorMatch.h>
+#include <frc/DriverStation.h>
 #include "commands/TurnControlPanelToColourCmd.h"
 #include "subsystems/ControlPanelSub.h"
 #include "Constants.h"
-#include <rev/ColorSensorV3.h>
-#include <rev/ColorMatch.h>
 
 TurnControlPanelToColourCmd::TurnControlPanelToColourCmd() {
   // Use addRequirements() here to declare subsystem dependencies.
 }
 
 // Called when the command is initially scheduled.
-void TurnControlPanelToColourCmd::Initialize() {}
+void TurnControlPanelToColourCmd::Initialize() {
+  DetermineColourToTurnTo();
+  m_controlPanelSub->togglePosition(true);
+  // we probably have to wait before we read the colour
+  m_startingColour = m_controlPanelSub->getColour();
+  m_controlPanelSub->setWheelPower(ControlPanelConstants::kMaxWheelSpeed);
+}
 
 // Called repeatedly when this Command is scheduled to run
 void TurnControlPanelToColourCmd::Execute() {
-    // if (matchedColour == ControlPanelConstants::kBlueTarget) {
-    //   colourString = "Blue";
-    // } else if (matchedColour == ControlPanelConstants::kRedTarget) {
-    //   colourString = "Red";
-    // } else if (matchedColour == ControlPanelConstants::kGreenTarget) {
-    //   colourString = "Green";
-    // } else if (matchedColour == ControlPanelConstants::kYellowTarget) {
-    //   colourString = "Yellow";
-    // } else {
-    //   colourString = "Unknown";
-    // }
+  m_currentColour = m_controlPanelSub->getColour();
 }
 
 // Called once the command ends or is interrupted.
-void TurnControlPanelToColourCmd::End(bool interrupted) {}
+void TurnControlPanelToColourCmd::End(bool interrupted) {
+  m_controlPanelSub->togglePosition(false);
+}
 
 // Returns true when the command should end.
-bool TurnControlPanelToColourCmd::IsFinished() { return false; }
+bool TurnControlPanelToColourCmd::IsFinished() {
+  if (m_currentColour == m_ColourToTurnTo) {
+    // This may be too abrupt of a stop - needs tuning
+    m_controlPanelSub->setWheelPower(0);
+    return true;
+  } else {
+    return false;
+  }
+}
+
+void TurnControlPanelToColourCmd::DetermineColourToTurnTo() {
+  // Get colour from the field
+  std::string gameData = frc::DriverStation::GetInstance().GetGameSpecificMessage();
+
+  if (gameData.length() > 0)
+  {
+    switch (gameData[0])
+    {
+      case 'G' :
+        //Green case code
+        m_ColourToTurnTo = ControlPanelConstants::kYellowTarget;
+        break;
+      case 'B' :
+        //Blue case code
+        m_ColourToTurnTo = ControlPanelConstants::kRedTarget;
+        break;
+      case 'Y' :
+        //Yellow case code
+        m_ColourToTurnTo = ControlPanelConstants::kGreenTarget;
+        break;
+      case 'R' :
+        //Red case code
+        m_ColourToTurnTo = ControlPanelConstants::kBlueTarget;
+        break;
+      default :
+        //This is corrupt data
+        // TODO : Throw an error?
+        break;
+    }
+
+  } else {
+    // Code for no data received yet
+    // TODO : Throw an error?
+  }
+}

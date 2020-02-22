@@ -9,6 +9,7 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+#include "subsystems/ControlPanelSub.h"
 
 /**
  * An example command.
@@ -30,5 +31,11 @@ class TurnControlPanelToColourCmd
 
   bool IsFinished() override;
 
-  char currentColour;
+  ControlPanelSub* m_controlPanelSub;
+  frc::Color m_startingColour;
+  frc::Color m_ColourToTurnTo;
+  frc::Color m_currentColour;
+
+ private:
+  void DetermineColourToTurnTo();
 };

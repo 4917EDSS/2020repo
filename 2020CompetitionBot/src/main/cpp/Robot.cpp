@@ -11,10 +11,10 @@
 #include <frc2/command/CommandScheduler.h>
 #include <frc/DriverStation.h>
 #include <cstdlib>
-
+#include <frc/RobotController.h>
 
 void Robot::RobotInit() {
-
+  frc::SmartDashboard::PutString("Target Colour", "____");
 
 
 }
@@ -27,7 +27,22 @@ void Robot::RobotInit() {
  * <p> This runs after the mode specific periodic functions, but before
  * LiveWindow and SmartDashboard integrated updating.
  */
-void Robot::RobotPeriodic() { frc2::CommandScheduler::GetInstance().Run(); }
+ int underTwentyCounter = 0;
+void Robot::RobotPeriodic() { 
+ 
+  uint64_t currentTimeStart = frc::RobotController::GetFPGATime();
+  frc2::CommandScheduler::GetInstance().Run(); 
+  uint64_t currentTimeFinal = frc::RobotController::GetFPGATime();
+  if (currentTimeFinal-currentTimeStart >= 20000){
+    std::cout << "cycles since last 20000: " << underTwentyCounter << std::endl;
+    std::cout << "diffrence: " << currentTimeFinal - currentTimeStart << std::endl;
+    underTwentyCounter = 0;
+  }
+  else if (currentTimeFinal - currentTimeStart < 20000){
+   underTwentyCounter++;
+    
+  }
+}
 
 /**
  * This function is called once each time the robot enters Disabled mode. You
@@ -96,12 +111,9 @@ gameData = frc::DriverStation::GetInstance().GetGameSpecificMessage();
          targetColour = 'Y';
         break;
       default:
-        frc::SmartDashboard::PutString("Target Colour", "____");
+        frc::SmartDashboard::PutString("Target Colour", "???");
         break;
     }
-  }
-  else {
-    frc::SmartDashboard::PutString("Target Colour", "Transmission not received");
   }
 }
 /**
