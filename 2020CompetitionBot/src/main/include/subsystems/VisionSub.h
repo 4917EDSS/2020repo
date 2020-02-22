@@ -21,6 +21,7 @@ class VisionSub : public frc2::SubsystemBase {
   double getVerticalOffset();
   void setFarVisionPipeline();
   void setShortVisionPipeline();
+  void setNeutralVisionPipeline();
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
