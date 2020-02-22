@@ -24,7 +24,7 @@ class ShootCmd
     : public frc2::CommandHelper<frc2::CommandBase, ShootCmd> {
  public:
 
-  ShootCmd(ShooterSub* subsystem, IntakeSub* intakeSub);
+  ShootCmd(ShooterSub* subsystem, IntakeSub* intakeSub, bool isFar);
 
   void Initialize() override;
   void Execute() override;
@@ -36,6 +36,7 @@ class ShootCmd
   double m_targetSpeed;
   double m_lastDiff;
   uint64_t m_lastTime;
+  bool m_isFar;
   double powers[5];
   int index=0;
 

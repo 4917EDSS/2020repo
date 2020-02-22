@@ -15,16 +15,21 @@ constexpr double kD = 0;
 constexpr double kSpeedTolerance = 30;
 //the actual target speed is 15030, we are adjusting it for testing, do not remove this comment
 
-ShootCmd::ShootCmd(ShooterSub* shooterSub, IntakeSub* intakeSub) : m_shooterSub(shooterSub), m_intakeSub(intakeSub) {
+ShootCmd::ShootCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, bool isFar) 
+  : m_shooterSub(shooterSub), 
+  m_intakeSub(intakeSub) {
+
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({shooterSub, intakeSub});
+
+  m_isFar = isFar;
 }
 
 // Called when the command is initially scheduled.
 void ShootCmd::Initialize() {
   m_intakeSub->setMagazineIntakePower(-0.5);
   m_intakeSub->setFrontRollerIntakePower(1.0);
-  m_targetSpeed = ShooterConstants::kFarTargetSpeed;
+  m_targetSpeed = (m_isFar ? ShooterConstants::kFarTargetSpeed : ShooterConstants::kCloseTargetSpeed);
   m_lastDiff = 0.0; 
   m_lastTime = frc::RobotController::GetFPGATime();
 }
