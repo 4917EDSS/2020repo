@@ -61,13 +61,13 @@ void DrivetrainSub::Periodic() {
                     units::meter_t(getRightEncoderDistanceM()));
   m_drive.Feed();
 
-  frc::SmartDashboard::PutNumber("RawEnc R", getRightEncoderRaw());
-  frc::SmartDashboard::PutNumber("RawEnc L", getLeftEncoderRaw());
-  frc::SmartDashboard::PutNumber("CnvrtdEnc R", getRightEncoderDistanceM());
-  frc::SmartDashboard::PutNumber("CnvrtdEnc L", getLeftEncoderDistanceM());
-  frc::SmartDashboard::PutNumber("MtrVlcty R", getRightVelocity());
-  frc::SmartDashboard::PutNumber("MtrVlcty L", getLeftVelocity());
-  frc::SmartDashboard::PutBoolean("High Gear", isShifterInHighGear());
+  // frc::SmartDashboard::PutNumber("RawEnc R", getRightEncoderRaw());
+  // frc::SmartDashboard::PutNumber("RawEnc L", getLeftEncoderRaw());
+  // frc::SmartDashboard::PutNumber("CnvrtdEnc R", getRightEncoderDistanceM());
+  // frc::SmartDashboard::PutNumber("CnvrtdEnc L", getLeftEncoderDistanceM());
+  // frc::SmartDashboard::PutNumber("MtrVlcty R", getRightVelocity());
+  // frc::SmartDashboard::PutNumber("MtrVlcty L", getLeftVelocity());
+  // frc::SmartDashboard::PutBoolean("High Gear", isShifterInHighGear());
   //std::cout << getPose().Translation().X() << " " << getPose().Translation().Y() << " " << getPose().Rotation().Radians() << "\n";
 }
 

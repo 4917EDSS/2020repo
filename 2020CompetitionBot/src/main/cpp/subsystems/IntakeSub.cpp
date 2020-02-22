@@ -23,9 +23,7 @@ IntakeSub::IntakeSub()
 //positive takes balls in negative takes balls to shooter 
 
 // This method will be called once per scheduler run
-void IntakeSub::Periodic() {
-    frc::SmartDashboard::PutBoolean("Intake Sensor", getFrontIntakeSensor());
-}
+void IntakeSub::Periodic() {}
 
 void IntakeSub::setFrontRollerIntakePower(double power) {
     m_frontRollerIntakeMotor.Set(ControlMode::PercentOutput, power);

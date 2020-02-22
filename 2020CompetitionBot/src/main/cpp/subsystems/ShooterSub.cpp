@@ -25,14 +25,11 @@ ShooterSub::ShooterSub()
       m_shooterMotor2.ConfigVelocityMeasurementPeriod(ctre::phoenix::motorcontrol::VelocityMeasPeriod::Period_5Ms);
       m_shooterMotor2.ConfigVelocityMeasurementWindow(4);
   // Implementation of subsystem constructor goes here.
-  frc::SmartDashboard::PutNumber("shooterspeed", 0.0);
 }
 
 void ShooterSub::Periodic() {
   // Implementation of subsystem periodic method goes here.
   frc::SmartDashboard::PutNumber("ShooterSpeed", getSpeed());
-  frc::SmartDashboard::PutNumber("motorCurrent1", m_shooterMotor1.GetOutputCurrent());
-  frc::SmartDashboard::PutNumber("motorCurrent2", m_shooterMotor2.GetOutputCurrent());
   frc::SmartDashboard::PutNumber("Hood Encoder Value",getHoodEncoder());
 }
 
