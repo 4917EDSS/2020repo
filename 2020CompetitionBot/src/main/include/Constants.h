@@ -51,12 +51,9 @@ namespace PneumaticIds {
 }
 
 namespace DioIds {
-    constexpr int kFrontIntakeSensor = 0;
-    constexpr int kPowerCellSensor1 = 1;
-    constexpr int kPowerCellSensor2 = 2;
-    constexpr int kPowerCellSensor3 = 3;
-    constexpr int kPowerCellSensor4 = 4;
-
+    constexpr int kFrontIntakeSensorL = 0;
+    constexpr int kFrontIntakeSensorR = 1;
+    constexpr int kMagazineFullSensor = 2;
 }
 
 namespace DriveConstants {
@@ -114,4 +111,10 @@ namespace ControlPanelConstants {
     constexpr frc::Color kRedTarget = frc::Color(0.473, 0.369, 0.154);
     constexpr frc::Color kYellowTarget = frc::Color(0.361, 0.524, 0.113);
     constexpr double kMaxWheelSpeed = 0.2;
+}
+
+namespace ShooterConstants {
+    constexpr double kMaxRPM = 21750;
+    constexpr double kCloseTargetSpeed = 12000;
+    constexpr double kFarTargetSpeed = 14000;   
 }

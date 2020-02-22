@@ -10,7 +10,6 @@
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 #include "subsystems/ShooterSub.h"
-#include "subsystems/IntakeSub.h"
 
 /**
  * An example command.
@@ -19,27 +18,20 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-
-class ShootCmd
-    : public frc2::CommandHelper<frc2::CommandBase, ShootCmd> {
+class SpinFlywheelCmd
+    : public frc2::CommandHelper<frc2::CommandBase, SpinFlywheelCmd> {
  public:
-
-  ShootCmd(ShooterSub* subsystem, IntakeSub* intakeSub, bool isFar);
+  
+  SpinFlywheelCmd(ShooterSub* subsystem, double targetSpeed);
+  
 
   void Initialize() override;
   void Execute() override;
   void End(bool interrupted) override;
+  bool IsFinished() override;
 
   private:
   ShooterSub* m_shooterSub;
-  IntakeSub* m_intakeSub;
   double m_targetSpeed;
-  double m_lastDiff;
-  uint64_t m_lastTime;
-  bool m_isFar;
-  double powers[5];
-  int index=0;
-  double m_integralDiff;
-
 
 };

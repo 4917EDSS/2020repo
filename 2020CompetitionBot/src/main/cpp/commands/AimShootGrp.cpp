@@ -14,6 +14,7 @@
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
 AimShootGrp::AimShootGrp(VisionSub* visionSub, DrivetrainSub* drivetrainSub, bool isFar, ShooterSub* shooterSub, IntakeSub* intakeSub) { 
   // Add your commands here, e.g.
-  AddCommands(AimSpinFlywheelGrp(visionSub, drivetrainSub, isFar), ShootCmd(shooterSub, intakeSub));
+  AddCommands(AimSpinFlywheelGrp(visionSub, drivetrainSub, shooterSub, isFar), ShootCmd(shooterSub, intakeSub, isFar));
   // AddCommands(FooCommand(), BarCommand());
 }
+  

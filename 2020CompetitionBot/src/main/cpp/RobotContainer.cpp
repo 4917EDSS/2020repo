@@ -21,7 +21,7 @@
 #include <frc2/command/RunCommand.h>
 #include "commands/DriveWithJoystickCmd.h"
 #include "commands/DisableAutoShiftCmd.h"
-#include "commands/ShootCmd.h"
+#include "commands/AimShootGrp.h"
 #include "commands/IntakeCmd.h"
 #include "commands/SetHoodPositionCmd.h"
 #include "commands/SetHoodSpeedCmd.h"
@@ -155,8 +155,11 @@ void RobotContainer::configureButtonBindings() {
 
   //Operator Commands...
 
-  frc2::JoystickButton shooterBtn(&m_operatorController, kShooterFarBtn);
-  shooterBtn.WhenHeld(ShootCmd(&m_shooterSub, &m_intakeSub));
+  frc2::JoystickButton shooterFarBtn(&m_operatorController, kShooterFarBtn);
+  shooterFarBtn.WhenHeld(AimShootGrp(&m_visionSub, &m_drivetrainSub, true, &m_shooterSub, &m_intakeSub));
+
+  frc2::JoystickButton shooterCloseBtn(&m_operatorController, kShooterCloseBtn);
+  shooterCloseBtn.WhenHeld(AimShootGrp(&m_visionSub, &m_drivetrainSub, false, &m_shooterSub, &m_intakeSub));
 
   frc2::JoystickButton intakeBtn(&m_operatorController, kIntakeBtn);
   intakeBtn.WhenHeld(IntakeCmd(&m_intakeSub));
