@@ -5,25 +5,29 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/DisableAutoShiftCmd.h"
-#include "subsystems/DrivetrainSub.h"
+#include "commands/SpinFlywheelCmd.h"
+#include "commands/ShootCmd.h"
+#include "Constants.h"
 
-DisableAutoShiftCmd::DisableAutoShiftCmd(DrivetrainSub* drivetrainSub): m_drivetrainSub(drivetrainSub) {
+SpinFlywheelCmd::SpinFlywheelCmd(ShooterSub* shooterSub, double targetSpeed) 
+  : m_shooterSub(shooterSub),
+    m_targetSpeed(targetSpeed) {
   // Use addRequirements() here to declare subsystem dependencies.
+  AddRequirements({shooterSub});
 }
+
 // Called when the command is initially scheduled.
-void DisableAutoShiftCmd::Initialize() {
-  m_drivetrainSub->disableAutoShift();
-  m_drivetrainSub->shiftDown();
+void SpinFlywheelCmd::Initialize() {
+    double feed = m_targetSpeed / ShooterConstants::kMaxRPM;;
+
+  m_shooterSub->setSpeed(feed);
 }
 
 // Called repeatedly when this Command is scheduled to run
-void DisableAutoShiftCmd::Execute() {}
+void SpinFlywheelCmd::Execute() {}
 
 // Called once the command ends or is interrupted.
-void DisableAutoShiftCmd::End(bool interrupted) {
-  m_drivetrainSub->enableAutoShift();
-}
+void SpinFlywheelCmd::End(bool interrupted) {}
 
 // Returns true when the command should end.
-bool DisableAutoShiftCmd::IsFinished() { return false; }
+bool SpinFlywheelCmd::IsFinished() { return false; }

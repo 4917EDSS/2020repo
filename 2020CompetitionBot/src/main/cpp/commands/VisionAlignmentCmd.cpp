@@ -27,6 +27,7 @@ VisionAlignmentCmd::VisionAlignmentCmd(VisionSub* visionSub, DrivetrainSub* driv
 
 void VisionAlignmentCmd::Initialize() {
   printf("vision started");
+  m_lastX = 0;
   m_drivetrainSub->shiftDown();
   if(m_isFar) {
     m_visionSub->setFarVisionPipeline();
@@ -74,6 +75,7 @@ void VisionAlignmentCmd::Execute() {
 void VisionAlignmentCmd::End(bool interrupted) {
   m_drivetrainSub->tankDriveVolts(0.0, 0.0);
   printf("vision ended");
+  m_visionSub->setNeutralVisionPipeline();
 }
 
 // Returns true when the command should end.

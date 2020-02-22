@@ -21,6 +21,10 @@ void VisionSub::setShortVisionPipeline() {
   nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 1.0);
 }
 
+void VisionSub::setNeutralVisionPipeline() {
+  nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("pipeline", 0.0);
+}
+
 double VisionSub::getVisionTarget() {
   return nt::NetworkTableInstance::GetDefault().GetTable("limelight")->GetNumber("tx", 0.0);
 }
