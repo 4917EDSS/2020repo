@@ -5,26 +5,27 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/DisableAutoShiftCmd.h"
-#include "subsystems/DrivetrainSub.h"
+#include "commands/KillEverythingCmd.h"
 
-DisableAutoShiftCmd::DisableAutoShiftCmd(DrivetrainSub* drivetrainSub): m_drivetrainSub(drivetrainSub) {
+
+KillEverythingCmd::KillEverythingCmd(ClimberSub* climberSub, ControlPanelSub* controlPanelSub, DrivetrainSub* driveTrainSub, IntakeSub* intakeSub,
+ ShooterSub* shooterSub, VisionSub* visionSub){
   // Use addRequirements() here to declare subsystem dependencies.
-  AddRequirements({drivetrainSub});
+  AddRequirements({climberSub, controlPanelSub, driveTrainSub, intakeSub, shooterSub, visionSub});
+
+
 }
 
 // Called when the command is initially scheduled.
-void DisableAutoShiftCmd::Initialize() {
-  m_drivetrainSub->disableAutoShift();
-}
+void KillEverythingCmd::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void DisableAutoShiftCmd::Execute() {}
+void KillEverythingCmd::Execute() {}
 
 // Called once the command ends or is interrupted.
-void DisableAutoShiftCmd::End(bool interrupted) {
-  m_drivetrainSub->enableAutoShift();
+void KillEverythingCmd::End(bool interrupted) {
+
 }
 
 // Returns true when the command should end.
-bool DisableAutoShiftCmd::IsFinished() { return false; }
+bool KillEverythingCmd::IsFinished() { return true; }

@@ -13,13 +13,12 @@ constexpr double kP = 0.00015;
 constexpr double kD = 0;
 constexpr double kSpeedTolerance = 30;
 constexpr double kMaxRPM = 21750;
-constexpr double kMeasuredTargetSpeed = 13675;
+constexpr double kMeasuredTargetSpeed = 20000;
 //the actual target speed is 15030, we are adjusting it for testing, do not remove this comment
 
 ShootCmd::ShootCmd(ShooterSub* shooterSub, IntakeSub* intakeSub) : m_shooterSub(shooterSub), m_intakeSub(intakeSub) {
   // Use addRequirements() here to declare subsystem dependencies.
-  AddRequirements({shooterSub});
-  AddRequirements({intakeSub});
+  AddRequirements({shooterSub, intakeSub});
 }
 
 // Called when the command is initially scheduled.
