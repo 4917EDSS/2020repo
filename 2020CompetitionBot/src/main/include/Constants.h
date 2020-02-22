@@ -51,12 +51,9 @@ namespace PneumaticIds {
 }
 
 namespace DioIds {
-    constexpr int kFrontIntakeSensor = 0;
-    constexpr int kPowerCellSensor1 = 1;
-    constexpr int kPowerCellSensor2 = 2;
-    constexpr int kPowerCellSensor3 = 3;
-    constexpr int kPowerCellSensor4 = 4;
-
+    constexpr int kFrontIntakeSensorL = 0;
+    constexpr int kFrontIntakeSensorR = 1;
+    constexpr int kMagazineFullSensor = 2;
 }
 
 namespace DriveConstants {

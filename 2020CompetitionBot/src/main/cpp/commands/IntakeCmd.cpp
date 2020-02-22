@@ -16,15 +16,10 @@ IntakeCmd::IntakeCmd(IntakeSub* intakeSub) : m_intakeSub(intakeSub), m_state(0),
 void IntakeCmd::Initialize() {
   m_state = 0;
   m_intakeSub->setFrontRollerIntakePower(1.0);
-  //Annon's garbage trash that he made me put back in so we could run the stupid frigging practice bot
-  //because our good bot is reliant on sensors to run, as it SHOULD be, but the dumb practice bot 
-  //has no sensors because apparently we like overcomplicating things, so, delete this as soon as it's fixed, 
-  //or just if you feel like it, I don't care, just delete it
-  m_intakeSub->setMagazineIntakePower(1.0);
 }
 
 void IntakeCmd::Execute() {
-  /*switch (m_state)
+  switch (m_state)
   {
   case 0: // state 0, waiting for a new ball to come into the robot. Magazine isn't full
     if(m_intakeSub->getFrontIntakeSensor()) {
@@ -42,11 +37,11 @@ void IntakeCmd::Execute() {
   break;
     default: m_intakeSub->setMagazineIntakePower(0.0);
     break;
-  }*/
+  }
 }
 
 bool IntakeCmd::IsFinished() { 
-  if(m_intakeSub->getFrontIntakeSensor() && m_intakeSub->getPowerCellSensor4()) {
+  if(m_intakeSub->getFrontIntakeSensor() && m_intakeSub->getMagazineFullSensor()) {
     // There are 5 powercells in the robot 
     return true;
   }

@@ -39,6 +39,7 @@ class ShootCmd
   bool m_isFar;
   double powers[5];
   int index=0;
+  double m_integralDiff;
 
 
 };
