@@ -54,14 +54,17 @@ double ShootCmd::runPID(){
 
 void ShootCmd::Execute() {
   m_shooterSub->setSpeed(runPID());
-  double currentDiff = m_targetSpeed - m_shooterSub->getSpeed();
-  frc::SmartDashboard::PutNumber("currentDiff", currentDiff);
-  if (fabs(currentDiff) <= kSpeedTolerance) {
-    m_intakeSub->setMagazineIntakePower(-0.75);
-  }
-  else{
-    m_intakeSub->setMagazineIntakePower(0.0);
-  }
+  m_intakeSub->setMagazineIntakePower(-0.75);//\this is just for testing what constant speed is needed to allow for a constant movement of the shooter
+  // double currentDiff = m_targetSpeed - m_shooterSub->getSpeed();
+  // frc::SmartDashboard::PutNumber("currentDiff", currentDiff);
+  // if (fabs(currentDiff) <= kSpeedTolerance) {
+  //   m_intakeSub->setMagazineIntakePower(-0.75);
+  // }
+  // else{
+  //   m_intakeSub->setMagazineIntakePower(0.0);
+  // }
+
+
   // // We need to change the target speed based on how close the target is (using the y value on limelight)
   // if(m_index < 5){
   //   double speed = runPID();
