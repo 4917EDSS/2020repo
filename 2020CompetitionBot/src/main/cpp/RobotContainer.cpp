@@ -36,6 +36,7 @@
 #include "commands/TurnControlPanelToColourCmd.h"
 #include "subsystems/VisionSub.h"
 #include "commands/KillEverythingCmd.h"
+#include "commands/RamseteCmd.h"
 
 
 /*
@@ -89,9 +90,8 @@ RobotContainer::RobotContainer() {
   // Configure the button bindings
   configureButtonBindings();
   autoChooserSetup();
-  frc::SmartDashboard::PutData("Set Hood none", new SetHoodPositionCmd(&m_shooterSub,0.0));
-  frc::SmartDashboard::PutData("Set Hood Medium", new SetHoodPositionCmd(&m_shooterSub,12000.0));
-  frc::SmartDashboard::PutData("Set Hood High", new SetHoodPositionCmd(&m_shooterSub,24000.0));
+  frc::SmartDashboard::PutData("Set Hood High", new SetHoodPositionCmd(&m_shooterSub,0.0));
+  frc::SmartDashboard::PutData("Set Hood Low", new SetHoodPositionCmd(&m_shooterSub,50876));
   frc::SmartDashboard::PutNumber("flywheelSpeed", 0.0);
   m_drivetrainSub.SetDefaultCommand(DriveWithJoystickCmd(&m_drivetrainSub, &m_driverController));
   m_shooterSub.SetDefaultCommand(SetHoodSpeedCmd(&m_shooterSub, &m_operatorController));
@@ -102,28 +102,26 @@ RobotContainer::RobotContainer() {
   // {&m_shooterSub}));
 }
 
-void RobotContainer::generateTrajectories() {
-  frc::DifferentialDriveVoltageConstraint autoVoltageConstraint(
-    frc::SimpleMotorFeedforward < units::meters > (
-      DriveConstants::ks, DriveConstants::kv, DriveConstants:: ka),
-        DriveConstants::kDriveKinematics, 10_V);
-        frc::TrajectoryConfig config(AutoConstants::kMaxSpeed, AutoConstants::kMaxAcceleration);
-        config.SetKinematics(DriveConstants::kDriveKinematics);
-        config.AddConstraint(autoVoltageConstraint);
-        auto exampleTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
-          frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
-          {frc::Translation2d(1_m, 1_m), frc::Translation2d(2_m, -1_m)},
-          frc::Pose2d(3_m, 0_m, frc::Rotation2d(0_deg)),
-          config);
-          }
-
 void RobotContainer::autoChooserSetup(){
-  m_autoChooser.AddOption("SecondAuto", new IntakeCmd(&m_intakeSub));
-  m_autoChooser.SetDefaultOption("VictoryLap", new IntakeCmd(&m_intakeSub));
+  frc::DifferentialDriveVoltageConstraint autoVoltageConstraint(
+    frc::SimpleMotorFeedforward<units::meters> (DriveConstants::ks, DriveConstants::kv, DriveConstants:: ka),
+    DriveConstants::kDriveKinematics, 
+    10_V);
 
+  frc::TrajectoryConfig config(AutoConstants::kMaxSpeed, AutoConstants::kMaxAcceleration);
+  config.SetKinematics(DriveConstants::kDriveKinematics);
+  config.AddConstraint(autoVoltageConstraint);
+
+  auto exampleTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
+    frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
+      {frc::Translation2d(1_m, 1_m), frc::Translation2d(2_m, -1_m)},
+    frc::Pose2d(3_m, 0_m, frc::Rotation2d(0_deg)),
+    config);
+
+  m_autoChooser.AddOption("Ramsete", new RamseteCmd(exampleTrajectory, &m_drivetrainSub));
+  m_autoChooser.SetDefaultOption("IntakeCmd", new IntakeCmd(&m_intakeSub));
 
   frc::SmartDashboard::PutData("Auto Chooser", &m_autoChooser);
-  frc::SmartDashboard::PutNumber("shooterspeed", 0);
 }
 
 void RobotContainer::configureButtonBindings() {
@@ -194,7 +192,6 @@ void RobotContainer::configureButtonBindings() {
 }
 
 frc2::Command* RobotContainer::getAutonomousCommand() {
-  // An example command will be run in autonomous
 
-  return m_autonomousCommand;
+  return m_autoChooser.GetSelected();
 }

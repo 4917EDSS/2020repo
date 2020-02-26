@@ -57,18 +57,18 @@ namespace DioIds {
 }
 
 namespace DriveConstants {
-    constexpr bool kLeftEncoderReversed = false;
-    constexpr bool RightEncoderReversed = true;
+    // constexpr bool kLeftEncoderReversed = false;
+    // constexpr bool RightEncoderReversed = true;
 
     constexpr auto kTrackwidth = 0.67_m; //this is the human measured constant
     //this is the characterized number: 0.797108131
     extern const frc::DifferentialDriveKinematics kDriveKinematics;
 
-    constexpr int kEncoderCPR = 1024;
-    constexpr double kWheelDiameterInches = 8;
-     // Assumes the encoders are directly mounted on the wheel shafts
-    constexpr double kEncoderDistancePerPulse =
-      (kWheelDiameterInches * wpi::math::pi) / static_cast<double>(kEncoderCPR);
+    // constexpr int kEncoderCPR = 1024;
+    // constexpr double kWheelDiameterInches = 8;
+    //  // Assumes the encoders are directly mounted on the wheel shafts
+    // constexpr double kEncoderDistancePerPulse =
+    //   (kWheelDiameterInches * wpi::math::pi) / static_cast<double>(kEncoderCPR);
     constexpr int kSmartCurrentLimit = 30;
 
     constexpr bool kGyroReversed = true;
@@ -77,8 +77,7 @@ namespace DriveConstants {
     constexpr auto kv = 3.95 * 1_V * 1_s / 1_m;
     constexpr auto ka = 0.428 * 1_V * 1_s * 1_s / 1_m;
 
-    // Example value only - as above, this must be tuned for your drive!
-    constexpr double kPDriveVel = 1.73;
+    constexpr double kPDriveVel = 14.3;
 }  // namespace DriveConstants
 
 namespace AutoConstants {
@@ -114,6 +113,8 @@ namespace ControlPanelConstants {
 }
 
 namespace ShooterConstants {
+    constexpr double kHighHood = 0.0;
+    constexpr double kLowHood = 19152.0;
     constexpr double kMaxRPM = 21750;
     constexpr double kCloseTargetSpeed = 12000;
     constexpr double kFarTargetSpeed = 14000;   

@@ -9,27 +9,22 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include "subsystems/VisionSub.h"
+#include <frc/trajectory/Trajectory.h>
 #include "subsystems/DrivetrainSub.h"
+#include <frc2/command/RamseteCommand.h>
 
-
-class VisionAlignmentCmd
-    : public frc2::CommandHelper<frc2::CommandBase, VisionAlignmentCmd> {
+/**
+ * An example command.
+ *
+ * <p>Note that this extends CommandHelper, rather extending CommandBase
+ * directly; this is crucially important, or else the decorator functions in
+ * Command will *not* work!
+ */
+class RamseteCmd
+    : public frc2::RamseteCommand{
  public:
-  VisionAlignmentCmd(VisionSub* visionSub, DrivetrainSub* drivetrainSub, bool m_isFar);
-
-  void Initialize() override;
-
-  void Execute() override;
-
+  RamseteCmd(Trajectory t, DrivetrainSub* drivetrainsub);
   void End(bool interrupted) override;
-
-  bool IsFinished() override;
-
- private:
-  VisionSub* m_visionSub;
+  private:
   DrivetrainSub* m_drivetrainSub;
-  uint64_t m_startTime;
-  bool m_isFar;
-  double m_lastX;
 };

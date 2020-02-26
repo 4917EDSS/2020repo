@@ -45,13 +45,13 @@ void ShooterSub::setHoodSpeed(double hoodSpeed) {
 }
 
 double ShooterSub::getHoodEncoder() {
-  return m_hoodMotor.GetSelectedSensorPosition()*-1;
+  return m_hoodMotor.GetSelectedSensorPosition();
 }
 
 // Gets maximum absolute speeds of both motors
 int ShooterSub::getSpeed() {
   int motor1Speed =  m_shooterMotor1.GetSelectedSensorVelocity();
   int motor2Speed =  m_shooterMotor2.GetSelectedSensorVelocity();
-  int overallSpeed = std::max(std::abs(motor1Speed), std::abs(motor2Speed));
-  return overallSpeed;
+ // int overallSpeed = std::max(std::abs(motor1Speed), std::abs(motor2Speed));
+  return std::abs(motor2Speed);
 }

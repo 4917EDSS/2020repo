@@ -33,7 +33,6 @@ class DrivetrainSub : public frc2::SubsystemBase {
    */
   void Periodic() override;
   void setDrivetrainEncoderZero();
-  void drive(double lSpeed, double rSpeed);
   void shiftUp();
   void shiftDown();
   bool isShifterInHighGear();
@@ -64,7 +63,8 @@ class DrivetrainSub : public frc2::SubsystemBase {
    * @param left the commanded left output
    * @param right the commanded right output
    */
-  void tankDriveVolts(double left, double right);
+  void tankDrive(double left, double right);
+  void tankDriveVolts(units::volt_t left, units::volt_t right);
   /**
    * Resets the drive encoders to currently read a position of 0.
    */
