@@ -7,6 +7,7 @@
 
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "commands/VisionAlignmentCmd.h"
+#include <frc/RobotController.h>
 
 constexpr double kP = 0.5;
 constexpr double kMaxPower = 0.5;
@@ -27,6 +28,7 @@ VisionAlignmentCmd::VisionAlignmentCmd(VisionSub* visionSub, DrivetrainSub* driv
 
 void VisionAlignmentCmd::Initialize() {
   printf("vision started");
+  m_startTime = frc::RobotController::GetFPGATime();
   m_lastX = 0;
   m_drivetrainSub->shiftDown();
   if(m_isFar) {
@@ -80,6 +82,9 @@ void VisionAlignmentCmd::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool VisionAlignmentCmd::IsFinished() { 
+  if((frc::RobotController::GetFPGATime() - m_startTime) < 500000) {
+    return false;
+  }
   double x = m_visionSub->getVisionTarget();
   double currentVelocity = (x - m_lastX);
   m_lastX = x;

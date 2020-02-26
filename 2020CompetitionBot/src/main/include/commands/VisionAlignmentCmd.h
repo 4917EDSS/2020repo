@@ -29,6 +29,7 @@ class VisionAlignmentCmd
  private:
   VisionSub* m_visionSub;
   DrivetrainSub* m_drivetrainSub;
+  uint64_t m_startTime;
   bool m_isFar;
   double m_lastX;
 };
