@@ -59,7 +59,6 @@ void DrivetrainSub::Periodic() {
   m_odometry.Update(frc::Rotation2d(units::degree_t(getHeading())),
                     units::meter_t(getLeftEncoderDistanceM()),
                     units::meter_t(getRightEncoderDistanceM()));
-  m_drive.Feed();
 
   // frc::SmartDashboard::PutNumber("RawEnc R", getRightEncoderRaw());
   // frc::SmartDashboard::PutNumber("RawEnc L", getLeftEncoderRaw());
@@ -103,6 +102,7 @@ bool DrivetrainSub::isShifterInHighGear() {
 void DrivetrainSub::tankDriveVolts(units::volt_t leftVolts, units::volt_t rightVolts) {
   m_leftMotors.SetVoltage(leftVolts);
   m_rightMotors.SetVoltage(-rightVolts);
+  m_drive.Feed();
 }
 
 void DrivetrainSub::tankDrive(double left, double right) {

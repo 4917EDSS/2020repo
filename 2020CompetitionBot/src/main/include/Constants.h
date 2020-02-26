@@ -57,18 +57,18 @@ namespace DioIds {
 }
 
 namespace DriveConstants {
-    constexpr bool kLeftEncoderReversed = false;
-    constexpr bool RightEncoderReversed = true;
+    // constexpr bool kLeftEncoderReversed = false;
+    // constexpr bool RightEncoderReversed = true;
 
     constexpr auto kTrackwidth = 0.67_m; //this is the human measured constant
     //this is the characterized number: 0.797108131
     extern const frc::DifferentialDriveKinematics kDriveKinematics;
 
-    constexpr int kEncoderCPR = 1024;
-    constexpr double kWheelDiameterInches = 8;
-     // Assumes the encoders are directly mounted on the wheel shafts
-    constexpr double kEncoderDistancePerPulse =
-      (kWheelDiameterInches * wpi::math::pi) / static_cast<double>(kEncoderCPR);
+    // constexpr int kEncoderCPR = 1024;
+    // constexpr double kWheelDiameterInches = 8;
+    //  // Assumes the encoders are directly mounted on the wheel shafts
+    // constexpr double kEncoderDistancePerPulse =
+    //   (kWheelDiameterInches * wpi::math::pi) / static_cast<double>(kEncoderCPR);
     constexpr int kSmartCurrentLimit = 30;
 
     constexpr bool kGyroReversed = true;
