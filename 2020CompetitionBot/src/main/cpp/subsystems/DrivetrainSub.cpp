@@ -100,7 +100,12 @@ bool DrivetrainSub::isShifterInHighGear() {
   return m_shifter.Get();
 }
 
-void DrivetrainSub::tankDriveVolts(double left, double right) {
+void DrivetrainSub::tankDriveVolts(units::volt_t leftVolts, units::volt_t rightVolts) {
+  m_leftMotors.SetVoltage(leftVolts);
+  m_rightMotors.SetVoltage(-rightVolts);
+}
+
+void DrivetrainSub::tankDrive(double left, double right) {
   m_leftMotors.Set(left);
   m_rightMotors.Set(-right);
 }

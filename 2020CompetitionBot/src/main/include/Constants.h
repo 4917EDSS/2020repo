@@ -77,8 +77,7 @@ namespace DriveConstants {
     constexpr auto kv = 3.95 * 1_V * 1_s / 1_m;
     constexpr auto ka = 0.428 * 1_V * 1_s * 1_s / 1_m;
 
-    // Example value only - as above, this must be tuned for your drive!
-    constexpr double kPDriveVel = 1.73;
+    constexpr double kPDriveVel = 14.3;
 }  // namespace DriveConstants
 
 namespace AutoConstants {
