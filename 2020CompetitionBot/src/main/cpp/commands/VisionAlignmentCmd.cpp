@@ -65,15 +65,15 @@ void VisionAlignmentCmd::Execute() {
   printf("vision x=%f power=%f\n", x, power);
   if(fabs(x) > VisionConstants::kXAllignmentTolerence)
   { 
-    m_drivetrainSub->tankDriveVolts((-power), (power));
+    m_drivetrainSub->tankDrive((-power), (power));
   } else {
-    m_drivetrainSub->tankDriveVolts(0.0, 0.0);
+    m_drivetrainSub->tankDrive(0.0, 0.0);
   }
 }
 
 // Called once the command ends or is interrupted.
 void VisionAlignmentCmd::End(bool interrupted) {
-  m_drivetrainSub->tankDriveVolts(0.0, 0.0);
+  m_drivetrainSub->tankDrive(0.0, 0.0);
   printf("vision ended");
   m_visionSub->setNeutralVisionPipeline();
 }
