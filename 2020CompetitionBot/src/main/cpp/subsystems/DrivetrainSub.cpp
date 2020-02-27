@@ -31,12 +31,6 @@ DrivetrainSub::DrivetrainSub()
     m_odometry{frc::Rotation2d(units::degree_t(getHeading()))},
     m_shifter{PneumaticIds::kShifterId} {
 
-// TODO: Do we need encoder to be on the output shaft vs on the motor?
-// Set the distance per pulse for the encoders
-// WARNING!  This value can get erased during brownouts.  Safer to do the conversion in the getLeftEncoder and getRightEncoder functions TODO.
-   m_shifter.Set(false);
-  setDrivetrainEncoderZero();
-
   m_rightMotor1.SetSmartCurrentLimit(DriveConstants::kSmartCurrentLimit);
   m_rightMotor2.SetSmartCurrentLimit(DriveConstants::kSmartCurrentLimit);
   m_rightMotor3.SetSmartCurrentLimit(DriveConstants::kSmartCurrentLimit);
@@ -47,10 +41,9 @@ DrivetrainSub::DrivetrainSub()
   m_leftMotor3.SetSmartCurrentLimit(DriveConstants::kSmartCurrentLimit);
   m_leftMotor4.SetSmartCurrentLimit(DriveConstants::kSmartCurrentLimit);
 
-
+  init();
   frc::SmartDashboard::PutNumber("drive power", 0);
 
-  arcadeDrive(0.2, 0);
 }
 
 // This method will be called once per scheduler run
@@ -70,7 +63,15 @@ void DrivetrainSub::Periodic() {
   //std::cout << getPose().Translation().X() << " " << getPose().Translation().Y() << " " << getPose().Rotation().Radians() << "\n";
 }
 
-void DrivetrainSub::setDrivetrainEncoderZero(){
+void DrivetrainSub::init() {
+  m_gyro.Reset();
+  shiftDown();
+  setDrivetrainEncoderZero();
+  tankDrive(0.0, 0.0);
+  m_odometry.ResetPosition(frc::Pose2d(), frc::Rotation2d());
+}
+
+void DrivetrainSub::setDrivetrainEncoderZero() {
   m_rightMotor1.GetEncoder().SetPosition(0);
   m_rightMotor2.GetEncoder().SetPosition(0);
   m_rightMotor3.GetEncoder().SetPosition(0);

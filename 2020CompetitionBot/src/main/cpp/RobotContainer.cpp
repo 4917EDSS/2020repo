@@ -102,7 +102,11 @@ RobotContainer::RobotContainer() {
   // {&m_shooterSub}));
 }
 
-void RobotContainer::autoChooserSetup(){
+void RobotContainer::initSubsystems() {
+  m_drivetrainSub.init();
+}
+
+void RobotContainer::autoChooserSetup() {
   frc::DifferentialDriveVoltageConstraint autoVoltageConstraint(
     frc::SimpleMotorFeedforward<units::meters> (DriveConstants::ks, DriveConstants::kv, DriveConstants:: ka),
     DriveConstants::kDriveKinematics, 
