@@ -8,11 +8,11 @@
 #include "commands/TurnControlPanelThreeTimesCmd.h"
 #include "constants.h"
 
-TurnControlPanelThreeTimesCmd::TurnControlPanelThreeTimesCmd(ControlPanelSub* controlPanelSub) : m_controlPanelSub(controlPanelSub) {
-
+TurnControlPanelThreeTimesCmd::TurnControlPanelThreeTimesCmd(ControlPanelSub* controlPanelSub)
+  : m_controlPanelSub(controlPanelSub)
+  {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({controlPanelSub});
-  
 }
 
 // Called when the command is initially scheduled.

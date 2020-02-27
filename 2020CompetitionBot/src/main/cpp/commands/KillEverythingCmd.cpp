@@ -8,12 +8,10 @@
 #include "commands/KillEverythingCmd.h"
 
 
-KillEverythingCmd::KillEverythingCmd(ClimberSub* climberSub, ControlPanelSub* controlPanelSub, DrivetrainSub* driveTrainSub, IntakeSub* intakeSub,
- ShooterSub* shooterSub, VisionSub* visionSub){
+KillEverythingCmd::KillEverythingCmd(ClimberSub* climberSub, ControlPanelSub* controlPanelSub,
+  DrivetrainSub* driveTrainSub, IntakeSub* intakeSub, ShooterSub* shooterSub, VisionSub* visionSub) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({climberSub, controlPanelSub, driveTrainSub, intakeSub, shooterSub, visionSub});
-
-
 }
 
 // Called when the command is initially scheduled.

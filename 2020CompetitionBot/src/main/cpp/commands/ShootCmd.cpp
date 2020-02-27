@@ -17,12 +17,11 @@ constexpr double kSpeedTolerance = 110.0;
 
 ShootCmd::ShootCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, bool isFar) 
   : m_shooterSub(shooterSub), 
-  m_intakeSub(intakeSub) {
-
+    m_intakeSub(intakeSub),
+    m_isFar(isFar)
+  {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({shooterSub, intakeSub});
-
-  m_isFar = isFar;
 }
 
 // Called when the command is initially scheduled.

@@ -9,7 +9,10 @@
 constexpr double kP=0.01;
 constexpr double kTolerance=50.0;
 
-SetHoodPositionCmd::SetHoodPositionCmd(ShooterSub* shooterSub, double targetPosition) : m_shooterSub(shooterSub), m_targetPosition(targetPosition) {
+SetHoodPositionCmd::SetHoodPositionCmd(ShooterSub* shooterSub, double targetPosition)
+  : m_shooterSub(shooterSub),
+    m_targetPosition(targetPosition)
+  {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({shooterSub});
 }

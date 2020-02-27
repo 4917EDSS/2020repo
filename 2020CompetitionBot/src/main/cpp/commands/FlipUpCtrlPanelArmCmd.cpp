@@ -9,14 +9,16 @@
 #include <frc/RobotController.h>
 
 
-FlipUpCtrlPanelArmCmd::FlipUpCtrlPanelArmCmd(ControlPanelSub* controlPanelSub): m_controlPanelSub(controlPanelSub) {
+FlipUpCtrlPanelArmCmd::FlipUpCtrlPanelArmCmd(ControlPanelSub* controlPanelSub)
+  : m_controlPanelSub(controlPanelSub)
+  {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({controlPanelSub});
 }
 
 // Called when the command is initially scheduled.
 void FlipUpCtrlPanelArmCmd::Initialize() {
-  m_controlPanelSub->togglePosition(true);
+   m_controlPanelSub->togglePosition(true);
    m_initializedTime = frc::RobotController::GetFPGATime();
   
 
