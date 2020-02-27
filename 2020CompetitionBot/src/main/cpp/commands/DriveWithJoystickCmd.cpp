@@ -15,7 +15,10 @@ constexpr int kSensitivityPower=2;
 constexpr double kMaxForwardAccel = 0.045;
 constexpr double kMaxTurnAccel = 0.08;
 constexpr double kDeadBand = 0.03;
-DriveWithJoystickCmd::DriveWithJoystickCmd(DrivetrainSub* drivetrainSub, frc::Joystick* joystick) : m_drivetrainSub(drivetrainSub), m_joystick(joystick){
+DriveWithJoystickCmd::DriveWithJoystickCmd(DrivetrainSub* drivetrainSub, frc::Joystick* joystick)
+  : m_drivetrainSub(drivetrainSub),
+    m_joystick(joystick)
+  {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({drivetrainSub});
 }
@@ -65,7 +68,7 @@ double capAcceleration (double power, double powerPrevious, double maxAccel){
 void DriveWithJoystickCmd::Execute() {
   double forwardPower=m_joystick->GetY();
   double turnPower=-m_joystick->GetZ();
-
+  
   forwardPower =  adjustSensitivity(forwardPower);
   turnPower = adjustSensitivity(turnPower);
 

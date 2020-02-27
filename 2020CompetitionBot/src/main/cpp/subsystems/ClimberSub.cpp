@@ -9,7 +9,7 @@
 #include "Constants.h"
 
 ClimberSub::ClimberSub() :
-    m_elevatorMotor1{CanIds::kElevatorMotor, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
+    m_armMotor{CanIds::kElevatorMotor, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
     m_climbReleaseLatch{PneumaticIds::kClimbReleaseLatch},
     m_climbBalanceMotor{CanIds::kClimbBalanceMotor} {
 }
@@ -17,12 +17,12 @@ ClimberSub::ClimberSub() :
 // This method will be called once per scheduler run
 void ClimberSub::Periodic() {}
 
-void ClimberSub::togglePosition(bool position) {
+void ClimberSub::releaseLatch(bool position) {
     m_climbReleaseLatch.Set(position);
 }
 
-void ClimberSub::setWinchSpeed(double speed) {
-    m_elevatorMotor1.Set(speed);
+void ClimberSub::setWinchPower(double power) {
+    m_armMotor.Set(power);
 }
 
 void ClimberSub::moveOnGenSwitch(double power) {

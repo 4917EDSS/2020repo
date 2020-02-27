@@ -9,19 +9,19 @@
 #include "commands/ClimbBalanceCmd.h"
 #include "Constants.h"
 
-ClimbBalanceCmd::ClimbBalanceCmd(ClimberSub* climbSub, bool isRight) {
+ClimbBalanceCmd::ClimbBalanceCmd(ClimberSub* climbSub, bool isRight)
+  : m_climbSub(climbSub),
+    m_isRight(isRight)
+  {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({climbSub});
 
   frc::SmartDashboard::PutNumber("MoveOnGenSwitchPower", ClimbConstants::kMoveOnGenSwitchPower);
-
-  m_isRight = isRight;
 }
 
 // Called when the command is initially scheduled.
 // We just turn the power on and leave it until command is interrupted calling End
 void ClimbBalanceCmd::Initialize() {
-
   // Determine the power to apply to motor
   double p = frc::SmartDashboard::GetNumber("MoveOnGenSwitchPower", ClimbConstants::kMoveOnGenSwitchPower);
   if (m_isRight) {
@@ -29,15 +29,15 @@ void ClimbBalanceCmd::Initialize() {
   }
 
   // Apply power
-  m_climbSub->moveOnGenSwitch(p);
+    m_climbSub->moveOnGenSwitch(p);
 }
 
 // Called repeatedly when this Command is scheduled to run
 void ClimbBalanceCmd::Execute() {
 }
 
-// Relying on command inrerruption to end thi
-void ClimbBalanceCmd::End(){
+// Relying on command inrerruption to end this
+void ClimbBalanceCmd::End(bool interrupted) {
   // Turn off motor when this command is interrupted
   m_climbSub->moveOnGenSwitch(0.0);
 }

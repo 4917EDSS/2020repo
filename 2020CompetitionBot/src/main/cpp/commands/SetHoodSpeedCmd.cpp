@@ -7,7 +7,11 @@
 
 #include "commands/SetHoodSpeedCmd.h"
 
-SetHoodSpeedCmd::SetHoodSpeedCmd(ShooterSub* shooterSub, frc::Joystick* joystick) : m_shooterSub(shooterSub), m_joystick(joystick) {
+SetHoodSpeedCmd::SetHoodSpeedCmd(ShooterSub* shooterSub, frc::Joystick* joystick)
+  : m_shooterSub(shooterSub),
+    m_joystick(joystick)
+  {
+  // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({shooterSub});
 }
 

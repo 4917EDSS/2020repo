@@ -21,7 +21,7 @@
 class TurnControlPanelToColourCmd
     : public frc2::CommandHelper<frc2::CommandBase, TurnControlPanelToColourCmd> {
  public:
-  TurnControlPanelToColourCmd();
+  TurnControlPanelToColourCmd(ControlPanelSub* controlPanelSub);
 
   void Initialize() override;
 

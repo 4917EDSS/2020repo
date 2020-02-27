@@ -21,14 +21,17 @@
 class ClimbWinchCmd
     : public frc2::CommandHelper<frc2::CommandBase, ClimbWinchCmd> {
  public:
-  ClimbWinchCmd(ClimberSub* climbSub);
+  ClimbWinchCmd(ClimberSub* climbSub, bool isUp);
+
+  void Initialize();
 
   void Execute() override;
 
-  void End();
+  void End(bool interrupted) override;
 
   bool IsFinished() override;
 
   private:
   ClimberSub* m_climbSub;
+  bool m_isUp;
 };

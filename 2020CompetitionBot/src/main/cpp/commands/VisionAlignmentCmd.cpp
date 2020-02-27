@@ -9,17 +9,17 @@
 #include "commands/VisionAlignmentCmd.h"
 #include <frc/RobotController.h>
 
-constexpr double kP = 0.5;
+constexpr double kP = 0.05;
 constexpr double kMaxPower = 0.5;
 constexpr double kMinPower = kMinimumTurningPower;
 constexpr double kMaxEndVelocity = 0.1;  // In degrees per iteration 
 
-VisionAlignmentCmd::VisionAlignmentCmd(VisionSub* visionSub, DrivetrainSub* drivetrainSub, bool isFar) :
-  m_visionSub(visionSub),
-  m_drivetrainSub(drivetrainSub),
-  m_isFar(isFar),
-  m_lastX(0)
-{
+VisionAlignmentCmd::VisionAlignmentCmd(VisionSub* visionSub, DrivetrainSub* drivetrainSub, bool isFar)
+  : m_visionSub(visionSub),
+    m_drivetrainSub(drivetrainSub),
+    m_isFar(isFar),
+    m_lastX(0)
+  {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({visionSub, drivetrainSub});
 }
@@ -45,7 +45,7 @@ void VisionAlignmentCmd::Execute() {
   bool isNegative = false;
 
   frc::SmartDashboard::PutNumber("FrontVisionTargetX", x);
-
+  
   // Get rid of negative to facilitate math.  We'll add it back at the end.
   if(x < 0) {
     isNegative = true;
@@ -63,7 +63,7 @@ void VisionAlignmentCmd::Execute() {
   if(isNegative) {
     power *= -1.0;  
   }
-
+  frc::SmartDashboard::PutNumber("LPower", power);
   printf("vision x=%f power=%f\n", x, power);
   if(fabs(x) > VisionConstants::kXAllignmentTolerence)
   { 

@@ -12,8 +12,11 @@
 #include "subsystems/ControlPanelSub.h"
 #include "Constants.h"
 
-TurnControlPanelToColourCmd::TurnControlPanelToColourCmd() {
+TurnControlPanelToColourCmd::TurnControlPanelToColourCmd(ControlPanelSub* controlPanelSub)
+  : m_controlPanelSub(controlPanelSub)
+  {
   // Use addRequirements() here to declare subsystem dependencies.
+  AddRequirements({controlPanelSub});
 }
 
 // Called when the command is initially scheduled.
