@@ -101,6 +101,7 @@ namespace VisionConstants {
 }  // namespace VisionConstants
 
 namespace ClimbConstants {
+    constexpr double kClimbWinchPower = 1.0;
     constexpr double kMoveOnGenSwitchPower = 10.0;
 }
 

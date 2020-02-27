@@ -14,12 +14,12 @@ constexpr double kMaxPower = 0.5;
 constexpr double kMinPower = kMinimumTurningPower;
 constexpr double kMaxEndVelocity = 0.1;  // In degrees per iteration 
 
-VisionAlignmentCmd::VisionAlignmentCmd(VisionSub* visionSub, DrivetrainSub* drivetrainSub, bool isFar) :
-  m_visionSub(visionSub),
-  m_drivetrainSub(drivetrainSub),
-  m_isFar(isFar),
-  m_lastX(0)
-{
+VisionAlignmentCmd::VisionAlignmentCmd(VisionSub* visionSub, DrivetrainSub* drivetrainSub, bool isFar)
+  : m_visionSub(visionSub),
+    m_drivetrainSub(drivetrainSub),
+    m_isFar(isFar),
+    m_lastX(0)
+  {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({visionSub, drivetrainSub});
 }

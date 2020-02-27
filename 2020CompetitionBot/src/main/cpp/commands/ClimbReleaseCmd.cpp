@@ -7,15 +7,16 @@
 
 #include "commands/ClimbReleaseCmd.h"
 
-ClimbReleaseCmd::ClimbReleaseCmd(ClimberSub* climbSub)  : m_ClimbSub(climbSub){
+ClimbReleaseCmd::ClimbReleaseCmd(ClimberSub* climbSub)
+  : m_ClimbSub(climbSub)
+  {
   // Use addRequirements() here to declare subsystem dependencies.
-  
   AddRequirements({climbSub});
 }
 
 // Called when the command is initially scheduled.
 void ClimbReleaseCmd::Initialize() {
-  m_ClimbSub->togglePosition(1);
+  m_ClimbSub->releaseLatch(1);
 }
 
 // Returns true when the command should end.

@@ -21,14 +21,14 @@ class ClimberSub : public frc2::SubsystemBase {
    * Will be called periodically whenever the CommandScheduler runs.
    */
   void Periodic();
-  void togglePosition(bool position);
-  void setWinchSpeed(double speed);
+  void releaseLatch(bool position);
+  void setWinchPower(double speed);
   void moveOnGenSwitch(double power);
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
-  rev::CANSparkMax m_elevatorMotor1;
+  rev::CANSparkMax m_armMotor;
   frc::Solenoid m_climbReleaseLatch; 
   ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_climbBalanceMotor;
 };
