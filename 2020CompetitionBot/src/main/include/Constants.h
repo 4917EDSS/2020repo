@@ -114,7 +114,7 @@ namespace ControlPanelConstants {
 
 namespace ShooterConstants {
     constexpr double kHighHood = 0.0;
-    constexpr double kLowHood = 19152.0;
+    constexpr double kLowHood = 14000;
     constexpr double kMaxRPM = 21750;
     constexpr double kCloseTargetSpeed = 12000;
     constexpr double kFarTargetSpeed = 14000;   
