@@ -27,7 +27,7 @@ class ClimbWinchCmd
 
   void Execute() override;
 
-  void End();
+  void End(bool interrupted) override;
 
   bool IsFinished() override;
 

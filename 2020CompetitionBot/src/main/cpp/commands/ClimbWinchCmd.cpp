@@ -37,7 +37,7 @@ void ClimbWinchCmd::Execute() {
 }
 
 // Relying on command inrerruption to end this
-void ClimbWinchCmd::End() {
+void ClimbWinchCmd::End(bool interrupted) {
   // Turn off motor when this command is interrupted
   m_climbSub->setWinchPower(0.0);
 }
