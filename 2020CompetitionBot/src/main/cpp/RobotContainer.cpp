@@ -62,27 +62,29 @@
 
 
 //Operator Buttons
-constexpr int kClimbWinchBtn=1;
+constexpr int kClimbWinchUpBtn=1;
 constexpr int kIntakeBtn=2;
-constexpr int kClimbReleaseBtn=3;
-constexpr int kConrolPanelUnfold=4;
+constexpr int kClimbWinchDownBtn=3;
+constexpr int kConrolPanelUnfoldBtn=4;
 constexpr int kShooterCloseBtn=7;
 constexpr int kShooterFarBtn=8;
-constexpr int kTurnControlPanelToColour=9;
-constexpr int kTurnControlPanelThreeTimes=10;
-constexpr int kKillEverything1 = 11;
-constexpr int kKillEverything2 = 12;
+constexpr int kTurnControlPanelToColourBtn=9;
+constexpr int kTurnControlPanelThreeTimesBtn=10;
+constexpr int kKillEverything1Btn = 11;
+constexpr int kKillEverything2Btn = 12;
+
+constexpr int kClimbWinchReleaseBtn=99; //Still need this button to be programmed
 
 //Driver Buttons
-constexpr int kDisableAutoShift=6;
-constexpr int kClimbBalanceLeft=7;
-constexpr int kClimbBalanceRight=8;
+constexpr int kDisableAutoShiftBtn=6;
+constexpr int kClimbBalanceLeftBtn=7;
+constexpr int kClimbBalanceRightBtn=8;
 //Going to integrate the alignment with shooterBtn, just hasn't happened yet
-constexpr int kShortCameraAlignment=9;
-constexpr int kFarCameraAlignment=10;
+constexpr int kShortCameraAlignmentBtn=9;
+constexpr int kFarCameraAlignmentBtn=10;
 // See driver
-// constexpr int kKillEverything1 = 11;
-// constexpr int kKillEverything2 = 12;
+// constexpr int kKillEverything1Btn = 11;
+// constexpr int kKillEverything2Btn = 12;
 
 RobotContainer::RobotContainer() {
   // Initialize all of your commands and subsystems here
@@ -129,25 +131,25 @@ void RobotContainer::configureButtonBindings() {
 
   //Driver Commands...
 
-   frc2::JoystickButton disableAutoShiftBtn(&m_driverController, kDisableAutoShift);
+   frc2::JoystickButton disableAutoShiftBtn(&m_driverController, kDisableAutoShiftBtn);
   disableAutoShiftBtn.WhenHeld(DisableAutoShiftCmd(&m_drivetrainSub));
 
-  frc2::JoystickButton farCameraAlignmentBtn(&m_driverController, kFarCameraAlignment);
+  frc2::JoystickButton farCameraAlignmentBtn(&m_driverController, kFarCameraAlignmentBtn);
   farCameraAlignmentBtn.WhenPressed(VisionAlignmentCmd(&m_visionSub, &m_drivetrainSub, true));
 
-  frc2::JoystickButton shortCameraAlignmentBtn(&m_driverController, kShortCameraAlignment);
+  frc2::JoystickButton shortCameraAlignmentBtn(&m_driverController, kShortCameraAlignmentBtn);
   shortCameraAlignmentBtn.WhenPressed(VisionAlignmentCmd(&m_visionSub, &m_drivetrainSub, false));
 
-  frc2::JoystickButton killEverythingBtn1d(&m_driverController, kKillEverything1);
+  frc2::JoystickButton killEverythingBtn1d(&m_driverController, kKillEverything1Btn);
   killEverythingBtn1d.WhenPressed(KillEverythingCmd(&m_climberSub, &m_controlPanelSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub, &m_visionSub));
 
-  frc2::JoystickButton killEverythingBtn2d(&m_driverController, kKillEverything2);
+  frc2::JoystickButton killEverythingBtn2d(&m_driverController, kKillEverything2Btn);
   killEverythingBtn2d.WhenPressed(KillEverythingCmd(&m_climberSub, &m_controlPanelSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub, &m_visionSub));
 
-  frc2::JoystickButton climbBalanceRightBtn(&m_driverController, kClimbBalanceRight);
+  frc2::JoystickButton climbBalanceRightBtn(&m_driverController, kClimbBalanceRightBtn);
   climbBalanceRightBtn.WhenHeld(ClimbBalanceCmd(&m_climberSub, true));
 
-  frc2::JoystickButton climbBalanceLeftBtn(&m_driverController, kClimbBalanceLeft);
+  frc2::JoystickButton climbBalanceLeftBtn(&m_driverController, kClimbBalanceLeftBtn);
   climbBalanceLeftBtn.WhenHeld(ClimbBalanceCmd(&m_climberSub, false));
 
 
@@ -162,22 +164,22 @@ void RobotContainer::configureButtonBindings() {
   frc2::JoystickButton intakeBtn(&m_operatorController, kIntakeBtn);
   intakeBtn.WhenHeld(IntakeCmd(&m_intakeSub));
 
-  frc2::JoystickButton climbReleaseBtn(&m_operatorController, kClimbReleaseBtn);
-  climbReleaseBtn.WhenPressed(ClimbReleaseCmd(&m_climberSub));
+  frc2::JoystickButton climbWinchUpBtn(&m_operatorController, kClimbWinchUpBtn);
+  climbWinchUpBtn.WhenHeld(ClimbWinchCmd(&m_climberSub, true));
 
-  frc2::JoystickButton climbWinchBtn(&m_operatorController, kClimbWinchBtn);
-  climbWinchBtn.WhenHeld(ClimbWinchCmd(&m_climberSub));
+  frc2::JoystickButton climbWinchDownBtn(&m_operatorController, kClimbWinchDownBtn);
+  climbWinchDownBtn.WhenHeld(ClimbWinchCmd(&m_climberSub, false));
 
-  frc2::JoystickButton turnControlPanelThreeTimesBtn(&m_operatorController, kTurnControlPanelThreeTimes);
+  frc2::JoystickButton turnControlPanelThreeTimesBtn(&m_operatorController, kTurnControlPanelThreeTimesBtn);
   turnControlPanelThreeTimesBtn.WhenPressed(frc2::SequentialCommandGroup{FlipUpCtrlPanelArmCmd(&m_controlPanelSub), TurnControlPanelThreeTimesCmd(&m_controlPanelSub)});
 
-  frc2::JoystickButton turnControlPanelToColourBtn(&m_operatorController, kTurnControlPanelToColour);
-  turnControlPanelToColourBtn.WhenPressed(TurnControlPanelToColourCmd());
+  frc2::JoystickButton turnControlPanelToColourBtn(&m_operatorController, kTurnControlPanelToColourBtn);
+  turnControlPanelToColourBtn.WhenPressed(TurnControlPanelToColourCmd(&m_controlPanelSub));
 
-  frc2::JoystickButton killEverythingBtn1o(&m_operatorController, kKillEverything1);
+  frc2::JoystickButton killEverythingBtn1o(&m_operatorController, kKillEverything1Btn);
   killEverythingBtn1o.WhenPressed(KillEverythingCmd(&m_climberSub, &m_controlPanelSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub, &m_visionSub));
 
-  frc2::JoystickButton killEverythingBtn2o(&m_operatorController, kKillEverything2);
+  frc2::JoystickButton killEverythingBtn2o(&m_operatorController, kKillEverything2Btn);
   killEverythingBtn2o.WhenPressed(KillEverythingCmd(&m_climberSub, &m_controlPanelSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub, &m_visionSub));
 
   m_driverController.SetXChannel(0);

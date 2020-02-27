@@ -11,7 +11,8 @@
 
 SpinFlywheelCmd::SpinFlywheelCmd(ShooterSub* shooterSub, double targetSpeed) 
   : m_shooterSub(shooterSub),
-    m_targetSpeed(targetSpeed) {
+    m_targetSpeed(targetSpeed)
+  {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({shooterSub});
 }
