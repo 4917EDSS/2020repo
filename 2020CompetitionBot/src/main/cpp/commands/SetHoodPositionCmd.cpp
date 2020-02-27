@@ -6,9 +6,9 @@
 /*----------------------------------------------------------------------------*/
 
 #include "commands/SetHoodPositionCmd.h"
-#include "Constants.h"
 constexpr double kP=0.2;
 constexpr double kTolerance=50.0;
+constexpr double kLowHood = 14000;
 
 SetHoodPositionCmd::SetHoodPositionCmd(ShooterSub* shooterSub, double targetPosition) : m_shooterSub(shooterSub), m_targetPosition(targetPosition) {
   // Use addRequirements() here to declare subsystem dependencies.
