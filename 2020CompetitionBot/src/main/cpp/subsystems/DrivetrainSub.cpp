@@ -49,7 +49,6 @@ DrivetrainSub::DrivetrainSub()
 
 
   frc::SmartDashboard::PutNumber("drive power", 0);
-
   arcadeDrive(0.2, 0);
 }
 

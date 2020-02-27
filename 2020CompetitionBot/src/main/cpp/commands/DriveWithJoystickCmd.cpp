@@ -65,7 +65,7 @@ double capAcceleration (double power, double powerPrevious, double maxAccel){
 void DriveWithJoystickCmd::Execute() {
   double forwardPower=m_joystick->GetY();
   double turnPower=-m_joystick->GetZ();
-
+  
   forwardPower =  adjustSensitivity(forwardPower);
   turnPower = adjustSensitivity(turnPower);
 
