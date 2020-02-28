@@ -37,7 +37,7 @@ void ClimbBalanceCmd::Execute() {
 }
 
 // Relying on command inrerruption to end this
-void ClimbBalanceCmd::End() {
+void ClimbBalanceCmd::End(bool interrupted) {
   // Turn off motor when this command is interrupted
   m_climbSub->moveOnGenSwitch(0.0);
 }

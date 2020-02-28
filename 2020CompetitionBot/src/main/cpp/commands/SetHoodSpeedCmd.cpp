@@ -22,7 +22,14 @@ void SetHoodSpeedCmd::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void SetHoodSpeedCmd::Execute() {
+  
   double speed = m_joystick->GetY();
+  if (speed >= 0.2) {
+    speed = 0.2;
+  }
+  else if (speed <= -0.2) {
+    speed = -0.2;
+  }
   m_shooterSub->setHoodSpeed(speed);
 }
 

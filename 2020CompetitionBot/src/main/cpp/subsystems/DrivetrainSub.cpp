@@ -43,7 +43,6 @@ DrivetrainSub::DrivetrainSub()
 
   init();
   frc::SmartDashboard::PutNumber("drive power", 0);
-
 }
 
 // This method will be called once per scheduler run

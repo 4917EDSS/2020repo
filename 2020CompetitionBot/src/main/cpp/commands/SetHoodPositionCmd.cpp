@@ -6,8 +6,9 @@
 /*----------------------------------------------------------------------------*/
 
 #include "commands/SetHoodPositionCmd.h"
-constexpr double kP=0.01;
+constexpr double kP=0.2;
 constexpr double kTolerance=50.0;
+constexpr double kLowHood = 14000;
 
 SetHoodPositionCmd::SetHoodPositionCmd(ShooterSub* shooterSub, double targetPosition)
   : m_shooterSub(shooterSub),
@@ -22,8 +23,9 @@ void SetHoodPositionCmd::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void SetHoodPositionCmd::Execute() {
-  double diff=m_targetPosition-m_shooterSub->getHoodEncoder();
-  m_shooterSub->setHoodSpeed(diff*kP);
+  double diff=m_shooterSub->getHoodEncoder() / kLowHood;
+  m_shooterSub->setHoodSpeed((diff*kP) - 0.1) ;
+  // m_shooterSub->setHoodSpeed(0.05);
 }
 
 // Called once the command ends or is interrupted.
@@ -33,8 +35,9 @@ void SetHoodPositionCmd::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool SetHoodPositionCmd::IsFinished() {
-  if (m_shooterSub->getHoodEncoder() >= m_targetPosition-kTolerance and m_shooterSub->getHoodEncoder() <= m_targetPosition+kTolerance) {
+  if (m_shooterSub->getHoodEncoder() >= m_targetPosition-kTolerance and m_shooterSub->getHoodEncoder() <= m_targetPosition + kTolerance) {
     return true;
   }
   return false;
 }
+

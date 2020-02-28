@@ -9,7 +9,7 @@
 #include "commands/VisionAlignmentCmd.h"
 #include <frc/RobotController.h>
 
-constexpr double kP = 0.5;
+constexpr double kP = 0.05;
 constexpr double kMaxPower = 0.5;
 constexpr double kMinPower = kMinimumTurningPower;
 constexpr double kMaxEndVelocity = 0.1;  // In degrees per iteration 
@@ -45,7 +45,7 @@ void VisionAlignmentCmd::Execute() {
   bool isNegative = false;
 
   frc::SmartDashboard::PutNumber("FrontVisionTargetX", x);
-
+  
   // Get rid of negative to facilitate math.  We'll add it back at the end.
   if(x < 0) {
     isNegative = true;
@@ -63,7 +63,7 @@ void VisionAlignmentCmd::Execute() {
   if(isNegative) {
     power *= -1.0;  
   }
-
+  frc::SmartDashboard::PutNumber("LPower", power);
   printf("vision x=%f power=%f\n", x, power);
   if(fabs(x) > VisionConstants::kXAllignmentTolerence)
   { 
