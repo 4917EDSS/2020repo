@@ -46,8 +46,8 @@ namespace CanIds {
 namespace PneumaticIds {
     //constexpr int Id = 0;
     constexpr int kShifterId = 1;
-    constexpr int kControlPanelFlipper = 2;
-    constexpr int kClimbReleaseLatch = 3;
+    constexpr int kClimbReleaseLatch = 2;
+    constexpr int kControlPanelFlipper = 3;
 }
 
 namespace DioIds {
@@ -101,7 +101,7 @@ namespace VisionConstants {
 }  // namespace VisionConstants
 
 namespace ClimbConstants {
-    constexpr double kClimbWinchPower = 1.0;
+    constexpr double kMaxArmMotorIncoderValue = 1.0;
     constexpr double kMoveOnGenSwitchPower = 1.0;
 }
 
@@ -115,7 +115,7 @@ namespace ControlPanelConstants {
 
 namespace ShooterConstants {
     constexpr double kHighHood = 0.0;
-    constexpr double kLowHood = 19152.0;
+    constexpr double kLowHood = 14000;
     constexpr double kMaxRPM = 21750;
     constexpr double kCloseTargetSpeed = 12000;
     constexpr double kFarTargetSpeed = 14000;   

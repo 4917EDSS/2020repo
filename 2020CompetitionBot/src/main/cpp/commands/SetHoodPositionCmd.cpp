@@ -6,13 +6,18 @@
 /*----------------------------------------------------------------------------*/
 
 #include "commands/SetHoodPositionCmd.h"
-constexpr double kP=0.01;
+constexpr double kP=0.2;
 constexpr double kTolerance=50.0;
+constexpr double kLowHood = 14000;
+constexpr double kControlStartDelta = 999999.9;
+constexpr double kMinPower = 0.05;
+constexpr double kMaxPower = 0.15;
+
 
 SetHoodPositionCmd::SetHoodPositionCmd(ShooterSub* shooterSub, double targetPosition)
   : m_shooterSub(shooterSub),
-    m_targetPosition(targetPosition)
-  {
+    m_targetPosition(targetPosition),
+    m_pc(targetPosition, kControlStartDelta, kTolerance, kMinPower, kMaxPower) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({shooterSub});
 }
@@ -22,8 +27,9 @@ void SetHoodPositionCmd::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void SetHoodPositionCmd::Execute() {
-  double diff=m_targetPosition-m_shooterSub->getHoodEncoder();
-  m_shooterSub->setHoodSpeed(diff*kP);
+  // double diff=m_shooterSub->getHoodEncoder() / kLowHood;
+  m_shooterSub->setHoodSpeed(m_pc.getPower(m_shooterSub->getHoodEncoder())) ;
+  // m_shooterSub->setHoodSpeed(0.05);
 }
 
 // Called once the command ends or is interrupted.
@@ -33,8 +39,12 @@ void SetHoodPositionCmd::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool SetHoodPositionCmd::IsFinished() {
-  if (m_shooterSub->getHoodEncoder() >= m_targetPosition-kTolerance and m_shooterSub->getHoodEncoder() <= m_targetPosition+kTolerance) {
+  // if hood is within +-tolerence of target and it's not going too fast, then we're done
+  if (
+    m_shooterSub->getHoodEncoder() >= m_targetPosition-kTolerance && m_shooterSub->getHoodEncoder() <= m_targetPosition + kTolerance
+    ) {
     return true;
   }
   return false;
 }
+

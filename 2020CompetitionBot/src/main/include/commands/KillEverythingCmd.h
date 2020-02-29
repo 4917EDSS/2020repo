@@ -35,6 +35,8 @@ class KillEverythingCmd
   bool IsFinished() override;
 
   private: 
+     ShooterSub* m_shooterSub;
+
 
 
 };

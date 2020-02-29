@@ -9,13 +9,16 @@
 
 
 KillEverythingCmd::KillEverythingCmd(ClimberSub* climberSub, ControlPanelSub* controlPanelSub,
-  DrivetrainSub* driveTrainSub, IntakeSub* intakeSub, ShooterSub* shooterSub, VisionSub* visionSub) {
+  DrivetrainSub* driveTrainSub, IntakeSub* intakeSub, ShooterSub* shooterSub, VisionSub* visionSub) : m_shooterSub(shooterSub) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({climberSub, controlPanelSub, driveTrainSub, intakeSub, shooterSub, visionSub});
 }
 
 // Called when the command is initially scheduled.
-void KillEverythingCmd::Initialize() {}
+void KillEverythingCmd::Initialize() {
+   m_shooterSub->setSpeed(0);
+
+}
 
 // Called repeatedly when this Command is scheduled to run
 void KillEverythingCmd::Execute() {}

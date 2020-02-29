@@ -20,6 +20,9 @@ ControlPanelSub::ControlPanelSub()
 
 }
 
+void ControlPanelSub::init() {
+}
+
 // This method will be called once per scheduler run
 void ControlPanelSub::Periodic() {}
 
