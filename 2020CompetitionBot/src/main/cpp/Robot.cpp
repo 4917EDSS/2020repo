@@ -77,7 +77,6 @@ void Robot::TeleopInit() {
     m_autonomousCommand->Cancel();
     m_autonomousCommand = nullptr;
   }
-  
 }
 /**
  * This function is called periodically during operator control.
