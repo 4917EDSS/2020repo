@@ -29,7 +29,7 @@ void ClimbWinchCmd::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void ClimbWinchCmd::Execute() {
   double p = -1 * (m_joystick->GetThrottle());
-  double e = m_climbSub->getArmMotorEncoderRaw();
+  double e = -1 * (m_climbSub->getArmMotorEncoderRaw());
   frc::SmartDashboard::PutNumber("Climb Winch Encoder", e);
   
   // Apply power
