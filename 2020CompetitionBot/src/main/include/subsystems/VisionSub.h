@@ -16,6 +16,7 @@ class VisionSub : public frc2::SubsystemBase {
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */
+  void init();
   void Periodic();
   double getVisionTarget();
   double getVerticalOffset();

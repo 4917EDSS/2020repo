@@ -15,6 +15,10 @@ ClimberSub::ClimberSub() :
 }
 
 // This method will be called once per scheduler run
+void ClimberSub::init() {
+
+}
+
 void ClimberSub::Periodic() {}
 
 void ClimberSub::releaseLatch(bool position) {

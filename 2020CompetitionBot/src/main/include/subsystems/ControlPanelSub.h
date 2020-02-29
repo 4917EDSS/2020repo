@@ -22,6 +22,7 @@ class ControlPanelSub : public frc2::SubsystemBase {
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */
+  void init();
   void Periodic();
   void togglePosition(bool position);
   void setWheelPower(double speed);

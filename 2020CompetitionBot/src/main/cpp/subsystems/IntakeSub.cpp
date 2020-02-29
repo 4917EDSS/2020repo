@@ -21,6 +21,9 @@ IntakeSub::IntakeSub()
 //positive takes balls in negative takes balls to shooter 
 
 // This method will be called once per scheduler run
+void IntakeSub::init() {
+    
+}
 void IntakeSub::Periodic() {}
 
 void IntakeSub::setFrontRollerIntakePower(double power) {

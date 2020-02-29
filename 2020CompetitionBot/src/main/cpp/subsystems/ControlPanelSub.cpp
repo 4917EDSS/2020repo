@@ -21,6 +21,9 @@ ControlPanelSub::ControlPanelSub()
 }
 
 // This method will be called once per scheduler run
+void ControlPanelSub::init() {
+    
+}
 void ControlPanelSub::Periodic() {}
 
 void ControlPanelSub::togglePosition(bool position){
