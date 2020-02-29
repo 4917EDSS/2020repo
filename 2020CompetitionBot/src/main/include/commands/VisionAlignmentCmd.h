@@ -27,10 +27,10 @@ class VisionAlignmentCmd
   bool IsFinished() override;
 
  private:
-  ProportionalController m_pController;
   VisionSub* m_visionSub;
   DrivetrainSub* m_drivetrainSub;
   uint64_t m_startTime;
   bool m_isFar;
   double m_lastX;
+  ProportionalController m_pController;
 };

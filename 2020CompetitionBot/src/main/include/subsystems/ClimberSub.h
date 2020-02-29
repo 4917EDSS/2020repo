@@ -12,6 +12,7 @@
 #include <rev/CANSparkMax.h>
 #include <rev/CANSparkMaxLowLevel.h>
 #include <ctre/Phoenix.h>
+#include <frc/Joystick.h>
 
 class ClimberSub : public frc2::SubsystemBase {
  public:
@@ -23,6 +24,8 @@ class ClimberSub : public frc2::SubsystemBase {
   void setWinchPower(double speed);
   void moveOnGenSwitch(double power);
   double getArmMotorEncoderRaw();
+  int getOperatorShiftState();
+  int getOperatorShiftState(frc::Joystick* joystick);
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be

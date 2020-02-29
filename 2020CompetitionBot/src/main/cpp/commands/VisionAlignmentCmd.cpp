@@ -41,7 +41,7 @@ void VisionAlignmentCmd::Initialize() {
 void VisionAlignmentCmd::Execute() {
   double x = m_visionSub->getVisionTarget();
   double outputPower = m_pController.getPower(x);
-  m_drivetrainSub->tankDrive(outputPower, outputPower);
+  m_drivetrainSub->tankDrive(-outputPower, outputPower);
 }
 
 // Called once the command ends or is interrupted.
