@@ -25,7 +25,7 @@ void ClimberSub::releaseLatch(bool position) {
 }
 
 void ClimberSub::setWinchPower(double power) {
-    m_armMotor.Set(power);
+    m_armMotor.Set(-power);
 }
 
 void ClimberSub::moveOnGenSwitch(double power) {
