@@ -19,7 +19,6 @@ class IntakeSub : public frc2::SubsystemBase {
  public:
   IntakeSub();
   // negative speed sends balls to shooter positive takes them to magazine 
-  void init();
   void setFrontRollerIntakePower(double power);
   void setMagazineIntakePower(double power);
   bool getFrontIntakeSensor();

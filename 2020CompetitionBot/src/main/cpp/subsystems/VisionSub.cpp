@@ -16,10 +16,7 @@ VisionSub::VisionSub() {
 
 void VisionSub::init() {
 }
-// This method will be called once per scheduler run
-void VisionSub::init() {
-    
-}
+
 void VisionSub::Periodic() {}
 
 void VisionSub::setFarVisionPipeline() {

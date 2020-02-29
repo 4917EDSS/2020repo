@@ -13,9 +13,7 @@ ClimbBalanceCmd::ClimbBalanceCmd(ClimberSub* climbSub, bool isRight)
   : m_climbSub(climbSub),
     m_isRight(isRight)
   {
-  // Use addRequirements() here to declare subsystem dependencies.
-  AddRequirements({climbSub});
-
+  //Intentional lack of addrequirements because we want thois to run simultaneously with climb winch
   frc::SmartDashboard::PutNumber("MoveOnGenSwitchPower", ClimbConstants::kMoveOnGenSwitchPower);
 }
 
