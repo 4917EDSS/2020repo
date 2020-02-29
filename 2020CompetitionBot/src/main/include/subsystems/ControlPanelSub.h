@@ -19,6 +19,7 @@ class ControlPanelSub : public frc2::SubsystemBase {
  public:
   ControlPanelSub();
 
+  void init();
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */

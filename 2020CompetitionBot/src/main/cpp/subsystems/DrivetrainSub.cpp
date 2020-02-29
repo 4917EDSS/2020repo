@@ -59,7 +59,7 @@ void DrivetrainSub::Periodic() {
   // frc::SmartDashboard::PutNumber("MtrVlcty R", getRightVelocity());
   // frc::SmartDashboard::PutNumber("MtrVlcty L", getLeftVelocity());
   // frc::SmartDashboard::PutBoolean("High Gear", isShifterInHighGear());
-  //std::cout << getPose().Translation().X() << " " << getPose().Translation().Y() << " " << getPose().Rotation().Radians() << "\n";
+  std::cout << getPose().Translation().X() << " " << getPose().Translation().Y() << " " << getPose().Rotation().Radians() << "\n";
 }
 
 void DrivetrainSub::init() {
@@ -100,14 +100,14 @@ bool DrivetrainSub::isShifterInHighGear() {
 }
 
 void DrivetrainSub::tankDriveVolts(units::volt_t leftVolts, units::volt_t rightVolts) {
-  m_leftMotors.SetVoltage(leftVolts);
-  m_rightMotors.SetVoltage(-rightVolts);
+  m_leftMotors.SetVoltage(-leftVolts);
+  m_rightMotors.SetVoltage(rightVolts);
   m_drive.Feed();
 }
 
 void DrivetrainSub::tankDrive(double left, double right) {
-  m_leftMotors.Set(left);
-  m_rightMotors.Set(-right);
+  m_leftMotors.Set(-left);
+  m_rightMotors.Set(right);
 }
 
 double DrivetrainSub::getAverageEncoderDistance() {

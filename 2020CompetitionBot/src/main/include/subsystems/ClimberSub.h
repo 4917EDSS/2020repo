@@ -17,6 +17,7 @@ class ClimberSub : public frc2::SubsystemBase {
  public:
   ClimberSub();
 
+  void init();
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */
@@ -32,5 +33,5 @@ class ClimberSub : public frc2::SubsystemBase {
   // declared private and exposed only through public methods.
   rev::CANSparkMax m_armMotor;
   frc::Solenoid m_climbReleaseLatch; 
-  ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_climbBalanceMotor;
+  rev::CANSparkMax m_climbBalanceMotor;
 };

@@ -12,7 +12,7 @@
 class VisionSub : public frc2::SubsystemBase {
  public:
   VisionSub();
-
+  void init();
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */

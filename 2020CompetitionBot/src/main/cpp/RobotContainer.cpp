@@ -74,9 +74,9 @@ constexpr int kKillEverything2Btn = 12;
 
 
 //Driver Buttons
-constexpr int kDisableAutoShiftBtn=6;
-constexpr int kClimbBalanceLeftBtn=7;
-constexpr int kClimbBalanceRightBtn=8;
+constexpr int kDisableAutoShiftBtn=8;
+constexpr int kClimbBalanceLeftBtn=5;
+constexpr int kClimbBalanceRightBtn=6;
 //Going to integrate the alignment with shooterBtn, just hasn't happened yet
 constexpr int kShortCameraAlignmentBtn=9;
 constexpr int kFarCameraAlignmentBtn=10;
@@ -124,8 +124,8 @@ void RobotContainer::autoChooserSetup() {
 
   auto exampleTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
     frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
-      {frc::Translation2d(1_m, 1_m), frc::Translation2d(2_m, -1_m)},
-    frc::Pose2d(3_m, 0_m, frc::Rotation2d(0_deg)),
+    {},
+    frc::Pose2d(1_m, 0_m, frc::Rotation2d(0_deg)),
     config);
 
   m_autoChooser.AddOption("Ramsete", new RamseteCmd(exampleTrajectory, &m_drivetrainSub));
