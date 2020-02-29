@@ -23,7 +23,6 @@ IntakeSub::IntakeSub()
 void IntakeSub::init() {
 }
 
-// This method will be called once per scheduler run
 void IntakeSub::Periodic() {}
 
 void IntakeSub::setFrontRollerIntakePower(double power) {

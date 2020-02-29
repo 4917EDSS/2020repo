@@ -17,7 +17,6 @@ ClimberSub::ClimberSub() :
 void ClimberSub::init() {
 }
 
-// This method will be called once per scheduler run
 void ClimberSub::Periodic() {}
 
 void ClimberSub::releaseLatch(bool position) {
@@ -25,7 +24,7 @@ void ClimberSub::releaseLatch(bool position) {
 }
 
 void ClimberSub::setWinchPower(double power) {
-    m_armMotor.Set(power);
+    m_armMotor.Set(-power);
 }
 
 void ClimberSub::moveOnGenSwitch(double power) {

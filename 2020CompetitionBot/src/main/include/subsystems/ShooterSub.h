@@ -14,9 +14,6 @@ class ShooterSub : public frc2::SubsystemBase {
  public:
   ShooterSub();
   void init();
-  /**
-   * Will be called periodically whenever the CommandScheduler runs.
-   */
   void Periodic() override;
   void setSpeed(double speed);
   void setFeedSpeed(double feedSpeed);

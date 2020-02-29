@@ -18,9 +18,6 @@ class ClimberSub : public frc2::SubsystemBase {
   ClimberSub();
 
   void init();
-  /**
-   * Will be called periodically whenever the CommandScheduler runs.
-   */
   void Periodic();
   void releaseLatch(bool position);
   void setWinchPower(double speed);
