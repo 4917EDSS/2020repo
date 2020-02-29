@@ -41,7 +41,11 @@ void ClimbWinchCmd::Execute() {
     }
   } else if (p < 0) {
     if (e > m_minimumArmMotorEncoderValue) {
-      m_climbSub->setWinchPower(p);
+      if (e > 10.0){
+        m_climbSub->setWinchPower(p);
+      } else{
+        m_climbSub->setWinchPower(p/3);
+      }
     } else {
       m_climbSub->setWinchPower(0.0);
     }
