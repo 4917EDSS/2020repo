@@ -38,22 +38,20 @@ void ClimbWinchCmd::Execute() {
   bool isShiftDownPressed = (m_climbSub->getOperatorShiftState(m_joystick) == DpadConstants::kDown);
 
   // Apply power
-  if (p > 0) {
-    if ((isShiftDownPressed) || (e < ClimbConstants::kMaxArmMotorIncoderValue)) {
-      m_climbSub->setWinchPower(p);
-    } else {
-      m_climbSub->setWinchPower(0.0);
-    }
-  } else if (p < 0) {
-    if ((isShiftDownPressed) || (e > m_minimumArmMotorEncoderValue)) {
-      if (e > 10.0){
-        m_climbSub->setWinchPower(p);
-      } else{
-        m_climbSub->setWinchPower(p/3);
-      }
-    } else {
-      m_climbSub->setWinchPower(0.0);
-    }
+  if(isShiftDownPressed) {
+    m_climbSub->setWinchPower(p);
+  }
+  else if((p > 0) && (e >= ClimbConstants::kMaxArmMotorEncoderValue)) {
+    m_climbSub->setWinchPower(0.0);
+  }
+  else if ((p < 0) && (e <= 0)) {
+    m_climbSub->setWinchPower(0.0);
+  }
+  else if (p < 0 && e < 10) {
+    m_climbSub->setWinchPower(p/3);
+  }
+  else {
+    m_climbSub->setWinchPower(p);
   }
 }
 

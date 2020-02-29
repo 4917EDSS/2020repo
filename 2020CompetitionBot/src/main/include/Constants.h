@@ -103,7 +103,7 @@ namespace VisionConstants {
 }  // namespace VisionConstants
 
 namespace ClimbConstants {
-    constexpr double kMaxArmMotorIncoderValue = 9999999.0;
+    constexpr double kMaxArmMotorEncoderValue = 9999999.0;
     constexpr double kMoveOnGenSwitchPower = 1.0;
 }
 
