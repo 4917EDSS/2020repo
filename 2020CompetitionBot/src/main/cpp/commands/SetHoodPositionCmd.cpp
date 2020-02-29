@@ -17,11 +17,9 @@ constexpr double kMaxPower = 0.15;
 SetHoodPositionCmd::SetHoodPositionCmd(ShooterSub* shooterSub, double targetPosition)
   : m_shooterSub(shooterSub),
     m_targetPosition(targetPosition),
-    m_pc(targetPosition, kControlStartDelta, kMinPower, kMaxPower)
-  {
+    m_pc(targetPosition, kControlStartDelta, kTolerance, kMinPower, kMaxPower) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({shooterSub});
-  
 }
 
 // Called when the command is initially scheduled.
