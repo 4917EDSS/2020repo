@@ -74,9 +74,9 @@ constexpr int kKillEverything2Btn = 12;
 
 
 //Driver Buttons
-constexpr int kDisableAutoShiftBtn=8;
-constexpr int kClimbBalanceLeftBtn=5;
-constexpr int kClimbBalanceRightBtn=6;
+constexpr int kDisableAutoShiftBtn=6;
+constexpr int kClimbBalanceLeftBtn=7;
+constexpr int kClimbBalanceRightBtn=8;
 //Going to integrate the alignment with shooterBtn, just hasn't happened yet
 constexpr int kShortCameraAlignmentBtn=9;
 constexpr int kFarCameraAlignmentBtn=10;

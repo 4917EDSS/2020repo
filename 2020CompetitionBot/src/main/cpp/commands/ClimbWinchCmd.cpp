@@ -23,16 +23,28 @@ ClimbWinchCmd::ClimbWinchCmd(ClimberSub* climbSub, frc::Joystick* joystick)
 void ClimbWinchCmd::Initialize() {
   // Get inisual incoder for start configuration
   // This will be the minimum incoder value allowed when retracting the arm
-  m_mnimumArmMotorEncoderValue = m_climbSub->getArmMotorEncoderRaw();
+  m_minimumArmMotorEncoderValue = 0;
 }
 
 // Called repeatedly when this Command is scheduled to run
 void ClimbWinchCmd::Execute() {
   double p = -1 * (m_joystick->GetThrottle());
-
+  double e = m_climbSub->getArmMotorEncoderRaw();
+  frc::SmartDashboard::PutNumber("Climb Winch Encoder", e);
+  
   // Apply power
-  if (p > m_mnimumArmMotorEncoderValue && p < ClimbConstants::kMaxArmMotorIncoderValue) {
-    m_climbSub->setWinchPower(p);
+  if (p > 0) {
+    if (e < ClimbConstants::kMaxArmMotorIncoderValue) {
+      m_climbSub->setWinchPower(p);
+    } else {
+      m_climbSub->setWinchPower(0.0);
+    }
+  } else if (p < 0) {
+    if (e > m_minimumArmMotorEncoderValue) {
+      m_climbSub->setWinchPower(p);
+    } else {
+      m_climbSub->setWinchPower(0.0);
+    }
   }
 }
 

@@ -34,5 +34,5 @@ class ClimbWinchCmd
   private:
   ClimberSub* m_climbSub;
   frc::Joystick* m_joystick;
-  double m_mnimumArmMotorEncoderValue;
+  double m_minimumArmMotorEncoderValue;
 };
