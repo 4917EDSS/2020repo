@@ -10,6 +10,7 @@
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 #include "subsystems/ShooterSub.h"
+#include "components/ProportionalController.h"
 
 /**
  * An example command.
@@ -33,4 +34,5 @@ class SetHoodPositionCmd
  private:
   ShooterSub* m_shooterSub;
   double m_targetPosition;
+  ProportionalController m_pc;
 };

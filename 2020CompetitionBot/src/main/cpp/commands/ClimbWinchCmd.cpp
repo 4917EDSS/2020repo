@@ -6,40 +6,38 @@
 /*----------------------------------------------------------------------------*/
 
 #include <frc/smartdashboard/SmartDashboard.h>
+#include <frc/Joystick.h>
 #include "commands/ClimbWinchCmd.h"
 #include "Constants.h"
 
-ClimbWinchCmd::ClimbWinchCmd(ClimberSub* climbSub, bool isUp)
+ClimbWinchCmd::ClimbWinchCmd(ClimberSub* climbSub, frc::Joystick* joystick)
   : m_climbSub(climbSub),
-    m_isUp(isUp)
+    m_joystick(joystick)
   {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({climbSub});
-  
-  frc::SmartDashboard::PutNumber("ClimbWinchPower", ClimbConstants::kClimbWinchPower);
 }
 
 // Called when the command is initially scheduled.
 // We just turn the power on and leave it until command is interrupted calling End
 void ClimbWinchCmd::Initialize() {
-  // Determine the power to apply to motor
-  double p = frc::SmartDashboard::GetNumber("ClimbWinchPower", ClimbConstants::kClimbWinchPower);
-  if (m_isUp) {
-    p = -p;
-  }
-
-  // Apply power
-  m_climbSub->setWinchPower(p);
+  // Get inisual incoder for start configuration
+  // This will be the minimum incoder value allowed when retracting the arm
+  m_mnimumArmMotorEncoderValue = m_climbSub->getArmMotorEncoderRaw();
 }
 
 // Called repeatedly when this Command is scheduled to run
 void ClimbWinchCmd::Execute() {
+  double p = -1 * (m_joystick->GetThrottle());
+
+  // Apply power
+  if (p > m_mnimumArmMotorEncoderValue && p < ClimbConstants::kMaxArmMotorIncoderValue) {
+    m_climbSub->setWinchPower(p);
+  }
 }
 
 // Relying on command inrerruption to end this
 void ClimbWinchCmd::End(bool interrupted) {
-  // Turn off motor when this command is interrupted
-  m_climbSub->setWinchPower(0.0);
 }
 
 // Returns true when the command should end.
