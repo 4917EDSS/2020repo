@@ -21,12 +21,13 @@
 class ClimbReleaseCmd
     : public frc2::CommandHelper<frc2::CommandBase, ClimbReleaseCmd> {
  public:
-  ClimbReleaseCmd(ClimberSub* climbSub);
+  ClimbReleaseCmd(ClimberSub* climbSub, frc::Joystick* joystick);
 
   void Initialize() override;
 
   bool IsFinished() override;
 
   private:
-  ClimberSub* m_ClimbSub;
+  ClimberSub* m_climbSub;
+  frc::Joystick* m_joystick;
 };

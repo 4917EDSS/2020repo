@@ -38,3 +38,9 @@ double ClimberSub::getArmMotorEncoderRaw()
 {
   return (m_armMotor.GetEncoder().GetPosition());
 }
+
+int ClimberSub::getOperatorShiftState(frc::Joystick* joystick) { 
+  // POV position is reported in degrees with 0 deg being up and increasing clockwise
+  // Positions between Up/down/left/right are ignored (i.e. 45 deg)
+  return joystick->GetPOV(0);
+}

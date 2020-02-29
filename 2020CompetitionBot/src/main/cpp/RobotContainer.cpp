@@ -173,7 +173,7 @@ void RobotContainer::configureButtonBindings() {
   intakeBtn.WhenHeld(IntakeCmd(&m_intakeSub));
 
  frc2::JoystickButton climbWinchReleaseBtn(&m_operatorController, kClimbWinchReleaseBtn);
-  climbWinchReleaseBtn.WhenPressed(ClimbReleaseCmd(&m_climberSub));
+  climbWinchReleaseBtn.WhenPressed(ClimbReleaseCmd(&m_climberSub, &m_operatorController));
 
   frc2::JoystickButton turnControlPanelThreeTimesBtn(&m_operatorController, kTurnControlPanelThreeTimesBtn);
   turnControlPanelThreeTimesBtn.WhenPressed(frc2::SequentialCommandGroup{FlipUpCtrlPanelArmCmd(&m_controlPanelSub), TurnControlPanelThreeTimesCmd(&m_controlPanelSub)});
@@ -199,6 +199,5 @@ void RobotContainer::configureButtonBindings() {
 }
 
 frc2::Command* RobotContainer::getAutonomousCommand() {
-
   return m_autoChooser.GetSelected();
 }

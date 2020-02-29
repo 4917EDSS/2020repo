@@ -29,18 +29,23 @@ void ClimbWinchCmd::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void ClimbWinchCmd::Execute() {
   double p = -1 * (m_joystick->GetThrottle());
+  if(fabs(p) < 0.1) {
+    p = 0;
+  }
   double e = -1 * (m_climbSub->getArmMotorEncoderRaw());
   frc::SmartDashboard::PutNumber("Climb Winch Encoder", e);
-  
+
+  bool isShiftDownPressed = (m_climbSub->getOperatorShiftState(m_joystick) == DpadConstants::kDown);
+
   // Apply power
   if (p > 0) {
-    if (e < ClimbConstants::kMaxArmMotorIncoderValue) {
+    if ((isShiftDownPressed) || (e < ClimbConstants::kMaxArmMotorIncoderValue)) {
       m_climbSub->setWinchPower(p);
     } else {
       m_climbSub->setWinchPower(0.0);
     }
   } else if (p < 0) {
-    if (e > m_minimumArmMotorEncoderValue) {
+    if ((isShiftDownPressed) || (e > m_minimumArmMotorEncoderValue)) {
       if (e > 10.0){
         m_climbSub->setWinchPower(p);
       } else{

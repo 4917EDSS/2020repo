@@ -120,3 +120,15 @@ namespace ShooterConstants {
     constexpr double kCloseTargetSpeed = 12000;
     constexpr double kFarTargetSpeed = 14000;   
 }
+
+namespace DpadConstants {
+    constexpr int kInactive = -1;
+    constexpr int kUp = 0;
+    constexpr int kUpRight = 45;
+    constexpr int kRight = 90;
+    constexpr int kRightDown = 135;
+    constexpr int kDown = 180;
+    constexpr int kDownLeft = 225;
+    constexpr int kLeft = 270;
+    constexpr int kLeftUp = 315;
+}

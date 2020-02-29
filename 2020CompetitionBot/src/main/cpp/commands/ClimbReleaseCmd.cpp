@@ -5,10 +5,13 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+#include <frc/Joystick.h>
 #include "commands/ClimbReleaseCmd.h"
+#include "Constants.h"
 
-ClimbReleaseCmd::ClimbReleaseCmd(ClimberSub* climbSub)
-  : m_ClimbSub(climbSub)
+ClimbReleaseCmd::ClimbReleaseCmd(ClimberSub* climbSub, frc::Joystick* joystick)
+  : m_climbSub(climbSub),
+    m_joystick(joystick)
   {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({climbSub});
@@ -16,7 +19,9 @@ ClimbReleaseCmd::ClimbReleaseCmd(ClimberSub* climbSub)
 
 // Called when the command is initially scheduled.
 void ClimbReleaseCmd::Initialize() {
-  m_ClimbSub->releaseLatch(true);
+  if (m_climbSub->getOperatorShiftState(m_joystick) == DpadConstants::kDown) {
+    m_climbSub->releaseLatch(true);
+  }
 }
 
 // Returns true when the command should end.
