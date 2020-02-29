@@ -29,7 +29,7 @@ void ClimbWinchCmd::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void ClimbWinchCmd::Execute() {
   double p = -1 * (m_joystick->GetThrottle());
-  double e = m_climbSub->getArmMotorEncoderRaw();
+  double e = -1 * (m_climbSub->getArmMotorEncoderRaw());
   frc::SmartDashboard::PutNumber("Climb Winch Encoder", e);
   
   // Apply power
@@ -41,7 +41,11 @@ void ClimbWinchCmd::Execute() {
     }
   } else if (p < 0) {
     if (e > m_minimumArmMotorEncoderValue) {
-      m_climbSub->setWinchPower(p);
+      if (e > 10.0){
+        m_climbSub->setWinchPower(p);
+      } else{
+        m_climbSub->setWinchPower(p/3);
+      }
     } else {
       m_climbSub->setWinchPower(0.0);
     }

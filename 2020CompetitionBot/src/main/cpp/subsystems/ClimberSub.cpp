@@ -12,9 +12,12 @@ ClimberSub::ClimberSub() :
     m_armMotor{CanIds::kElevatorMotor, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
     m_climbReleaseLatch{PneumaticIds::kClimbReleaseLatch},
     m_climbBalanceMotor{CanIds::kClimbBalanceMotor, rev::CANSparkMaxLowLevel::MotorType::kBrushless} {
+    init();
 }
 
 void ClimberSub::init() {
+    releaseLatch(false);
+    m_armMotor.GetEncoder().SetPosition(0);
 }
 
 void ClimberSub::Periodic() {}

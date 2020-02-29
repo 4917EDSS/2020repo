@@ -15,8 +15,9 @@ IntakeSub::IntakeSub()
       m_topIntakeMotor{CanIds::kTopIntakeMotor},
       m_frontIntakeSensorL{DioIds::kFrontIntakeSensorL}, 
       m_frontIntakeSensorR{DioIds::kFrontIntakeSensorR}, 
+      m_magazineFrontSensorL{DioIds::kMagazineFrontSensorL},
+      m_magazineFrontSensorR{DioIds::kMagazineFrontSensorR},
       m_magazineFullSensor{DioIds::kMagazineFullSensor}     {
-    
 }
 //positive takes balls in negative takes balls to shooter 
 
@@ -36,6 +37,15 @@ void IntakeSub::setMagazineIntakePower(double power) {
 
 bool IntakeSub::getFrontIntakeSensor() {
     if(!m_frontIntakeSensorL.Get() || !m_frontIntakeSensorR.Get()){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+bool IntakeSub::getMagazineFrontSensor() {
+    if(!m_magazineFrontSensorL.Get() || !m_magazineFrontSensorR.Get()){
         return true;
     }
     else{
