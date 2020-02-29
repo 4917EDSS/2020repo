@@ -11,7 +11,10 @@
 ClimberSub::ClimberSub() :
     m_armMotor{CanIds::kElevatorMotor, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
     m_climbReleaseLatch{PneumaticIds::kClimbReleaseLatch},
-    m_climbBalanceMotor{CanIds::kClimbBalanceMotor} {
+    m_climbBalanceMotor{CanIds::kClimbBalanceMotor, rev::CANSparkMaxLowLevel::MotorType::kBrushless} {
+}
+
+void ClimberSub::init() {
 }
 
 // This method will be called once per scheduler run
@@ -22,9 +25,14 @@ void ClimberSub::releaseLatch(bool position) {
 }
 
 void ClimberSub::setWinchPower(double power) {
-    m_armMotor.Set(power);
+    m_armMotor.Set(-power);
 }
 
 void ClimberSub::moveOnGenSwitch(double power) {
     m_climbBalanceMotor.Set(power);
+}
+
+double ClimberSub::getArmMotorEncoderRaw()
+{
+  return (m_armMotor.GetEncoder().GetPosition());
 }

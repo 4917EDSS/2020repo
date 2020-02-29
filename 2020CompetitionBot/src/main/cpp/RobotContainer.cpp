@@ -62,9 +62,8 @@
 
 
 //Operator Buttons
-constexpr int kClimbWinchUpBtn=1;
+constexpr int kClimbWinchReleaseBtn=1;
 constexpr int kIntakeBtn=2;
-constexpr int kClimbWinchDownBtn=3;
 constexpr int kConrolPanelUnfoldBtn=4;
 constexpr int kShooterCloseBtn=7;
 constexpr int kShooterFarBtn=8;
@@ -73,12 +72,11 @@ constexpr int kTurnControlPanelThreeTimesBtn=10;
 constexpr int kKillEverything1Btn = 11;
 constexpr int kKillEverything2Btn = 12;
 
-constexpr int kClimbWinchReleaseBtn=99; //Still need this button to be programmed
 
 //Driver Buttons
-constexpr int kDisableAutoShiftBtn=6;
-constexpr int kClimbBalanceLeftBtn=7;
-constexpr int kClimbBalanceRightBtn=8;
+constexpr int kDisableAutoShiftBtn=8;
+constexpr int kClimbBalanceLeftBtn=5;
+constexpr int kClimbBalanceRightBtn=6;
 //Going to integrate the alignment with shooterBtn, just hasn't happened yet
 constexpr int kShortCameraAlignmentBtn=9;
 constexpr int kFarCameraAlignmentBtn=10;
@@ -102,10 +100,16 @@ RobotContainer::RobotContainer() {
   //     m_shooterSub.setSpeed(frc::SmartDashboard::GetNumber("flywheelSpeed", 0.0));
   //   },
   // {&m_shooterSub}));
+  m_climberSub.SetDefaultCommand(ClimbWinchCmd(&m_climberSub, &m_operatorController));
 }
 
 void RobotContainer::initSubsystems() {
+  m_climberSub.init();
+  m_controlPanelSub.init();
   m_drivetrainSub.init();
+  m_intakeSub.init();
+  m_shooterSub.init();
+  m_visionSub.init();
 }
 
 void RobotContainer::autoChooserSetup() {
@@ -120,8 +124,8 @@ void RobotContainer::autoChooserSetup() {
 
   auto exampleTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
     frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
-      {frc::Translation2d(1_m, 1_m), frc::Translation2d(2_m, -1_m)},
-    frc::Pose2d(3_m, 0_m, frc::Rotation2d(0_deg)),
+    {},
+    frc::Pose2d(1_m, 0_m, frc::Rotation2d(0_deg)),
     config);
 
   m_autoChooser.AddOption("Ramsete", new RamseteCmd(exampleTrajectory, &m_drivetrainSub));
@@ -168,11 +172,8 @@ void RobotContainer::configureButtonBindings() {
   frc2::JoystickButton intakeBtn(&m_operatorController, kIntakeBtn);
   intakeBtn.WhenHeld(IntakeCmd(&m_intakeSub));
 
-  frc2::JoystickButton climbWinchUpBtn(&m_operatorController, kClimbWinchUpBtn);
-  climbWinchUpBtn.WhenHeld(ClimbWinchCmd(&m_climberSub, true));
-
-  frc2::JoystickButton climbWinchDownBtn(&m_operatorController, kClimbWinchDownBtn);
-  climbWinchDownBtn.WhenHeld(ClimbWinchCmd(&m_climberSub, false));
+ frc2::JoystickButton climbWinchReleseBtn(&m_operatorController, kClimbWinchReleaseBtn);
+  climbWinchReleseBtn.WhenPressed(ClimbReleaseCmd(&m_climberSub));
 
   frc2::JoystickButton turnControlPanelThreeTimesBtn(&m_operatorController, kTurnControlPanelThreeTimesBtn);
   turnControlPanelThreeTimesBtn.WhenPressed(frc2::SequentialCommandGroup{FlipUpCtrlPanelArmCmd(&m_controlPanelSub), TurnControlPanelThreeTimesCmd(&m_controlPanelSub)});
