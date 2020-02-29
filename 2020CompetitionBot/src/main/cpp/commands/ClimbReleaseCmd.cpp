@@ -16,7 +16,7 @@ ClimbReleaseCmd::ClimbReleaseCmd(ClimberSub* climbSub)
 
 // Called when the command is initially scheduled.
 void ClimbReleaseCmd::Initialize() {
-  m_ClimbSub->releaseLatch(1);
+  m_ClimbSub->releaseLatch(true);
 }
 
 // Returns true when the command should end.
