@@ -27,6 +27,9 @@ ShooterSub::ShooterSub()
   // Implementation of subsystem constructor goes here.
 }
 
+void ShooterSub::init() {
+}
+
 void ShooterSub::Periodic() {
   // Implementation of subsystem periodic method goes here.
   frc::SmartDashboard::PutNumber("ShooterSpeed", getSpeed());

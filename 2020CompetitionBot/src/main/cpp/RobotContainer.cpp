@@ -104,7 +104,12 @@ RobotContainer::RobotContainer() {
 }
 
 void RobotContainer::initSubsystems() {
+  m_climberSub.init();
+  m_controlPanelSub.init();
   m_drivetrainSub.init();
+  m_intakeSub.init();
+  m_shooterSub.init();
+  m_visionSub.init();
 }
 
 void RobotContainer::autoChooserSetup() {

@@ -13,7 +13,7 @@
 class ShooterSub : public frc2::SubsystemBase {
  public:
   ShooterSub();
-
+  void init();
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */

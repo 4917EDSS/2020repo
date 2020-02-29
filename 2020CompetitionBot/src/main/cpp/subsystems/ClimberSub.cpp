@@ -11,7 +11,10 @@
 ClimberSub::ClimberSub() :
     m_armMotor{CanIds::kElevatorMotor, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
     m_climbReleaseLatch{PneumaticIds::kClimbReleaseLatch},
-    m_climbBalanceMotor{CanIds::kClimbBalanceMotor} {
+    m_climbBalanceMotor{CanIds::kClimbBalanceMotor, rev::CANSparkMaxLowLevel::MotorType::kBrushless} {
+}
+
+void ClimberSub::init() {
 }
 
 // This method will be called once per scheduler run
