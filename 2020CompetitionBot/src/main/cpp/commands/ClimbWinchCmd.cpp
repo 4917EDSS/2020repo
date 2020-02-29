@@ -34,17 +34,17 @@ void ClimbWinchCmd::Execute() {
   
   // Apply power
   if (p > 0) {
-    if (e < ClimbConstants::kMaxArmMotorIncoderValue) {
+    //if (e < ClimbConstants::kMaxArmMotorIncoderValue) {
       m_climbSub->setWinchPower(p);
-    } else {
-      m_climbSub->setWinchPower(0.0);
-    }
+    // } else {
+    //   m_climbSub->setWinchPower(0.0);
+    // }
   } else if (p < 0) {
-    if (e > m_minimumArmMotorEncoderValue) {
+    // if (e > m_minimumArmMotorEncoderValue) {
       m_climbSub->setWinchPower(p);
-    } else {
-      m_climbSub->setWinchPower(0.0);
-    }
+    // } else {
+    //   m_climbSub->setWinchPower(0.0);
+    // }
   }
 }
 
