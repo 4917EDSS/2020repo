@@ -8,7 +8,6 @@
 #include "commands/RamseteCmd.h"
 #include <frc/controller/SimpleMotorFeedForward.h>
 
-// TODO: Check that '[&drivetrainSub]' is correct.  I might need to be '[drivetrainSub]' since it's alreayd a pointer.
 RamseteCmd::RamseteCmd(Trajectory t, DrivetrainSub* drivetrainSub)
   : frc2::RamseteCommand(t, 
       [drivetrainSub]() {return drivetrainSub->getPose();},
