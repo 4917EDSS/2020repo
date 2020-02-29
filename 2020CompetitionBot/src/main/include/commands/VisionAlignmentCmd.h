@@ -11,7 +11,7 @@
 #include <frc2/command/CommandHelper.h>
 #include "subsystems/VisionSub.h"
 #include "subsystems/DrivetrainSub.h"
-
+#include "components/ProportionalController.h"
 
 class VisionAlignmentCmd
     : public frc2::CommandHelper<frc2::CommandBase, VisionAlignmentCmd> {
@@ -27,6 +27,7 @@ class VisionAlignmentCmd
   bool IsFinished() override;
 
  private:
+  ProportionalController m_pController;
   VisionSub* m_visionSub;
   DrivetrainSub* m_drivetrainSub;
   uint64_t m_startTime;
