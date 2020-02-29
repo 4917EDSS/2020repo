@@ -90,8 +90,8 @@ RobotContainer::RobotContainer() {
   // Configure the button bindings
   configureButtonBindings();
   autoChooserSetup();
-  frc::SmartDashboard::PutData("Set Hood High", new SetHoodPositionCmd(&m_shooterSub, 0.0));
-  frc::SmartDashboard::PutData("Set Hood Low", new SetHoodPositionCmd(&m_shooterSub, -14000));
+  frc::SmartDashboard::PutData("Set Hood High", new SetHoodPositionCmd(&m_shooterSub, 0));
+  frc::SmartDashboard::PutData("Set Hood Low", new SetHoodPositionCmd(&m_shooterSub, 15500));
   frc::SmartDashboard::PutNumber("flywheelSpeed", 0.0);
   m_drivetrainSub.SetDefaultCommand(DriveWithJoystickCmd(&m_drivetrainSub, &m_driverController));
   m_shooterSub.SetDefaultCommand(SetHoodSpeedCmd(&m_shooterSub, &m_operatorController));

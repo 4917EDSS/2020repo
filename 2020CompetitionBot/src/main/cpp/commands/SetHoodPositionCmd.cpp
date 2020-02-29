@@ -7,11 +7,11 @@
 
 #include "commands/SetHoodPositionCmd.h"
 constexpr double kP=0.2;
-constexpr double kTolerance=50.0;
+constexpr double kTolerance=75.0;
 constexpr double kLowHood = 14000;
 constexpr double kControlStartDelta = 999999.9;
-constexpr double kMinPower = 0.125;
-constexpr double kMaxPower = 0.2;
+constexpr double kMinPower = 0.25;
+constexpr double kMaxPower = 0.3;
 
 
 SetHoodPositionCmd::SetHoodPositionCmd(ShooterSub* shooterSub, double targetPosition)

@@ -44,7 +44,7 @@ void ShooterSub::setSpeed(double speed) {
 
 
 void ShooterSub::setHoodSpeed(double hoodSpeed) {
-  m_hoodMotor.Set(hoodSpeed);
+  m_hoodMotor.Set(-hoodSpeed);
 }
 
 double ShooterSub::getHoodEncoder() {
