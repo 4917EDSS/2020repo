@@ -1,7 +1,8 @@
 #include "components/ProportionalController.h"
+#include <cmath>
 
-ProportionalController::ProportionalController(double targetLocation, double controlStartDelta, double minPower, double maxPower) 
-  : m_targetLocation(targetLocation), m_controlStartDelta(controlStartDelta), m_minPower(minPower), m_maxPower(maxPower) {
+ProportionalController::ProportionalController(double targetLocation, double controlStartDelta, double tolerance, double minPower, double maxPower) 
+  : m_targetLocation(targetLocation), m_controlStartDelta(controlStartDelta), m_tolerance(tolerance), m_minPower(minPower), m_maxPower(maxPower) {
 
 }
 
@@ -14,6 +15,10 @@ double ProportionalController::getPower(double curLocation) {
   if(delta < 0.0) {
     forward = false;
     delta *= -1.0;  // Make sure delta is positive for calcs
+  }
+
+  if(delta < fabs(m_tolerance)) {
+    return 0;
   }
 
   // If the delta is bigger than the point at which we want to apply proportional control, use max power
