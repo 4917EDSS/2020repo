@@ -24,6 +24,7 @@ class ClimberSub : public frc2::SubsystemBase {
   void releaseLatch(bool position);
   void setWinchPower(double speed);
   void moveOnGenSwitch(double power);
+  double getArmMotorEncoderRaw();
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be

@@ -28,3 +28,8 @@ void ClimberSub::setWinchPower(double power) {
 void ClimberSub::moveOnGenSwitch(double power) {
     m_climbBalanceMotor.Set(power);
 }
+
+double ClimberSub::getArmMotorEncoderRaw()
+{
+  return (m_armMotor.GetEncoder().GetPosition());
+}
