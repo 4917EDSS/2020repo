@@ -21,6 +21,7 @@ RamseteCmd::RamseteCmd(Trajectory t, DrivetrainSub* drivetrainSub)
       {drivetrainSub}),
     m_drivetrainSub(drivetrainSub) {
   // Use addRequirements() here to declare subsystem dependencies.
+  AddRequirements({drivetrainSub});
 }
 
 void RamseteCmd::End(bool interrupted) {
