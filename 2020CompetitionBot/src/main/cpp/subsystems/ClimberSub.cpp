@@ -9,29 +9,29 @@
 #include "Constants.h"
 
 ClimberSub::ClimberSub() :
-    m_armMotor{CanIds::kElevatorMotor, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
-    m_climbReleaseLatch{PneumaticIds::kClimbReleaseLatch},
-    m_climbBalanceMotor{CanIds::kClimbBalanceMotor, rev::CANSparkMaxLowLevel::MotorType::kBrushless} {
-    init();
+  m_armMotor{CanIds::kElevatorMotor, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
+  m_climbReleaseLatch{PneumaticIds::kClimbReleaseLatch},
+  m_climbBalanceMotor{CanIds::kClimbBalanceMotor, rev::CANSparkMaxLowLevel::MotorType::kBrushless} {
+  init();
 }
 
 void ClimberSub::init() {
-    releaseLatch(false);
-    m_armMotor.GetEncoder().SetPosition(0);
+  releaseLatch(false);
+  m_armMotor.GetEncoder().SetPosition(0);
 }
 
 void ClimberSub::Periodic() {}
 
 void ClimberSub::releaseLatch(bool position) {
-    m_climbReleaseLatch.Set(position);
+  m_climbReleaseLatch.Set(position);
 }
 
 void ClimberSub::setWinchPower(double power) {
-    m_armMotor.Set(-power);
+  m_armMotor.Set(-power);
 }
 
 void ClimberSub::moveOnGenSwitch(double power) {
-    m_climbBalanceMotor.Set(power);
+  m_climbBalanceMotor.Set(power);
 }
 
 double ClimberSub::getArmMotorEncoderRaw()

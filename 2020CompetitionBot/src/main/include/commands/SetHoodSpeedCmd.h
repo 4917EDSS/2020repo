@@ -22,7 +22,7 @@
 class SetHoodSpeedCmd
     : public frc2::CommandHelper<frc2::CommandBase, SetHoodSpeedCmd> {
  public:
-  SetHoodSpeedCmd(ShooterSub* subsystem, frc::Joystick* joystick);
+  SetHoodSpeedCmd(ShooterSub* shooterSub, frc::Joystick* joystick);
 
   void Initialize() override;
 

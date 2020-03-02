@@ -10,18 +10,15 @@
 
 
 FlipUpCtrlPanelArmCmd::FlipUpCtrlPanelArmCmd(ControlPanelSub* controlPanelSub)
-  : m_controlPanelSub(controlPanelSub)
-  {
+  : m_controlPanelSub(controlPanelSub) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({controlPanelSub});
 }
 
 // Called when the command is initially scheduled.
 void FlipUpCtrlPanelArmCmd::Initialize() {
-   m_controlPanelSub->togglePosition(true);
-   m_initializedTime = frc::RobotController::GetFPGATime();
-  
-
+  m_controlPanelSub->flipArmUp(true);
+  m_initializedTime = frc::RobotController::GetFPGATime();
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -33,7 +30,8 @@ void FlipUpCtrlPanelArmCmd::End(bool interrupted) {}
 
 // Returns true when the command should end.
 bool FlipUpCtrlPanelArmCmd::IsFinished() { 
-  if ( (frc::RobotController::GetFPGATime() - m_initializedTime) > 500000) {
+  // Wait X microseconds for the arm to flip up
+  if( (frc::RobotController::GetFPGATime() - m_initializedTime) > 500000) {
     return true; 
   }
   else {

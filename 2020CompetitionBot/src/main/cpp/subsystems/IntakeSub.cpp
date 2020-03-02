@@ -11,48 +11,49 @@
 #include "Constants.h"
 
 IntakeSub::IntakeSub() 
-    : m_frontRollerIntakeMotor{CanIds::kFrontRollerIntakeMotor},
-      m_topIntakeMotor{CanIds::kTopIntakeMotor},
-      m_frontIntakeSensorL{DioIds::kFrontIntakeSensorL}, 
-      m_frontIntakeSensorR{DioIds::kFrontIntakeSensorR}, 
-      m_magazineFrontSensorL{DioIds::kMagazineFrontSensorL},
-      m_magazineFrontSensorR{DioIds::kMagazineFrontSensorR},
-      m_magazineFullSensor{DioIds::kMagazineFullSensor}     {
+  : m_frontRollerIntakeMotor{CanIds::kFrontRollerIntakeMotor},
+    m_topIntakeMotor{CanIds::kTopIntakeMotor},
+    m_frontIntakeSensorL{DioIds::kFrontIntakeSensorL}, 
+    m_frontIntakeSensorR{DioIds::kFrontIntakeSensorR}, 
+    m_magazineFrontSensorL{DioIds::kMagazineFrontSensorL},
+    m_magazineFrontSensorR{DioIds::kMagazineFrontSensorR},
+    m_magazineFullSensor{DioIds::kMagazineFullSensor} {
 }
-//positive takes balls in negative takes balls to shooter 
 
 void IntakeSub::init() {
+  setFrontRollerIntakePower(0.0);
+  setMagazineIntakePower(0.0);
 }
 
 void IntakeSub::Periodic() {}
 
+//positive takes balls in negative takes balls to shooter
 void IntakeSub::setFrontRollerIntakePower(double power) {
-    m_frontRollerIntakeMotor.Set(ControlMode::PercentOutput, power);
-
+  m_frontRollerIntakeMotor.Set(ControlMode::PercentOutput, power);
 }
 
 void IntakeSub::setMagazineIntakePower(double power) {
-    m_topIntakeMotor.Set(ControlMode::PercentOutput, power);
+  m_topIntakeMotor.Set(ControlMode::PercentOutput, power);
 }
 
 bool IntakeSub::getFrontIntakeSensor() {
-    if(!m_frontIntakeSensorL.Get() || !m_frontIntakeSensorR.Get()){
-        return true;
-    }
-    else{
-        return false;
-    }
+  if(!m_frontIntakeSensorL.Get() || !m_frontIntakeSensorR.Get()) {
+    return true;
+  }
+  else {
+    return false;
+  }
 }
 
 bool IntakeSub::getMagazineFrontSensor() {
-    if(!m_magazineFrontSensorL.Get() || !m_magazineFrontSensorR.Get()){
-        return true;
-    }
-    else{
-        return false;
-    }
+  if(!m_magazineFrontSensorL.Get() || !m_magazineFrontSensorR.Get()) {
+    return true;
+  }
+  else {
+    return false;
+  }
 }
 
 bool IntakeSub::getMagazineFullSensor() {
-    return !m_magazineFullSensor.Get();
+  return !m_magazineFullSensor.Get();
 }

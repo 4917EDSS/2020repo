@@ -9,15 +9,14 @@
 #include "constants.h"
 
 TurnControlPanelThreeTimesCmd::TurnControlPanelThreeTimesCmd(ControlPanelSub* controlPanelSub)
-  : m_controlPanelSub(controlPanelSub)
-  {
+  : m_controlPanelSub(controlPanelSub) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({controlPanelSub});
 }
 
 // Called when the command is initially scheduled.
 void TurnControlPanelThreeTimesCmd::Initialize() {
-  m_controlPanelSub->togglePosition(true);
+  m_controlPanelSub->flipArmUp(true);
   // we probably have to wait before we read the colour
   m_startingColour = m_controlPanelSub->getColour();
   m_controlPanelSub->setWheelPower(ControlPanelConstants::kMaxWheelSpeed);
@@ -27,27 +26,29 @@ void TurnControlPanelThreeTimesCmd::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void TurnControlPanelThreeTimesCmd::Execute() {
   frc::Color currentColour = m_controlPanelSub->getColour();
-  if (!m_inExpectedColour && currentColour == m_startingColour) {
+  if(!m_inExpectedColour && (currentColour == m_startingColour)) {
     m_inExpectedColour = true;
     m_numHalfRotations++;
-  } else if (m_inExpectedColour && !(currentColour == m_startingColour)) {
+  } 
+  else if (m_inExpectedColour && !(currentColour == m_startingColour)) {
     m_inExpectedColour = false;
   }
 }
 
 // Called once the command ends or is interrupted.
 void TurnControlPanelThreeTimesCmd::End(bool interrupted) {
-  m_controlPanelSub->togglePosition(false);
+  m_controlPanelSub->flipArmUp(false);
 }
 
 // Returns true when the command should end.
 bool TurnControlPanelThreeTimesCmd::IsFinished() { 
   // We are done after 3 rotations (6 half rotations) and we have gone past the initial colour
-  if (m_numHalfRotations == 6 && !m_inExpectedColour) {
+  if((m_numHalfRotations >= 6) && !m_inExpectedColour) {
     // This may be too abrupt of a stop - needs tuning
     m_controlPanelSub->setWheelPower(0);
     return true;
-  } else {
+  } 
+  else {
     return false; 
   } 
 }

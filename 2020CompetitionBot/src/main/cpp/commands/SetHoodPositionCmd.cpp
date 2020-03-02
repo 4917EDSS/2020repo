@@ -6,13 +6,12 @@
 /*----------------------------------------------------------------------------*/
 
 #include "commands/SetHoodPositionCmd.h"
-constexpr double kP=0.2;
-constexpr double kTolerance=75.0;
+constexpr double kP = 0.2;
+constexpr double kTolerance = 75.0;
 constexpr double kLowHood = 14000;
 constexpr double kControlStartDelta = 999999.9;
 constexpr double kMinPower = 0.25;
 constexpr double kMaxPower = 0.3;
-
 
 SetHoodPositionCmd::SetHoodPositionCmd(ShooterSub* shooterSub, double targetPosition)
   : m_shooterSub(shooterSub),
@@ -27,10 +26,8 @@ void SetHoodPositionCmd::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void SetHoodPositionCmd::Execute() {
-  double outputPower = (m_pc.getPower(m_shooterSub->getHoodEncoder()));
+  double outputPower = m_pc.getPower(m_shooterSub->getHoodEncoder());
   m_shooterSub->setHoodSpeed(outputPower);
-  std::cout << "Executed " << outputPower << "\n";
-  // m_shooterSub->setHoodSpeed(0.05);
 }
 
 // Called once the command ends or is interrupted.
@@ -42,7 +39,6 @@ void SetHoodPositionCmd::End(bool interrupted) {
 bool SetHoodPositionCmd::IsFinished() {
   // if hood is within +-tolerence of target and it's not going too fast, then we're done
   if ((fabs(m_shooterSub->getHoodEncoder() - m_targetPosition) <= kTolerance) /*&& (currentVelocity < kTargetVelocity), if necessary*/) {
-    std::cout << "Finished \n";
     return true;
   }
   return false;

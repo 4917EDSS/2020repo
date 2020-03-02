@@ -18,8 +18,7 @@ constexpr double kSpeedTolerance = 110.0;
 ShootCmd::ShootCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, bool isFar) 
   : m_shooterSub(shooterSub), 
     m_intakeSub(intakeSub),
-    m_isFar(isFar)
-  {
+    m_isFar(isFar) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({shooterSub, intakeSub});
 }
@@ -38,17 +37,17 @@ double ShootCmd::runPID(){
   double currentDiff = m_targetSpeed - m_shooterSub->getSpeed();
   double feed = m_targetSpeed / ShooterConstants::kMaxRPM;
   uint64_t currentTime = frc::RobotController::GetFPGATime();
-  double timeSinceLast = static_cast<double>(currentTime - m_lastTime)/1000000.0;
-  double speedDiff = (currentDiff - m_lastDiff)/timeSinceLast;
+  double timeSinceLast = static_cast<double>(currentTime - m_lastTime) / 1000000.0;
+  double speedDiff = (currentDiff - m_lastDiff) / timeSinceLast;
   // don't want to start integrating while getting up to speed
-  if(currentDiff < 1000){
-    double addedIntegralDiff = (timeSinceLast)*((currentDiff + m_lastDiff)/2.0);
+  if(currentDiff < 1000) {
+    double addedIntegralDiff = (timeSinceLast) * ((currentDiff + m_lastDiff) / 2.0);
     m_integralDiff += addedIntegralDiff;
-    std::cout << m_integralDiff  << "***\n";
+    //std::cout << m_integralDiff  << "***\n";
   }
   m_lastDiff = currentDiff;
   m_lastTime = currentTime;
-  return (currentDiff*kP) + (m_integralDiff*kI) + (speedDiff*kD)  + feed;
+  return (currentDiff * kP) + (m_integralDiff * kI) + (speedDiff * kD) + feed;
 }
 
 void ShootCmd::Execute() {
@@ -91,7 +90,7 @@ void ShootCmd::Execute() {
 
 // Called once the command ends or is interrupted.
 void ShootCmd::End(bool interrupted) {
-    m_shooterSub->setSpeed(0);
-    m_intakeSub->setMagazineIntakePower(0);
-    m_intakeSub->setFrontRollerIntakePower(0);
+  m_shooterSub->setSpeed(0);
+  m_intakeSub->setMagazineIntakePower(0);
+  m_intakeSub->setFrontRollerIntakePower(0);
 }

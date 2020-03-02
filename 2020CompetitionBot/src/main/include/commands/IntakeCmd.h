@@ -21,7 +21,7 @@
 class IntakeCmd
     : public frc2::CommandHelper<frc2::CommandBase, IntakeCmd> {
  public:
-  IntakeCmd(IntakeSub* subsystem);
+  IntakeCmd(IntakeSub* intakeSub);
 
   void Initialize() override;
   void Execute() override;

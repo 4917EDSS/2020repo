@@ -9,22 +9,19 @@
 #include "commands/VisionAlignmentCmd.h"
 #include <frc/RobotController.h>
 
+constexpr double kMaxEndVelocity = 0.1;  // In degrees per iteration
 
-
-constexpr double kMaxEndVelocity = 0.1;  // In degrees per iteration 
 VisionAlignmentCmd::VisionAlignmentCmd(VisionSub* visionSub, DrivetrainSub* drivetrainSub, bool isFar)
   : m_visionSub(visionSub),
     m_drivetrainSub(drivetrainSub),
     m_isFar(isFar),
     m_lastX(0),
-    m_pController(0, 20, VisionConstants::kXAllignmentTolerence, 0.2, 0.5)
-  {
+    m_pController(0, 20, VisionConstants::kXAllignmentTolerence, 0.2, 0.5) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({visionSub, drivetrainSub});
 }
 
 // Called when the command is initially scheduled.
-
 void VisionAlignmentCmd::Initialize() {
   m_startTime = frc::RobotController::GetFPGATime();
   m_lastX = 0;

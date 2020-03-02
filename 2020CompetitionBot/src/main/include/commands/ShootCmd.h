@@ -24,7 +24,7 @@ class ShootCmd
     : public frc2::CommandHelper<frc2::CommandBase, ShootCmd> {
  public:
 
-  ShootCmd(ShooterSub* subsystem, IntakeSub* intakeSub, bool isFar);
+  ShootCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, bool isFar);
 
   void Initialize() override;
   void Execute() override;

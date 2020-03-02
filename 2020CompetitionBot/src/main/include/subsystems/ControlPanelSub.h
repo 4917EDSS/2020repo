@@ -21,17 +21,15 @@ class ControlPanelSub : public frc2::SubsystemBase {
 
   void init();
   void Periodic();
-  void togglePosition(bool position);
+  void flipArmUp(bool position);
   void setWheelPower(double speed);
   frc::Color getColour();
 
-    rev::ColorSensorV3 m_colourSensor{i2cPort};
  private:
-    static constexpr auto i2cPort = frc::I2C::Port::kOnboard;
-
-    rev::ColorMatch m_colourMatcher;
-   ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_controlPanelMotor;
-   frc::Solenoid m_controlPanelFlipper;
-  // Components (e.g. motor controllers and sensors) should generally be
-  // declared private and exposed only through public methods.
+  static constexpr auto i2cPort = frc::I2C::Port::kOnboard;
+  
+  rev::ColorSensorV3 m_colourSensor{i2cPort};
+  rev::ColorMatch m_colourMatcher;
+  ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_controlPanelMotor;
+  frc::Solenoid m_controlPanelFlipper;
 };

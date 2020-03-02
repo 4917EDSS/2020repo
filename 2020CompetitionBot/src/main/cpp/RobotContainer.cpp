@@ -19,14 +19,16 @@
 #include <frc2/command/SequentialCommandGroup.h>
 #include <frc2/command/button/JoystickButton.h>
 #include <frc2/command/RunCommand.h>
+
+#include "Constants.h"
+#include "subsystems/ClimberSub.h"
+#include "subsystems/VisionSub.h"
 #include "commands/DriveWithJoystickCmd.h"
 #include "commands/DisableAutoShiftCmd.h"
 #include "commands/AimShootGrp.h"
 #include "commands/IntakeCmd.h"
 #include "commands/SetHoodPositionCmd.h"
 #include "commands/SetHoodSpeedCmd.h"
-#include "Constants.h"
-#include "subsystems/ClimberSub.h"
 #include "commands/ClimbReleaseCmd.h"
 #include "commands/ClimbWinchCmd.h"
 #include "commands/VisionAlignmentCmd.h"
@@ -34,7 +36,6 @@
 #include "commands/TurnControlPanelThreeTimesCmd.h"
 #include "commands/FlipUpCtrlPanelArmCmd.h"
 #include "commands/TurnControlPanelToColourCmd.h"
-#include "subsystems/VisionSub.h"
 #include "commands/KillEverythingCmd.h"
 #include "commands/RamseteCmd.h"
 
@@ -60,49 +61,40 @@
  * Right Joystick Horizontal Axis = 2
  */
 
-
-//Operator Buttons
-constexpr int kClimbWinchReleaseBtn=1;
-constexpr int kIntakeBtn=2;
-constexpr int kConrolPanelUnfoldBtn=4;
-constexpr int kShooterCloseBtn=7;
-constexpr int kShooterFarBtn=8;
-constexpr int kTurnControlPanelToColourBtn=9;
-constexpr int kTurnControlPanelThreeTimesBtn=10;
+//Driver Buttons
+constexpr int kDisableAutoShiftBtn = 6;
+constexpr int kClimbBalanceLeftBtn = 7;
+constexpr int kClimbBalanceRightBtn = 8;
+constexpr int kShortCameraAlignmentBtn = 9; //Going to integrate the alignment with shooterBtn, just hasn't happened yet
+constexpr int kFarCameraAlignmentBtn = 10;
 constexpr int kKillEverything1Btn = 11;
 constexpr int kKillEverything2Btn = 12;
 
-
-//Driver Buttons
-constexpr int kDisableAutoShiftBtn=6;
-constexpr int kClimbBalanceLeftBtn=7;
-constexpr int kClimbBalanceRightBtn=8;
-//Going to integrate the alignment with shooterBtn, just hasn't happened yet
-constexpr int kShortCameraAlignmentBtn=9;
-constexpr int kFarCameraAlignmentBtn=10;
-// See driver
-// constexpr int kKillEverything1Btn = 11;
+//Operator Buttons
+constexpr int kClimbWinchReleaseBtn = 1;
+constexpr int kIntakeBtn = 2;
+constexpr int kConrolPanelUnfoldBtn = 4;
+constexpr int kShooterCloseBtn = 7;
+constexpr int kShooterFarBtn = 8;
+constexpr int kTurnControlPanelToColourBtn = 9;
+constexpr int kTurnControlPanelThreeTimesBtn = 10;
+// constexpr int kKillEverything1Btn = 11;  // Same as driver
 // constexpr int kKillEverything2Btn = 12;
 
 RobotContainer::RobotContainer() {
-  // Initialize all of your commands and subsystems here
-  //m_autonomousCommand(&m_shooterSub);
   // Configure the button bindings
   configureButtonBindings();
   autoChooserSetup();
-  frc::SmartDashboard::PutData("Set Hood High", new SetHoodPositionCmd(&m_shooterSub, 0));
-  frc::SmartDashboard::PutData("Set Hood Low", new SetHoodPositionCmd(&m_shooterSub, 15500));
-  frc::SmartDashboard::PutNumber("flywheelSpeed", 0.0);
+
   m_drivetrainSub.SetDefaultCommand(DriveWithJoystickCmd(&m_drivetrainSub, &m_driverController));
   m_shooterSub.SetDefaultCommand(SetHoodSpeedCmd(&m_shooterSub, &m_operatorController));
-  // m_shooterSub.SetDefaultCommand(frc2::RunCommand(
-  //   [this] {
-  //     m_shooterSub.setSpeed(frc::SmartDashboard::GetNumber("flywheelSpeed", 0.0));
-  //   },
-  // {&m_shooterSub}));
   m_climberSub.SetDefaultCommand(ClimbWinchCmd(&m_climberSub, &m_operatorController));
+
+  frc::SmartDashboard::PutData("Hood High", new SetHoodPositionCmd(&m_shooterSub, 0));
+  frc::SmartDashboard::PutData("Hood Low", new SetHoodPositionCmd(&m_shooterSub, 15500));
 }
 
+// Make sure that all of the subsystems are in a known state
 void RobotContainer::initSubsystems() {
   m_climberSub.init();
   m_controlPanelSub.init();
@@ -113,6 +105,7 @@ void RobotContainer::initSubsystems() {
 }
 
 void RobotContainer::autoChooserSetup() {
+  // Setup a trajectory
   frc::DifferentialDriveVoltageConstraint autoVoltageConstraint(
     frc::SimpleMotorFeedforward<units::meters> (DriveConstants::ks, DriveConstants::kv, DriveConstants:: ka),
     DriveConstants::kDriveKinematics, 
@@ -128,15 +121,17 @@ void RobotContainer::autoChooserSetup() {
     frc::Pose2d(1_m, 0_m, frc::Rotation2d(0_deg)),
     config);
 
+  // Create the list of auto options and put it up on the dashboard
   m_autoChooser.AddOption("Ramsete", new RamseteCmd(exampleTrajectory, &m_drivetrainSub));
   m_autoChooser.SetDefaultOption("IntakeCmd", new IntakeCmd(&m_intakeSub));
-
   frc::SmartDashboard::PutData("Auto Chooser", &m_autoChooser);
 }
 
-void RobotContainer::configureButtonBindings() {
-  // Configure your button bindings here
+frc2::Command* RobotContainer::getAutonomousCommand() {
+  return m_autoChooser.GetSelected();
+}
 
+void RobotContainer::configureButtonBindings() {
   //Driver Commands...
 
    frc2::JoystickButton disableAutoShiftBtn(&m_driverController, kDisableAutoShiftBtn);
@@ -187,6 +182,8 @@ void RobotContainer::configureButtonBindings() {
   frc2::JoystickButton killEverythingBtn2o(&m_operatorController, kKillEverything2Btn);
   killEverythingBtn2o.WhenPressed(KillEverythingCmd(&m_climberSub, &m_controlPanelSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub, &m_visionSub));
 
+
+  // Configure controller joystick axes
   m_driverController.SetXChannel(0);
   m_driverController.SetYChannel(1);
   m_driverController.SetZChannel(2);
@@ -196,8 +193,4 @@ void RobotContainer::configureButtonBindings() {
   m_operatorController.SetYChannel(1);
   m_operatorController.SetZChannel(2);
   m_operatorController.SetThrottleChannel(3);
-}
-
-frc2::Command* RobotContainer::getAutonomousCommand() {
-  return m_autoChooser.GetSelected();
 }

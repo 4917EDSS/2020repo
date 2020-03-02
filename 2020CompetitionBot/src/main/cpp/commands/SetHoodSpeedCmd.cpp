@@ -7,30 +7,28 @@
 
 #include "commands/SetHoodSpeedCmd.h"
 
+constexpr double kMaxHoodPower = 0.2;
 SetHoodSpeedCmd::SetHoodSpeedCmd(ShooterSub* shooterSub, frc::Joystick* joystick)
   : m_shooterSub(shooterSub),
-    m_joystick(joystick)
-  {
+    m_joystick(joystick) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({shooterSub});
 }
 
 // Called when the command is initially scheduled.
 void SetHoodSpeedCmd::Initialize() {
-  //m_shooterSub->setHoodSpeed(m_speed);
 }
 
 // Called repeatedly when this Command is scheduled to run
 void SetHoodSpeedCmd::Execute() {
-  
-  double speed = m_joystick->GetY();
-  if (speed >= 0.2) {
-    speed = 0.2;
+  double power = m_joystick->GetY();
+  if (power >= kMaxHoodPower) {
+    power = kMaxHoodPower;
   }
-  else if (speed <= -0.2) {
-    speed = -0.2;
+  else if (power <= -kMaxHoodPower) {
+    power = -kMaxHoodPower;
   }
-  m_shooterSub->setHoodSpeed(speed);
+  m_shooterSub->setHoodSpeed(power);
 }
 
 // Called once the command ends or is interrupted.

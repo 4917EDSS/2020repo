@@ -19,8 +19,7 @@ RamseteCmd::RamseteCmd(Trajectory t, DrivetrainSub* drivetrainSub)
       frc2::PIDController(DriveConstants::kPDriveVel, 0, 0),
       [drivetrainSub](auto left, auto right) {drivetrainSub->tankDriveVolts(left, right);},
       {drivetrainSub}),
-    m_drivetrainSub(drivetrainSub)
-  {
+    m_drivetrainSub(drivetrainSub) {
   // Use addRequirements() here to declare subsystem dependencies.
 }
 

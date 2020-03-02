@@ -14,9 +14,8 @@
 
 constexpr float kEncoderRotationsToMLowGear = 5.0/(160.162);
 constexpr float kEncoderRotationsToMHighGear = 5.0/(102.264);
-//Metres per second, not velocity
-constexpr double kShiftUpSpeed = 2.35;
-constexpr double kShiftDownSpeed = 1.15;
+constexpr double kShiftUpSpeed = 2.35;    // In m/s
+constexpr double kShiftDownSpeed = 1.15;  // In m/s
 
 DrivetrainSub::DrivetrainSub() 
   : m_leftMotor1{CanIds::kLeftMotor1, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
@@ -42,7 +41,14 @@ DrivetrainSub::DrivetrainSub()
   m_leftMotor4.SetSmartCurrentLimit(DriveConstants::kSmartCurrentLimit);
 
   init();
-  frc::SmartDashboard::PutNumber("drive power", 0);
+}
+
+void DrivetrainSub::init() {
+  m_gyro.Reset();
+  shiftDown();
+  setDrivetrainEncoderZero();
+  tankDrive(0.0, 0.0);
+  m_odometry.ResetPosition(frc::Pose2d(), frc::Rotation2d());
 }
 
 // This method will be called once per scheduler run
@@ -59,15 +65,7 @@ void DrivetrainSub::Periodic() {
   // frc::SmartDashboard::PutNumber("MtrVlcty R", getRightVelocity());
   // frc::SmartDashboard::PutNumber("MtrVlcty L", getLeftVelocity());
   // frc::SmartDashboard::PutBoolean("High Gear", isShifterInHighGear());
-  std::cout << getPose().Translation().X() << " " << getPose().Translation().Y() << " " << getPose().Rotation().Radians() << "\n";
-}
-
-void DrivetrainSub::init() {
-  m_gyro.Reset();
-  shiftDown();
-  setDrivetrainEncoderZero();
-  tankDrive(0.0, 0.0);
-  m_odometry.ResetPosition(frc::Pose2d(), frc::Rotation2d());
+  // std::cout << getPose().Translation().X() << " " << getPose().Translation().Y() << " " << getPose().Rotation().Radians() << "\n";
 }
 
 void DrivetrainSub::setDrivetrainEncoderZero() {
@@ -80,6 +78,11 @@ void DrivetrainSub::setDrivetrainEncoderZero() {
   m_leftMotor2.GetEncoder().SetPosition(0);
   m_leftMotor3.GetEncoder().SetPosition(0);
   m_leftMotor4.GetEncoder().SetPosition(0);
+}
+
+void DrivetrainSub::resetOdometry(frc::Pose2d pose) {
+  setDrivetrainEncoderZero();
+  m_odometry.ResetPosition(pose, frc::Rotation2d(units::degree_t(getHeading())));
 }
 
 void DrivetrainSub::arcadeDrive(double fwd, double rot) {
@@ -135,12 +138,6 @@ frc::DifferentialDriveWheelSpeeds DrivetrainSub::getWheelSpeeds() {
           units::meters_per_second_t(getRightVelocity()) };
 }
 
-void DrivetrainSub::resetOdometry(frc::Pose2d pose) {
-  setDrivetrainEncoderZero();
-  m_odometry.ResetPosition(pose,
-                           frc::Rotation2d(units::degree_t(getHeading())));
-}
-
 // Returns the conversion factor for converting motor encoder ticks to meters.
 // This method takes into account which gear we are in.s
 double DrivetrainSub::getEncoderRotationsToM() {
@@ -190,7 +187,6 @@ double DrivetrainSub::getRightVelocity()
   return (encoder.GetVelocity() * getEncoderRotationsToM() / 60.0 );
 }
 
-
 void DrivetrainSub::autoShift() {
   if(m_autoShiftEnabled) {
     double avgWheelSpeeds = (getLeftVelocity() + getRightVelocity()) / 2;
@@ -205,9 +201,11 @@ void DrivetrainSub::autoShift() {
     }
   }
 }
+
 void DrivetrainSub::disableAutoShift() {
   m_autoShiftEnabled=false;
 }
+
 void DrivetrainSub::enableAutoShift() {
   m_autoShiftEnabled=true;
 }

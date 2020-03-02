@@ -15,19 +15,20 @@ ShooterSub::ShooterSub()
   : m_shooterMotor1(CanIds::kShootMotor1), 
     m_shooterMotor2(CanIds::kShootMotor2), 
     m_feederMotor(CanIds::kFeederMotor), 
-    m_hoodMotor(CanIds::kHoodMotor){
-      m_shooterMotor1.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor);
-      m_shooterMotor2.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor);
-      m_hoodMotor.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::QuadEncoder,0,0);
-      m_hoodMotor.SetSelectedSensorPosition(0);
-      m_shooterMotor1.ConfigVelocityMeasurementPeriod(ctre::phoenix::motorcontrol::VelocityMeasPeriod::Period_5Ms);
-      m_shooterMotor1.ConfigVelocityMeasurementWindow(4);
-      m_shooterMotor2.ConfigVelocityMeasurementPeriod(ctre::phoenix::motorcontrol::VelocityMeasPeriod::Period_5Ms);
-      m_shooterMotor2.ConfigVelocityMeasurementWindow(4);
-  // Implementation of subsystem constructor goes here.
+    m_hoodMotor(CanIds::kHoodMotor) {
+  m_shooterMotor1.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor);
+  m_shooterMotor2.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor);
+  m_hoodMotor.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::QuadEncoder,0,0);
+  m_hoodMotor.SetSelectedSensorPosition(0);
+  m_shooterMotor1.ConfigVelocityMeasurementPeriod(ctre::phoenix::motorcontrol::VelocityMeasPeriod::Period_5Ms);
+  m_shooterMotor1.ConfigVelocityMeasurementWindow(4);
+  m_shooterMotor2.ConfigVelocityMeasurementPeriod(ctre::phoenix::motorcontrol::VelocityMeasPeriod::Period_5Ms);
+  m_shooterMotor2.ConfigVelocityMeasurementWindow(4);
 }
 
 void ShooterSub::init() {
+  setSpeed(0.0);
+  setHoodSpeed(0.0);
 }
 
 void ShooterSub::Periodic() {

@@ -9,8 +9,7 @@
 #include "subsystems/DrivetrainSub.h"
 
 DisableAutoShiftCmd::DisableAutoShiftCmd(DrivetrainSub* drivetrainSub)
-  : m_drivetrainSub(drivetrainSub)
-  {
+  : m_drivetrainSub(drivetrainSub) {
   // Use addRequirements() here to declare subsystem dependencies.
 }
 // Called when the command is initially scheduled.

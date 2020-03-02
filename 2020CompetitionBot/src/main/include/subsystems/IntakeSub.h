@@ -18,17 +18,14 @@ constexpr double ktargetDistance = 7;
 class IntakeSub : public frc2::SubsystemBase {
  public:
   IntakeSub();
+  void Periodic();
+  void init();
   // negative speed sends balls to shooter positive takes them to magazine 
   void setFrontRollerIntakePower(double power);
   void setMagazineIntakePower(double power);
   bool getFrontIntakeSensor();
   bool getMagazineFrontSensor();
   bool getMagazineFullSensor();
-  void init();
-  /**
-   * Will be called periodically whenever the CommandScheduler runs.
-   */
-  void Periodic();
 
  private:
   ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_frontRollerIntakeMotor;

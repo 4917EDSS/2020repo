@@ -11,8 +11,7 @@
 
 ClimbReleaseCmd::ClimbReleaseCmd(ClimberSub* climbSub, frc::Joystick* joystick)
   : m_climbSub(climbSub),
-    m_joystick(joystick)
-  {
+    m_joystick(joystick) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({climbSub});
 }

@@ -17,8 +17,7 @@ constexpr double kMaxTurnAccel = 0.08;
 constexpr double kDeadBand = 0.03;
 DriveWithJoystickCmd::DriveWithJoystickCmd(DrivetrainSub* drivetrainSub, frc::Joystick* joystick)
   : m_drivetrainSub(drivetrainSub),
-    m_joystick(joystick)
-  {
+    m_joystick(joystick) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({drivetrainSub});
 }
@@ -30,12 +29,12 @@ void DriveWithJoystickCmd::Initialize() {
 }
 
 double adjustSensitivity (double power) {
-  double sign=-1.0;
+  double sign = -1.0;
   if (power >= 0) {
-   sign=1.0;
+    sign = 1.0;
   }
-  power=pow(power,kSensitivityPower);
-  power=fabs(power)*sign;
+  power = pow(power, kSensitivityPower);
+  power = fabs(power) * sign;
 
   return power;
 }
@@ -55,24 +54,25 @@ double applyDeadBand(double power, double minimum) {
   return power;
 }
 
-double capAcceleration (double power, double powerPrevious, double maxAccel){
-  if (powerPrevious - power > maxAccel){
+double capAcceleration (double power, double powerPrevious, double maxAccel) {
+  if(powerPrevious - power > maxAccel) {
     power = powerPrevious - maxAccel;
   }
-  else if (power - powerPrevious > maxAccel){
+  else if (power - powerPrevious > maxAccel) {
     power = powerPrevious + maxAccel;
   }
   return power;
 }
+
 // Called repeatedly when this Command is scheduled to run
 void DriveWithJoystickCmd::Execute() {
-  double forwardPower=m_joystick->GetY();
-  double turnPower=-m_joystick->GetZ();
+  double forwardPower = m_joystick->GetY();
+  double turnPower = -m_joystick->GetZ();
   
-  forwardPower =  adjustSensitivity(forwardPower);
+  forwardPower = adjustSensitivity(forwardPower);
   turnPower = adjustSensitivity(turnPower);
 
-  forwardPower =  applyDeadBand(forwardPower, kMinimumForwardPower);
+  forwardPower = applyDeadBand(forwardPower, kMinimumForwardPower);
   turnPower =  applyDeadBand(turnPower, kMinimumTurningPower);
 
   forwardPower = capAcceleration(forwardPower, m_forwardPowerPrevious, kMaxForwardAccel);
@@ -83,7 +83,7 @@ void DriveWithJoystickCmd::Execute() {
 
   m_forwardPowerPrevious = forwardPower;
   m_turnPowerPrevious = turnPower;
- }
+}
 
 // Called once the command ends or is interrupted.
 void DriveWithJoystickCmd::End(bool interrupted) {}

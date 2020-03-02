@@ -59,20 +59,9 @@ namespace DioIds {
 }
 
 namespace DriveConstants {
-    // constexpr bool kLeftEncoderReversed = false;
-    // constexpr bool RightEncoderReversed = true;
-
-    constexpr auto kTrackwidth = 0.67_m; //this is the human measured constant
-    //this is the characterized number: 0.797108131
+    constexpr auto kTrackwidth = 0.67_m; // This is the human measured constant (characterized number was 0.797108131)
     extern const frc::DifferentialDriveKinematics kDriveKinematics;
-
-    // constexpr int kEncoderCPR = 1024;
-    // constexpr double kWheelDiameterInches = 8;
-    //  // Assumes the encoders are directly mounted on the wheel shafts
-    // constexpr double kEncoderDistancePerPulse =
-    //   (kWheelDiameterInches * wpi::math::pi) / static_cast<double>(kEncoderCPR);
     constexpr int kSmartCurrentLimit = 30;
-
     constexpr bool kGyroReversed = true;
 
     constexpr auto ks = 0.102_V;
@@ -80,27 +69,26 @@ namespace DriveConstants {
     constexpr auto ka = 0.428 * 1_V * 1_s * 1_s / 1_m;
 
     constexpr double kPDriveVel = 14.3;
-}  // namespace DriveConstants
+}
 
 namespace AutoConstants {
     constexpr auto kMaxSpeed = 2.93_mps;
     constexpr auto kMaxAcceleration = 7_mps_sq;
 
-    // Reasonable baseline values for a RAMSETE follower in units of meters and
-    // seconds
+    // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
     constexpr double kRamseteB = 2;
     constexpr double kRamseteZeta = 0.7;
-}  // namespace AutoConstants
+}
 
 namespace OIConstants {
     constexpr int kDriverControllerPort = 1;
-}  // namespace OIConstants
+}
 
 namespace VisionConstants {
     constexpr double kXAllignmentTolerence = 0.5;
     constexpr double kXMax = 30.0;
     constexpr double kFrontCameraId = 1;
-}  // namespace VisionConstants
+}
 
 namespace ClimbConstants {
     constexpr double kMaxArmMotorEncoderValue = 9999999.0;

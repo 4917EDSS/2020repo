@@ -14,7 +14,7 @@
 // For more information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
 AimSpinFlywheelGrp::AimSpinFlywheelGrp(VisionSub* visionSub, DrivetrainSub* drivetrainSub,ShooterSub* shooterSub, bool isFar)
-    : CommandHelper(
+  : CommandHelper(
           // The deadline command
           VisionAlignmentCmd(visionSub, drivetrainSub, isFar), 
           SpinFlywheelCmd(shooterSub, (isFar ? ShooterConstants::kFarTargetSpeed : ShooterConstants::kCloseTargetSpeed))) {

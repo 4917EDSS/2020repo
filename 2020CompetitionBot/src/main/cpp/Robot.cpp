@@ -15,8 +15,6 @@
 
 void Robot::RobotInit() {
   frc::SmartDashboard::PutString("Target Colour", "____");
-  
-
 }
 
 /**
@@ -27,20 +25,21 @@ void Robot::RobotInit() {
  * <p> This runs after the mode specific periodic functions, but before
  * LiveWindow and SmartDashboard integrated updating.
  */
- int underTwentyCounter = 0;
+int underTwentyCounter = 0;
 void Robot::RobotPeriodic() { 
  
   uint64_t currentTimeStart = frc::RobotController::GetFPGATime();
   frc2::CommandScheduler::GetInstance().Run(); 
   uint64_t currentTimeFinal = frc::RobotController::GetFPGATime();
+
+  // Count number of loop overruns
   if (currentTimeFinal-currentTimeStart >= 20000){
     std::cout << "cycles since last 20000: " << underTwentyCounter << std::endl;
     std::cout << "diffrence: " << currentTimeFinal - currentTimeStart << std::endl;
     underTwentyCounter = 0;
   }
   else if (currentTimeFinal - currentTimeStart < 20000){
-   underTwentyCounter++;
-    
+    underTwentyCounter++;
   }
 }
 
@@ -82,17 +81,16 @@ void Robot::TeleopInit() {
  * This function is called periodically during operator control.
  */
 void Robot::TeleopPeriodic() {
+  //This is an example of how to create a boolean box with specific colours:
+  // NetworkTableEntry myBoolean = Shuffleboard.getTab("SmartDashboard")
+  //         .add("Target Colour", false)
+  //         .withWidget("Boolean Box")
+  //         .withProperties(Map.of("colourWhenTrue", "blue", "colourWhenFalse",       
+  //         "gray")) .getEntry();
 
-//This is an example of how to create a boolean box with specific colours:
-// NetworkTableEntry myBoolean = Shuffleboard.getTab("SmartDashboard")
-//         .add("Target Color", false)
-//         .withWidget("Boolean Box")
-//         .withProperties(Map.of("colorWhenTrue", "blue", "colorWhenFalse",       
-//         "gray")) .getEntry();
-
-std::string gameData;
-gameData = frc::DriverStation::GetInstance().GetGameSpecificMessage();
-  if (gameData.length() > 0){
+  std::string gameData;
+  gameData = frc::DriverStation::GetInstance().GetGameSpecificMessage();
+  if (gameData.length() > 0) {
     switch (gameData[0]) {
       case 'B': 
         frc::SmartDashboard::PutString("Target Colour", "Blue");
@@ -116,6 +114,7 @@ gameData = frc::DriverStation::GetInstance().GetGameSpecificMessage();
     }
   }
 }
+
 /**
  * This function is called periodically during test mode.
  */
@@ -124,3 +123,4 @@ void Robot::TestPeriodic() {}
 #ifndef RUNNING_FRC_TESTS
 int main() { return frc::StartRobot<Robot>(); }
 #endif
+
