@@ -38,6 +38,7 @@
 #include "commands/TurnControlPanelToColourCmd.h"
 #include "commands/KillEverythingCmd.h"
 #include "commands/RamseteCmd.h"
+#include "commands/ShootCmd.h"
 
 
 /*
@@ -74,8 +75,10 @@ constexpr int kKillEverything2Btn = 12;
 constexpr int kClimbWinchReleaseBtn = 1;
 constexpr int kIntakeBtn = 2;
 constexpr int kControlPanelArmToggleBtn = 4;
-constexpr int kShooterCloseBtn = 7;
-constexpr int kShooterFarBtn = 8;
+constexpr int kShooterCloseBtn = 5;
+constexpr int kShooterFarBtn = 6;
+constexpr int kSimpleCloseShotBtn = 7;
+constexpr int kSimpleFarShotBtn = 8;
 constexpr int kTurnControlPanelThreeTimesBtn = 9;
 constexpr int kTurnControlPanelToColourBtn = 10;
 // constexpr int kKillEverything1Btn = 11;  // Same as driver
@@ -157,6 +160,11 @@ void RobotContainer::configureButtonBindings() {
 
 
   //Operator Commands...
+  frc2::JoystickButton simpleCloseShotBtn(&m_operatorController, kSimpleCloseShotBtn);
+  simpleCloseShotBtn.WhenHeld(ShootCmd(&m_shooterSub, &m_intakeSub, false));
+
+  frc2::JoystickButton simpleFarShotBtn(&m_operatorController, kSimpleFarShotBtn);
+  simpleFarShotBtn.WhenHeld(ShootCmd(&m_shooterSub, &m_intakeSub, true));
 
   frc2::JoystickButton shooterFarBtn(&m_operatorController, kShooterFarBtn);
   shooterFarBtn.WhenHeld(AimShootGrp(&m_visionSub, &m_drivetrainSub, true, &m_shooterSub, &m_intakeSub));
