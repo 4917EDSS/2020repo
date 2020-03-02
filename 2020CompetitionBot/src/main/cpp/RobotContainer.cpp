@@ -73,11 +73,11 @@ constexpr int kKillEverything2Btn = 12;
 //Operator Buttons
 constexpr int kClimbWinchReleaseBtn = 1;
 constexpr int kIntakeBtn = 2;
-constexpr int kConrolPanelUnfoldBtn = 4;
+constexpr int kControlPanelArmToggleBtn = 4;
 constexpr int kShooterCloseBtn = 7;
 constexpr int kShooterFarBtn = 8;
-constexpr int kTurnControlPanelToColourBtn = 9;
-constexpr int kTurnControlPanelThreeTimesBtn = 10;
+constexpr int kTurnControlPanelThreeTimesBtn = 9;
+constexpr int kTurnControlPanelToColourBtn = 10;
 // constexpr int kKillEverything1Btn = 11;  // Same as driver
 // constexpr int kKillEverything2Btn = 12;
 
