@@ -5,12 +5,13 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "subsystems/DrivetrainSub.h"
+#include <iostream>
 #include <frc/geometry/Rotation2d.h>
 #include <frc/kinematics/DifferentialDriveWheelSpeeds.h>
 #include <frc/smartdashboard/SmartDashboard.h>
-#include "RobotContainer.h"
-#include <iostream>
+#include <frc/RobotController.h>
+
+#include "subsystems/DrivetrainSub.h"
 
 constexpr float kEncoderRotationsToMLowGear = 5.0/(160.162);
 constexpr float kEncoderRotationsToMHighGear = 5.0/(102.264);
@@ -49,6 +50,11 @@ void DrivetrainSub::init() {
   setDrivetrainEncoderZero();
   tankDrive(0.0, 0.0);
   m_odometry.ResetPosition(frc::Pose2d(), frc::Rotation2d());
+#ifdef RAMSETE_LOG
+  std::cout << "RLog," << "FPGATime" << "," << "poseX" << "," << "poseY" << "," << "poseAngle"
+            << "," << "wheelSpeedL" << "," << "wheelSpeedR" << "," << "m_wheelVoltageL" << "," << "m_wheelVoltageR"
+            << std::endl;
+#endif
 }
 
 // This method will be called once per scheduler run
@@ -66,6 +72,12 @@ void DrivetrainSub::Periodic() {
   // frc::SmartDashboard::PutNumber("MtrVlcty L", getLeftVelocity());
   // frc::SmartDashboard::PutBoolean("High Gear", isShifterInHighGear());
   // std::cout << getPose().Translation().X() << " " << getPose().Translation().Y() << " " << getPose().Rotation().Radians() << "\n";
+
+#ifdef RAMSETE_LOG
+  std::cout << "RLog," << frc::RobotController::GetFPGATime() << "," << m_ramseteLog.m_poseX << "," << m_ramseteLog.m_poseY << "," << m_ramseteLog.m_poseAngle 
+            << "," << m_ramseteLog.m_wheelSpeedL << "," << m_ramseteLog.m_wheelSpeedR << "," << m_ramseteLog.m_wheelVoltageL << "," << m_ramseteLog.m_wheelVoltageR 
+            << std::endl;
+#endif
 }
 
 void DrivetrainSub::setDrivetrainEncoderZero() {
@@ -103,6 +115,10 @@ bool DrivetrainSub::isShifterInHighGear() {
 }
 
 void DrivetrainSub::tankDriveVolts(units::volt_t leftVolts, units::volt_t rightVolts) {
+#ifdef RAMSETE_LOG
+  m_ramseteLog.m_wheelVoltageL = leftVolts;
+  m_ramseteLog.m_wheelVoltageR = rightVolts;
+#endif
   m_leftMotors.SetVoltage(-leftVolts);
   m_rightMotors.SetVoltage(rightVolts);
   m_drive.Feed();
@@ -129,13 +145,23 @@ double DrivetrainSub::getTurnRate() {
   return m_gyro.GetRate() * (DriveConstants::kGyroReversed ? -1.0 : 1.0);
 }
 
-frc::Pose2d DrivetrainSub::getPose() { 
-  return m_odometry.GetPose(); //At 0 degrees, forward is positive x, left is positive y (location is relative to the center of the robot)
+frc::Pose2d DrivetrainSub::getPose() {
+  frc::Pose2d currentPose = m_odometry.GetPose();
+#ifdef RAMSETE_LOG
+  m_ramseteLog.m_poseX = currentPose.Translation().X();
+  m_ramseteLog.m_poseY = currentPose.Translation().Y();
+  m_ramseteLog.m_poseAngle = currentPose.Rotation().Degrees();
+#endif
+  return currentPose; //At 0 degrees, forward is positive x, left is positive y (location is relative to the center of the robot)
 }
 
 frc::DifferentialDriveWheelSpeeds DrivetrainSub::getWheelSpeeds() {
+#ifdef RAMSETE_LOG
+  m_ramseteLog.m_wheelSpeedL = units::meters_per_second_t(getLeftVelocity());
+  m_ramseteLog.m_wheelSpeedR = units::meters_per_second_t(getRightVelocity());
+#endif
   return {units::meters_per_second_t(getLeftVelocity()),
-          units::meters_per_second_t(getRightVelocity()) };
+          units::meters_per_second_t(getRightVelocity())};
 }
 
 // Returns the conversion factor for converting motor encoder ticks to meters.

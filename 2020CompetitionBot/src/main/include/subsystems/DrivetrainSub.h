@@ -22,12 +22,29 @@
 
 #include "Constants.h"
 
+// Uncomment to disable logging of Ramsete command data (path following)
+//#define RAMSETE_LOG 1
+
+#ifdef RAMSETE_LOG
+// Structure to hold the Ramsete data for one iteration
+struct RamseteLog {
+  units::length::meter_t m_poseX;           // In meters
+  units::length::meter_t m_poseY;           // In meters
+  units::angle::degree_t m_poseAngle;       // In degrees
+  units::meters_per_second_t m_wheelSpeedL; // In meters per second
+  units::meters_per_second_t m_wheelSpeedR; // In meters per second
+  units::volt_t m_wheelVoltageL;            // In volts
+  units::volt_t m_wheelVoltageR;            // In volts
+};
+#endif
+
 constexpr double kMinimumForwardPower = 0.12;
 constexpr double kMinimumTurningPower = 0.17;
 
 class DrivetrainSub : public frc2::SubsystemBase {
  public:
   DrivetrainSub();
+
   /**
    * Will be called periodically whenever the CommandScheduler runs.
    */
@@ -151,4 +168,8 @@ class DrivetrainSub : public frc2::SubsystemBase {
   frc::DifferentialDriveOdometry m_odometry;
 
   frc::Solenoid m_shifter;
+
+#ifdef RAMSETE_LOG
+  struct RamseteLog m_ramseteLog;
+#endif
 };

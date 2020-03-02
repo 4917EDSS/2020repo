@@ -33,12 +33,12 @@ void Robot::RobotPeriodic() {
   uint64_t currentTimeFinal = frc::RobotController::GetFPGATime();
 
   // Count number of loop overruns
-  if (currentTimeFinal-currentTimeStart >= 20000){
+  if(currentTimeFinal-currentTimeStart >= 20000) {
     std::cout << "cycles since last 20000: " << underTwentyCounter << std::endl;
     std::cout << "diffrence: " << currentTimeFinal - currentTimeStart << std::endl;
     underTwentyCounter = 0;
   }
-  else if (currentTimeFinal - currentTimeStart < 20000){
+  else if(currentTimeFinal - currentTimeStart < 20000) {
     underTwentyCounter++;
   }
 }
