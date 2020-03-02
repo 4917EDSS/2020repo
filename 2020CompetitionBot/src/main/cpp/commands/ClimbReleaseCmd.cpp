@@ -20,6 +20,8 @@ ClimbReleaseCmd::ClimbReleaseCmd(ClimberSub* climbSub, frc::Joystick* joystick)
 void ClimbReleaseCmd::Initialize() {
   if (m_climbSub->getOperatorShiftState(m_joystick) == DpadConstants::kDown) {
     m_climbSub->releaseLatch(true);
+  } else if (m_climbSub->getOperatorShiftState(m_joystick) == DpadConstants::kUp) {
+    m_climbSub->releaseLatch(false);
   }
 }
 
