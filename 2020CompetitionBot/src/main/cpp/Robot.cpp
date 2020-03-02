@@ -57,7 +57,11 @@ void Robot::DisabledPeriodic() {}
  * RobotContainer} class.
  */
 void Robot::AutonomousInit() {
-  m_container.initSubsystems();
+  if (!m_isInitialized) {
+    m_container.initSubsystems();
+    m_isInitialized = true; 
+  }
+  
   m_autonomousCommand = m_container.getAutonomousCommand();
 
   if (m_autonomousCommand != nullptr) {
@@ -68,6 +72,11 @@ void Robot::AutonomousInit() {
 void Robot::AutonomousPeriodic() {}
 
 void Robot::TeleopInit() {
+  if (!m_isInitialized) {
+    m_container.initSubsystems();
+    m_isInitialized = true; 
+  }
+
   // This makes sure that the autonomous stops running when
   // teleop starts running. If you want the autonomous to
   // continue until interrupted by another command, remove
