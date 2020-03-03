@@ -15,7 +15,7 @@ ToggleControlPanelArmCmd::ToggleControlPanelArmCmd(ControlPanelSub * controlPane
 
 // Called when the command is initially scheduled.
 void ToggleControlPanelArmCmd::Initialize() {
-  m_controlPanelSub->flipArmUp(!m_controlPanelSub->isArmUp());
+  m_controlPanelSub->flipArmUp(not m_controlPanelSub->getArmPosition());
 }
 
 // Called repeatedly when this Command is scheduled to run
