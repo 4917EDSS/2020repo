@@ -47,7 +47,8 @@ namespace PneumaticIds {
     //constexpr int Id = 0;
     constexpr int kShifterId = 1;
     constexpr int kClimbReleaseLatch = 2;
-    constexpr int kControlPanelFlipper = 3;
+    constexpr int kControlPanelFlipper = 4;
+    constexpr int kHoodAdjuster = 3;
 }
 
 namespace DioIds {

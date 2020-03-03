@@ -15,7 +15,8 @@ ShooterSub::ShooterSub()
   : m_shooterMotor1(CanIds::kShootMotor1), 
     m_shooterMotor2(CanIds::kShootMotor2), 
     m_feederMotor(CanIds::kFeederMotor), 
-    m_hoodMotor(CanIds::kHoodMotor) {
+    m_hoodMotor(CanIds::kHoodMotor),
+    m_hoodAdjuster(PneumaticIds::kHoodAdjuster) {
   m_shooterMotor1.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor);
   m_shooterMotor2.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::IntegratedSensor);
   m_hoodMotor.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::FeedbackDevice::QuadEncoder,0,0);
@@ -29,7 +30,9 @@ ShooterSub::ShooterSub()
 void ShooterSub::init() {
   setSpeed(0.0);
   setHoodSpeed(0.0);
-   frc::SmartDashboard::PutNumber("FlywheelSpeed", 0);
+  frc::SmartDashboard::PutNumber("FlywheelSpeed", 0);
+  flipHoodUp(true);
+
 }
 
 void ShooterSub::Periodic() {
@@ -53,6 +56,13 @@ void ShooterSub::setHoodSpeed(double hoodSpeed) {
 
 double ShooterSub::getHoodEncoder() {
   return m_hoodMotor.GetSelectedSensorPosition();
+}
+bool ShooterSub::getHoodPosition() {
+  return m_hoodAdjuster.Get();
+}
+
+void ShooterSub::flipHoodUp(bool location){
+  m_hoodAdjuster.Set(location);
 }
 
 // Gets maximum absolute speeds of both motors

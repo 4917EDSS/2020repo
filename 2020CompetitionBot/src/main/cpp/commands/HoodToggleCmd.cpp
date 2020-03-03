@@ -5,24 +5,26 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/ToggleControlPanelArmCmd.h"
-#include "subsystems/ControlPanelSub.h"
+#include "commands/HoodToggleCmd.h"
+#include "subsystems/ShooterSub.h"
 
-ToggleControlPanelArmCmd::ToggleControlPanelArmCmd(ControlPanelSub * controlPanelSub) : m_controlPanelSub(controlPanelSub) {
+HoodToggleCmd::HoodToggleCmd(ShooterSub* shooterSub) 
+: m_ShooterSub(shooterSub)
+{
+  AddRequirements({shooterSub});
   // Use addRequirements() here to declare subsystem dependencies.
-  AddRequirements({controlPanelSub});
 }
 
 // Called when the command is initially scheduled.
-void ToggleControlPanelArmCmd::Initialize() {
-  m_controlPanelSub->flipArmUp(not m_controlPanelSub->getArmPosition());
+void HoodToggleCmd::Initialize() {
+  m_ShooterSub->flipHoodUp(not m_ShooterSub->getHoodPosition());
 }
 
 // Called repeatedly when this Command is scheduled to run
-void ToggleControlPanelArmCmd::Execute() {}
+void HoodToggleCmd::Execute() {}
 
 // Called once the command ends or is interrupted.
-void ToggleControlPanelArmCmd::End(bool interrupted) {}
+void HoodToggleCmd::End(bool interrupted) {}
 
 // Returns true when the command should end.
-bool ToggleControlPanelArmCmd::IsFinished() { return true; }
+bool HoodToggleCmd::IsFinished() { return true; }
