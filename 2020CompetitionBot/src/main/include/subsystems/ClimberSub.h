@@ -23,7 +23,7 @@ class ClimberSub : public frc2::SubsystemBase {
   void releaseLatch(bool position);
   void setWinchPower(double speed);
   void moveOnGenSwitch(double power);
-  double getArmMotorEncoderRaw();
+  double getArmMotorEncoder();
   int getOperatorShiftState();
   int getOperatorShiftState(frc::Joystick* joystick);
 
