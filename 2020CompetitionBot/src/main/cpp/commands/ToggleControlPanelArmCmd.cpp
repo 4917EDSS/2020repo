@@ -6,13 +6,17 @@
 /*----------------------------------------------------------------------------*/
 
 #include "commands/ToggleControlPanelArmCmd.h"
+#include "subsystems/ControlPanelSub.h"
 
-ToggleControlPanelArmCmd::ToggleControlPanelArmCmd() {
+ToggleControlPanelArmCmd::ToggleControlPanelArmCmd(ControlPanelSub * controlPanelSub) : m_controlPanelSub(controlPanelSub) {
   // Use addRequirements() here to declare subsystem dependencies.
+  AddRequirements({controlPanelSub});
 }
 
 // Called when the command is initially scheduled.
-void ToggleControlPanelArmCmd::Initialize() {}
+void ToggleControlPanelArmCmd::Initialize() {
+  m_controlPanelSub->flipArmUp(not m_controlPanelSub->getArmPosition());
+}
 
 // Called repeatedly when this Command is scheduled to run
 void ToggleControlPanelArmCmd::Execute() {}
@@ -21,4 +25,4 @@ void ToggleControlPanelArmCmd::Execute() {}
 void ToggleControlPanelArmCmd::End(bool interrupted) {}
 
 // Returns true when the command should end.
-bool ToggleControlPanelArmCmd::IsFinished() { return false; }
+bool ToggleControlPanelArmCmd::IsFinished() { return true; }

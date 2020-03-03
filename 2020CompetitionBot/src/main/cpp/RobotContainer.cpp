@@ -38,6 +38,7 @@
 #include "commands/TurnControlPanelToColourCmd.h"
 #include "commands/KillEverythingCmd.h"
 #include "commands/RamseteCmd.h"
+#include "commands/ToggleControlPanelArmCmd.h"
 
 
 /*
@@ -175,6 +176,9 @@ void RobotContainer::configureButtonBindings() {
 
   frc2::JoystickButton turnControlPanelToColourBtn(&m_operatorController, kTurnControlPanelToColourBtn);
   turnControlPanelToColourBtn.WhenPressed(TurnControlPanelToColourCmd(&m_controlPanelSub));
+
+ frc2::JoystickButton controlPanelArmToggleBtn(&m_operatorController, kControlPanelArmToggleBtn);
+  controlPanelArmToggleBtn.WhenPressed(ToggleControlPanelArmCmd(&m_controlPanelSub));
 
   frc2::JoystickButton killEverythingBtn1o(&m_operatorController, kKillEverything1Btn);
   killEverythingBtn1o.WhenPressed(KillEverythingCmd(&m_climberSub, &m_controlPanelSub, &m_drivetrainSub, &m_intakeSub, &m_shooterSub, &m_visionSub));
