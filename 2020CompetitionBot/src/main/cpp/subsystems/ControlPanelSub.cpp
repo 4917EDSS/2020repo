@@ -23,6 +23,7 @@ void ControlPanelSub::init() {
 }
 
 void ControlPanelSub::Periodic() {}
+
 bool ControlPanelSub::getArmPosition() {
   return m_controlPanelFlipper.Get();
 }
