@@ -21,7 +21,7 @@ class ControlPanelSub : public frc2::SubsystemBase {
 
   void init();
   void Periodic();
-  bool getArmPosition();
+  bool isArmUp();
   void flipArmUp(bool position);
   void setWheelPower(double speed);
   frc::Color getColour();

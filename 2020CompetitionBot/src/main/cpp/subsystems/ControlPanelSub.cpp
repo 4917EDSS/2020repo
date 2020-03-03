@@ -23,9 +23,11 @@ void ControlPanelSub::init() {
 }
 
 void ControlPanelSub::Periodic() {}
-bool ControlPanelSub::getArmPosition() {
+
+bool ControlPanelSub::isArmUp() {
   return m_controlPanelFlipper.Get();
 }
+
 void ControlPanelSub::flipArmUp(bool position){
   m_controlPanelFlipper.Set(position);
 }
