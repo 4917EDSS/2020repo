@@ -9,6 +9,7 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+#include "subsystems/IntakeSub.h"
 
 /**
  * An example command.
@@ -20,8 +21,8 @@
 class ExpelCmd
     : public frc2::CommandHelper<frc2::CommandBase, ExpelCmd> {
  public:
-  ExpelCmd();
-
+  ExpelCmd(IntakeSub* intakeSub);
+  
   void Initialize() override;
 
   void Execute() override;
@@ -29,4 +30,6 @@ class ExpelCmd
   void End(bool interrupted) override;
 
   bool IsFinished() override;
+ private:
+ IntakeSub* m_intakeSub;
 };

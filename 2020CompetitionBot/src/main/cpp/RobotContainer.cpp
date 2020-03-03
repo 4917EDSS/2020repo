@@ -39,6 +39,7 @@
 #include "commands/KillEverythingCmd.h"
 #include "commands/RamseteCmd.h"
 #include "commands/ShootCmd.h"
+#include "commands/ExpelCmd.h"
 
 
 /*
@@ -74,11 +75,12 @@ constexpr int kKillEverything2Btn = 12;
 //Operator Buttons
 constexpr int kClimbWinchReleaseBtn = 1;
 constexpr int kIntakeBtn = 2;
+constexpr int kExpelBtn = 3;
 constexpr int kControlPanelArmToggleBtn = 4;
-constexpr int kShooterCloseBtn = 5;
-constexpr int kShooterFarBtn = 6;
-constexpr int kSimpleCloseShotBtn = 7;
-constexpr int kSimpleFarShotBtn = 8;
+constexpr int kSimpleCloseShotBtn = 5;
+constexpr int kSimpleFarShotBtn = 6;
+constexpr int kShooterCloseBtn = 7;
+constexpr int kShooterFarBtn = 8;
 constexpr int kTurnControlPanelThreeTimesBtn = 9;
 constexpr int kTurnControlPanelToColourBtn = 10;
 // constexpr int kKillEverything1Btn = 11;  // Same as driver
@@ -174,6 +176,9 @@ void RobotContainer::configureButtonBindings() {
 
   frc2::JoystickButton intakeBtn(&m_operatorController, kIntakeBtn);
   intakeBtn.WhenHeld(IntakeCmd(&m_intakeSub));
+
+  frc2::JoystickButton expelBtn(&m_operatorController, kExpelBtn);
+  expelBtn.WhenHeld(ExpelCmd(&m_intakeSub));
 
  frc2::JoystickButton climbWinchReleaseBtn(&m_operatorController, kClimbWinchReleaseBtn);
   climbWinchReleaseBtn.WhenPressed(ClimbReleaseCmd(&m_climberSub, &m_operatorController));
