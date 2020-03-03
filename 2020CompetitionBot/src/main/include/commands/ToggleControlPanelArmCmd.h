@@ -9,6 +9,7 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+#include "subsystems/ControlPanelSub.h"
 
 /**
  * An example command.
@@ -20,7 +21,7 @@
 class ToggleControlPanelArmCmd
     : public frc2::CommandHelper<frc2::CommandBase, ToggleControlPanelArmCmd> {
  public:
-  ToggleControlPanelArmCmd();
+  ToggleControlPanelArmCmd(ControlPanelSub* controlPanelSub);
 
   void Initialize() override;
 
@@ -29,4 +30,6 @@ class ToggleControlPanelArmCmd
   void End(bool interrupted) override;
 
   bool IsFinished() override;
+ private:
+  ControlPanelSub* m_controlPanelSub;
 };
