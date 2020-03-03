@@ -10,6 +10,7 @@
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 #include "subsystems/ClimberSub.h"
+#include "components/ProportionalController.h"
 
 /**
  * An example command.
@@ -34,5 +35,6 @@ class ClimbWinchCmd
   private:
   ClimberSub* m_climbSub;
   frc::Joystick* m_joystick;
-  double m_minimumArmMotorEncoderValue;
+  ProportionalController m_pcUp;
+  ProportionalController m_pcDown;  
 };
