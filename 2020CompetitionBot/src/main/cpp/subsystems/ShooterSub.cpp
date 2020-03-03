@@ -29,12 +29,15 @@ ShooterSub::ShooterSub()
 void ShooterSub::init() {
   setSpeed(0.0);
   setHoodSpeed(0.0);
+   frc::SmartDashboard::PutNumber("FlywheelSpeed", 0);
 }
 
 void ShooterSub::Periodic() {
   // Implementation of subsystem periodic method goes here.
   frc::SmartDashboard::PutNumber("ShooterSpeed", getSpeed());
   frc::SmartDashboard::PutNumber("Hood Encoder Value",getHoodEncoder());
+
+
 }
 
 //Sets speed of all motors
