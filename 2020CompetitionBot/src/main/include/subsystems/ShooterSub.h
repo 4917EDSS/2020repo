@@ -9,6 +9,7 @@
 
 #include <frc2/command/SubsystemBase.h>
 #include <ctre/Phoenix.h>
+#include <frc/Solenoid.h>
 
 class ShooterSub : public frc2::SubsystemBase {
  public:
@@ -20,6 +21,8 @@ class ShooterSub : public frc2::SubsystemBase {
   void setHoodSpeed(double hoodSpeed);
   double getHoodEncoder();
   int getSpeed();
+  bool getHoodPosition();
+  void flipHoodUp(bool location);
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
@@ -28,4 +31,5 @@ class ShooterSub : public frc2::SubsystemBase {
   WPI_TalonFX m_shooterMotor2;
   ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_feederMotor;
   ctre::phoenix::motorcontrol::can::WPI_TalonSRX m_hoodMotor;
+  frc::Solenoid m_hoodAdjuster;
 };

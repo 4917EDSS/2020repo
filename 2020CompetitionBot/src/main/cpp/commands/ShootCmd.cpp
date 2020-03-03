@@ -26,7 +26,8 @@ ShootCmd::ShootCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, bool isFar)
 // Called when the command is initially scheduled.
 void ShootCmd::Initialize() {
   m_intakeSub->setFrontRollerIntakePower(1.0);
-  m_targetSpeed = (m_isFar ? ShooterConstants::kFarTargetSpeed : ShooterConstants::kCloseTargetSpeed);
+  m_targetSpeed = frc::SmartDashboard::GetNumber("flywheelSpeed", 0);
+  //(m_isFar ? ShooterConstants::kFarTargetSpeed : ShooterConstants::kCloseTargetSpeed);
   m_lastDiff = 0.0; 
   m_lastTime = frc::RobotController::GetFPGATime();
   m_integralDiff = 0.0;
@@ -53,39 +54,6 @@ double ShootCmd::runPID(){
 void ShootCmd::Execute() {
   m_shooterSub->setSpeed(runPID());
   m_intakeSub->setMagazineIntakePower(-0.75);//\this is just for testing what constant speed is needed to allow for a constant movement of the shooter
-  // double currentDiff = m_targetSpeed - m_shooterSub->getSpeed();
-  // frc::SmartDashboard::PutNumber("currentDiff", currentDiff);
-  // if (fabs(currentDiff) <= kSpeedTolerance) {
-  //   m_intakeSub->setMagazineIntakePower(-0.75);
-  // }
-  // else{
-  //   m_intakeSub->setMagazineIntakePower(0.0);
-  // }
-
-
-  // // We need to change the target speed based on how close the target is (using the y value on limelight)
-  // if(m_index < 5){
-  //   double speed = runPID();
-  //   m_shooterSub->setSpeed(speed);
-
-  //   if(fabs(currentDiff) <= kSpeedTolerance){
-  //     powers[m_index]=speed;
-  //     std::cout << "good " << speed << "\n";
-  //     m_index+=1;
-  //   }
-  //   else {
-  //     m_index=0;
-  //     std::cout << speed << "\n";
-  //   }
-  // }
-  // else {
-  //   double sum=0;
-  //   for(int i=0; i < 5; i++) {
-  //     sum+=powers[i];
-  //   }
-  //   double avg=sum/5.0;
-  //   m_shooterSub->setSpeed(avg);
-  // }
 }
 
 // Called once the command ends or is interrupted.
@@ -94,3 +62,4 @@ void ShootCmd::End(bool interrupted) {
   m_intakeSub->setMagazineIntakePower(0);
   m_intakeSub->setFrontRollerIntakePower(0);
 }
+ 
