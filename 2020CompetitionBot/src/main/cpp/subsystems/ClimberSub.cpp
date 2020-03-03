@@ -34,8 +34,7 @@ void ClimberSub::moveOnGenSwitch(double power) {
   m_climbBalanceMotor.Set(power);
 }
 
-double ClimberSub::getArmMotorEncoder()
-{
+double ClimberSub::getArmMotorEncoder() {
   return (-1 * m_armMotor.GetEncoder().GetPosition());
 }
 
