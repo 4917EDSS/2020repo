@@ -10,7 +10,6 @@
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 #include "subsystems/ClimberSub.h"
-#include "components/ProportionalController.h"
 
 /**
  * An example command.
@@ -22,7 +21,7 @@
 class ClimbWinchCmd
     : public frc2::CommandHelper<frc2::CommandBase, ClimbWinchCmd> {
  public:
-  ClimbWinchCmd(ClimberSub* climbSub, frc::Joystick* joystick);
+  ClimbWinchCmd(ClimberSub* climberSub, frc::Joystick* joystick);
 
   void Initialize();
 
@@ -33,8 +32,6 @@ class ClimbWinchCmd
   bool IsFinished() override;
 
   private:
-  ClimberSub* m_climbSub;
+  ClimberSub* m_climberSub;
   frc::Joystick* m_joystick;
-  ProportionalController m_pcUp;
-  ProportionalController m_pcDown;  
 };
