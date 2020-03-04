@@ -34,7 +34,7 @@ void ShootCmd::Initialize() {
   m_index = 0;
 }
 
-double ShootCmd::runPID(){
+double ShootCmd::runPID() {
   double currentDiff = m_targetSpeed - m_shooterSub->getSpeed();
   double feed = m_targetSpeed / ShooterConstants::kMaxRPM;
   uint64_t currentTime = frc::RobotController::GetFPGATime();
@@ -53,7 +53,7 @@ double ShootCmd::runPID(){
 
 void ShootCmd::Execute() {
   m_shooterSub->setSpeed(runPID());
-  m_intakeSub->setMagazineIntakePower(-0.75);//\this is just for testing what constant speed is needed to allow for a constant movement of the shooter
+  m_intakeSub->setMagazineIntakePower(-0.5);
 }
 
 // Called once the command ends or is interrupted.
