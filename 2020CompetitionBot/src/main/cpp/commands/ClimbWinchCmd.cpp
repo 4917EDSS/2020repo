@@ -10,22 +10,41 @@
 #include "commands/ClimbWinchCmd.h"
 #include "Constants.h"
 
-// This is the proportional controller approach. We are trying a different approach
+// ----------------------------------------------------------------------------------------
+// This was added for the proportional controller approach. We abandoned it.
+// ----------------------------------------------------------------------------------------
 // constexpr double kTolerance = 2.0;
 // constexpr double kControlStartDelta = 10.0;
 // constexpr double kMinPower = 0.05;
 // constexpr double kMaxPower = 1.0;
-constexpr double kMinArmMotorEncoderValue = 10.0;
+// ----------------------------------------------------------------------------------------
 constexpr double kMaxArmMotorEncoderValue = 471.0;
-
+constexpr double kMinArmMotorEncoderValue = 10.0; // WARNING: This must be > 0.
+                                                  // The string can wrap around itself different
+                                                  // ways when winding up and result in bottoming
+                                                  // out the climb arm and the encoder value can
+                                                  // be a value like 5.0 when bottomed out. The
+                                                  // motor is strong enough to break the string,
+                                                  // so once we've extended the arm and retracted
+                                                  // it all the way, we need to stop retraction
+                                                  // safely before bottoming out when encoder
+                                                  // reports a value close to but > 5.0. The value
+                                                  // 10.0 was chosen. 10.0 encoder ticks equates
+                                                  // to about 0.75 inches of arm travel. This will
+                                                  // allow the arm to retract to anywhere from nearly
+                                                  // bottoming out no closer then 0.75 inches from
+                                                  // bottomig out depending on how the string winds
+                                                  // on itself.
 
 ClimbWinchCmd::ClimbWinchCmd(ClimberSub* climberSub, frc::Joystick* joystick)
   : m_climberSub(climberSub),
     m_joystick(joystick) {
-
-    // This is the proportional controller approach. We are trying a different approach
+    // ----------------------------------------------------------------------------------------
+    // This was added for the proportional controller approach. We abandoned it.
+    // ----------------------------------------------------------------------------------------
     // m_pcUp(kMaxArmMotorEncoderValue, kControlStartDelta, kTolerance, kMinPower, kMaxPower), 
     // m_pcDown(kMinArmMotorEncoderValue, kControlStartDelta, kTolerance, kMinPower, kMaxPower) {
+    // ----------------------------------------------------------------------------------------
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({climberSub});
 }
@@ -50,7 +69,7 @@ void ClimbWinchCmd::Execute() {
   bool isShiftDownPressed = (m_climberSub->getOperatorShiftState(m_joystick) == DpadConstants::kDown);
   
   // ----------------------------------------------------------------------------------------
-  // This is the proportional controller approach. We are trying a different approach
+  // This was added for the proportional controller approach. We abandoned it.
   // ----------------------------------------------------------------------------------------
   // Apply power
   // if (isShiftDownPressed) {
