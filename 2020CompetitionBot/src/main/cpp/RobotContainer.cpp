@@ -75,8 +75,8 @@ constexpr int kKillEverything1Btn = 11;
 constexpr int kKillEverything2Btn = 12;
 
 //Operator Buttons
-//constexpr int kClimbWinchReleaseBtn = 1; This is just for testing the hood toggle. NOT PERMAMENT
-constexpr int kHoodToggle = 1;// This is temporary
+constexpr int kClimbWinchReleaseBtn = 1; 
+// constexpr int kHoodToggle = 1;
 constexpr int kIntakeBtn = 2;
 constexpr int kExpelBtn = 3;
 constexpr int kControlPanelArmToggleBtn = 4;
@@ -183,11 +183,11 @@ void RobotContainer::configureButtonBindings() {
   frc2::JoystickButton expelBtn(&m_operatorController, kExpelBtn);
   expelBtn.WhenHeld(ExpelCmd(&m_intakeSub));
 
-//  frc2::JoystickButton climbWinchReleaseBtn(&m_operatorController, kClimbWinchReleaseBtn);
-//   climbWinchReleaseBtn.WhenPressed(ClimbReleaseCmd(&m_climberSub, &m_operatorController));
+ frc2::JoystickButton climbWinchReleaseBtn(&m_operatorController, kClimbWinchReleaseBtn);
+  climbWinchReleaseBtn.WhenPressed(ClimbReleaseCmd(&m_climberSub, &m_operatorController));
 
-  frc2::JoystickButton hoodToggleBtn(&m_operatorController, kHoodToggle);
-  hoodToggleBtn.WhenPressed(HoodToggleCmd(&m_shooterSub));
+  // frc2::JoystickButton hoodToggleBtn(&m_operatorController, kHoodToggle);
+  // hoodToggleBtn.WhenPressed(HoodToggleCmd(&m_shooterSub));
 
   frc2::JoystickButton turnControlPanelThreeTimesBtn(&m_operatorController, kTurnControlPanelThreeTimesBtn);
   turnControlPanelThreeTimesBtn.WhenPressed(frc2::SequentialCommandGroup{FlipUpCtrlPanelArmCmd(&m_controlPanelSub), TurnControlPanelThreeTimesCmd(&m_controlPanelSub)});
