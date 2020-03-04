@@ -128,7 +128,7 @@ void RobotContainer::autoChooserSetup() {
 
   // Create the list of auto options and put it up on the dashboard
   m_autoChooser.AddOption("Ramsete", new RamseteCmd(exampleTrajectory, &m_drivetrainSub));
-  m_autoChooser.SetDefaultOption("IntakeCmd", new IntakeCmd(&m_intakeSub));
+  m_autoChooser.SetDefaultOption("IntakeCmd", new IntakeCmd(&m_intakeSub,&m_drivetrainSub));
   frc::SmartDashboard::PutData("Auto Chooser", &m_autoChooser);
 }
 
@@ -175,7 +175,7 @@ void RobotContainer::configureButtonBindings() {
   shooterCloseBtn.WhenHeld(AimShootGrp(&m_visionSub, &m_drivetrainSub, false, &m_shooterSub, &m_intakeSub));
 
   frc2::JoystickButton intakeBtn(&m_operatorController, kIntakeBtn);
-  intakeBtn.WhenHeld(IntakeCmd(&m_intakeSub));
+  intakeBtn.WhenHeld(IntakeCmd(&m_intakeSub, &m_drivetrainSub));
 
   frc2::JoystickButton expelBtn(&m_operatorController, kExpelBtn);
   expelBtn.WhenHeld(ExpelCmd(&m_intakeSub));

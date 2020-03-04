@@ -1,6 +1,9 @@
 // 4917 proportional controller
 // Will output max power until the delta between current and target location gets to control-start-delta
 // Once at control-start-delta, output power will be proportional to how close current is to target
+
+// Important: Positive power must result in an increase in encoder value, negative power = smaller 
+// encoder value.
 #pragma once
 
 
