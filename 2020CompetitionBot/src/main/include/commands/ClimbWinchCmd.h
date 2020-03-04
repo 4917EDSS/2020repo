@@ -21,7 +21,7 @@
 class ClimbWinchCmd
     : public frc2::CommandHelper<frc2::CommandBase, ClimbWinchCmd> {
  public:
-  ClimbWinchCmd(ClimberSub* climbSub, frc::Joystick* joystick);
+  ClimbWinchCmd(ClimberSub* climberSub, frc::Joystick* joystick);
 
   void Initialize();
 
@@ -32,7 +32,6 @@ class ClimbWinchCmd
   bool IsFinished() override;
 
   private:
-  ClimberSub* m_climbSub;
+  ClimberSub* m_climberSub;
   frc::Joystick* m_joystick;
-  double m_minimumArmMotorEncoderValue;
 };
