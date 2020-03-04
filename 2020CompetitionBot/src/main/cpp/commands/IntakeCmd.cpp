@@ -7,8 +7,9 @@
 
 #include "commands/IntakeCmd.h"
 
-IntakeCmd::IntakeCmd(IntakeSub* intakeSub)
+IntakeCmd::IntakeCmd(IntakeSub* intakeSub, DrivetrainSub* drivetrainSub)
   : m_intakeSub(intakeSub),
+    m_drivetrainSub(drivetrainSub),
     m_state(0),
     m_startingEncDistance(0) {
   // Use addRequirements() here to declare subsystem dependencies.
@@ -19,6 +20,8 @@ IntakeCmd::IntakeCmd(IntakeSub* intakeSub)
 void IntakeCmd::Initialize() {
   m_state = 0;
   m_intakeSub->setFrontRollerIntakePower(1.0);
+  m_drivetrainSub->shiftDown();
+  m_drivetrainSub->disableAutoShift();
 }
 
 void IntakeCmd::Execute() {
@@ -59,4 +62,5 @@ bool IntakeCmd::IsFinished() {
 void IntakeCmd::End(bool interrupted) {
   m_intakeSub->setFrontRollerIntakePower(0.0);
   m_intakeSub->setMagazineIntakePower(0.0);
+  m_drivetrainSub->enableAutoShift();
 }

@@ -10,7 +10,6 @@
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 #include "subsystems/ShooterSub.h"
-#include <frc/Joystick.h>
 
 /**
  * An example command.
@@ -19,10 +18,13 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class SetHoodSpeedCmd
-    : public frc2::CommandHelper<frc2::CommandBase, SetHoodSpeedCmd> {
+class HoodToggleCmd
+    : public frc2::CommandHelper<frc2::CommandBase, HoodToggleCmd> {
  public:
-  SetHoodSpeedCmd(ShooterSub* shooterSub, frc::Joystick* joystick);
+  HoodToggleCmd(ShooterSub* shooterSub);
+  HoodToggleCmd(ShooterSub* shooterSub, bool hoodUp);
+  
+  
 
   void Initialize() override;
 
@@ -33,6 +35,7 @@ class SetHoodSpeedCmd
   bool IsFinished() override;
 
  private:
-  ShooterSub* m_shooterSub;
-  frc::Joystick* m_joystick;
+  ShooterSub* m_ShooterSub;
+  bool m_hoodUp;
+  bool m_hoodToggle;
 };
