@@ -130,7 +130,7 @@ void RobotContainer::autoChooserSetup() {
     config);
 
   // Create the list of auto options and put it up on the dashboard
-  m_autoChooser.AddOption("Ramsete", new RamseteCmd(exampleTrajectory, &m_drivetrainSub));
+  m_autoChooser.AddOption("Ramsete", new RamseteCmd(exampleTrajectory, &m_drivetrainSub, frc2::PIDController(DriveConstants::kPDriveVel, 0, 0), frc2::PIDController(DriveConstants::kPDriveVel, 0, 0)));
   m_autoChooser.SetDefaultOption("IntakeCmd", new IntakeCmd(&m_intakeSub,&m_drivetrainSub));
   frc::SmartDashboard::PutData("Auto Chooser", &m_autoChooser);
 }
