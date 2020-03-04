@@ -92,7 +92,6 @@ namespace VisionConstants {
 }
 
 namespace ClimbConstants {
-    constexpr double kMaxArmMotorEncoderValue = 471.0;
     constexpr double kMoveOnGenSwitchPower = 1.0;
 }
 
@@ -108,8 +107,8 @@ namespace ShooterConstants {
     constexpr double kHighHood = 0.0;
     constexpr double kLowHood = 15500;
     constexpr double kMaxRPM = 21750;
-    constexpr double kCloseTargetSpeed = 12000;
-    constexpr double kFarTargetSpeed = 16000;   
+    constexpr double kCloseTargetSpeed = 15000;
+    constexpr double kFarTargetSpeed = 17800;   
 }
 
 namespace DpadConstants {

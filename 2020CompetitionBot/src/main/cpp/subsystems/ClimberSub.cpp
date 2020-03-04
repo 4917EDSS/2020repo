@@ -34,9 +34,8 @@ void ClimberSub::moveOnGenSwitch(double power) {
   m_climbBalanceMotor.Set(power);
 }
 
-double ClimberSub::getArmMotorEncoderRaw()
-{
-  return (m_armMotor.GetEncoder().GetPosition());
+double ClimberSub::getArmMotorEncoder() {
+  return (-1 * m_armMotor.GetEncoder().GetPosition());
 }
 
 int ClimberSub::getOperatorShiftState(frc::Joystick* joystick) { 

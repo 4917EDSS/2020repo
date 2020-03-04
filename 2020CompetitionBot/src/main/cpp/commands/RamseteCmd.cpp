@@ -8,16 +8,16 @@
 #include "commands/RamseteCmd.h"
 #include <frc/controller/SimpleMotorFeedForward.h>
 
-RamseteCmd::RamseteCmd(Trajectory t, DrivetrainSub* drivetrainSub)
+RamseteCmd::RamseteCmd(Trajectory t, DrivetrainSub* drivetrainSub, frc2::PIDController leftController, frc2::PIDController rightController)
   : frc2::RamseteCommand(t, 
       [drivetrainSub]() {return drivetrainSub->getPose();},
       frc::RamseteController(AutoConstants::kRamseteB, AutoConstants::kRamseteZeta),
       frc::SimpleMotorFeedforward<units::meters>(DriveConstants::ks, DriveConstants::kv, DriveConstants::ka),
       DriveConstants::kDriveKinematics,
       [drivetrainSub] {return drivetrainSub->getWheelSpeeds();},
-      frc2::PIDController(DriveConstants::kPDriveVel, 0, 0),
-      frc2::PIDController(DriveConstants::kPDriveVel, 0, 0),
-      [drivetrainSub](auto left, auto right) {drivetrainSub->tankDriveVolts(left, right);},
+      leftController,
+      rightController,
+      [=](auto left, auto right) {drivetrainSub->tankDriveVolts(left, right); printf("Left: %f", leftController.GetSetpoint()); printf("Right: %f", rightController.GetSetpoint());},
       {drivetrainSub}),
     m_drivetrainSub(drivetrainSub) {
   // Use addRequirements() here to declare subsystem dependencies.
