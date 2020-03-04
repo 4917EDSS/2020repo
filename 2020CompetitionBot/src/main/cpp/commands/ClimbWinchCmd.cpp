@@ -15,7 +15,7 @@
 // constexpr double kControlStartDelta = 10.0;
 // constexpr double kMinPower = 0.05;
 // constexpr double kMaxPower = 1.0;
-constexpr double kMinArmMotorEncoderValue = 0.0;
+constexpr double kMinArmMotorEncoderValue = 10.0;
 constexpr double kMaxArmMotorEncoderValue = 471.0;
 
 
