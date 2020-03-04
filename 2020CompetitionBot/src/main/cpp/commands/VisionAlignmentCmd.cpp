@@ -36,6 +36,7 @@ void VisionAlignmentCmd::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void VisionAlignmentCmd::Execute() {
+  std::cout << frc::RobotController::GetFPGATime() - m_startTime << std::endl;
   double x = m_visionSub->getVisionTarget();
   double outputPower = m_pController.getPower(x);
   m_drivetrainSub->tankDrive(-outputPower, outputPower);
@@ -49,7 +50,7 @@ void VisionAlignmentCmd::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool VisionAlignmentCmd::IsFinished() { 
-  if((frc::RobotController::GetFPGATime() - m_startTime) < 500000) {
+  if((frc::RobotController::GetFPGATime() - m_startTime) < 1500000) {
     return false;
   }
   double x = m_visionSub->getVisionTarget();
