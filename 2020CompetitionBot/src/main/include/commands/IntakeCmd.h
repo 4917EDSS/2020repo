@@ -10,6 +10,7 @@
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 #include "subsystems/IntakeSub.h"
+#include "subsystems/drivetrainSub.h"
 
 /**
  * An example command.
@@ -21,7 +22,7 @@
 class IntakeCmd
     : public frc2::CommandHelper<frc2::CommandBase, IntakeCmd> {
  public:
-  IntakeCmd(IntakeSub* intakeSub);
+  IntakeCmd(IntakeSub* intakeSub, DrivetrainSub* drivetrainSub);
 
   void Initialize() override;
   void Execute() override;
@@ -31,6 +32,7 @@ class IntakeCmd
 
 private:
   IntakeSub* m_intakeSub;
+  DrivetrainSub* m_drivetrainSub;
   int m_state;
   double m_startingEncDistance;
 
