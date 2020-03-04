@@ -26,7 +26,7 @@ ShootCmd::ShootCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, bool isFar)
 // Called when the command is initially scheduled.
 void ShootCmd::Initialize() {
   m_intakeSub->setFrontRollerIntakePower(1.0);
-  m_targetSpeed = frc::SmartDashboard::GetNumber("flywheelSpeed", 0);
+  m_targetSpeed = frc::SmartDashboard::GetNumber("FlySpeed", 0);
   //(m_isFar ? ShooterConstants::kFarTargetSpeed : ShooterConstants::kCloseTargetSpeed);
   m_lastDiff = 0.0; 
   m_lastTime = frc::RobotController::GetFPGATime();

@@ -19,7 +19,6 @@
 #include <frc2/command/SequentialCommandGroup.h>
 #include <frc2/command/button/JoystickButton.h>
 #include <frc2/command/RunCommand.h>
-
 #include "Constants.h"
 #include "subsystems/ClimberSub.h"
 #include "subsystems/VisionSub.h"
@@ -27,8 +26,7 @@
 #include "commands/DisableAutoShiftCmd.h"
 #include "commands/AimShootGrp.h"
 #include "commands/IntakeCmd.h"
-#include "commands/SetHoodPositionCmd.h"
-#include "commands/SetHoodSpeedCmd.h"
+#include "commands/HoodToggleCmd.h"
 #include "commands/ClimbReleaseCmd.h"
 #include "commands/ClimbWinchCmd.h"
 #include "commands/VisionAlignmentCmd.h"
@@ -95,11 +93,10 @@ RobotContainer::RobotContainer() {
   autoChooserSetup();
 
   m_drivetrainSub.SetDefaultCommand(DriveWithJoystickCmd(&m_drivetrainSub, &m_driverController));
-  m_shooterSub.SetDefaultCommand(SetHoodSpeedCmd(&m_shooterSub, &m_operatorController));
+  //m_shooterSub.SetDefaultCommand(HoodToggleCmd(&m_shooterSub, &m_operatorController));
   m_climberSub.SetDefaultCommand(ClimbWinchCmd(&m_climberSub, &m_operatorController));
 
-  frc::SmartDashboard::PutData("Hood High", new SetHoodPositionCmd(&m_shooterSub, 0));
-  frc::SmartDashboard::PutData("Hood Low", new SetHoodPositionCmd(&m_shooterSub, 15500));
+  frc::SmartDashboard::PutData("Hood Low", new HoodToggleCmd(&m_shooterSub));
 }
 
 // Make sure that all of the subsystems are in a known state
@@ -130,7 +127,7 @@ void RobotContainer::autoChooserSetup() {
     config);
 
   // Create the list of auto options and put it up on the dashboard
-  m_autoChooser.AddOption("Ramsete", new RamseteCmd(exampleTrajectory, &m_drivetrainSub));
+  m_autoChooser.AddOption("Ramsete", new RamseteCmd(exampleTrajectory, &m_drivetrainSub, frc2::PIDController(DriveConstants::kPDriveVel, 0, 0), frc2::PIDController(DriveConstants::kPDriveVel, 0, 0)));
   m_autoChooser.SetDefaultOption("IntakeCmd", new IntakeCmd(&m_intakeSub,&m_drivetrainSub));
   frc::SmartDashboard::PutData("Auto Chooser", &m_autoChooser);
 }
