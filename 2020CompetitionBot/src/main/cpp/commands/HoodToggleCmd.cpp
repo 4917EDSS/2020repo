@@ -25,8 +25,7 @@ void HoodToggleCmd::Initialize() {
     m_ShooterSub->flipHoodUp(not m_ShooterSub->getHoodPosition());
   }
   else {
-    m_ShooterSub->flipHoodUp(m_hoodUp)
-
+    m_ShooterSub->flipHoodUp(m_hoodUp);
   }
 }
 

@@ -17,7 +17,7 @@ RamseteCmd::RamseteCmd(Trajectory t, DrivetrainSub* drivetrainSub, frc2::PIDCont
       [drivetrainSub] {return drivetrainSub->getWheelSpeeds();},
       leftController,
       rightController,
-      [drivetrainSub](auto left, auto right) {drivetrainSub->tankDriveVolts(left, right); printf("Left: %f", leftController.GetSetpoint()); printf("Right: %f", rightController.GetSetpoint());},
+      [=](auto left, auto right) {drivetrainSub->tankDriveVolts(left, right); printf("Left: %f", leftController.GetSetpoint()); printf("Right: %f", rightController.GetSetpoint());},
       {drivetrainSub}),
     m_drivetrainSub(drivetrainSub) {
   // Use addRequirements() here to declare subsystem dependencies.
