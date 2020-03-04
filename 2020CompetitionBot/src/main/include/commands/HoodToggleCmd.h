@@ -22,6 +22,9 @@ class HoodToggleCmd
     : public frc2::CommandHelper<frc2::CommandBase, HoodToggleCmd> {
  public:
   HoodToggleCmd(ShooterSub* shooterSub);
+  HoodToggleCmd(ShooterSub* shooterSub, bool hoodUp);
+  
+  
 
   void Initialize() override;
 
@@ -33,4 +36,6 @@ class HoodToggleCmd
 
  private:
   ShooterSub* m_ShooterSub;
+  bool m_hoodUp;
+  bool m_hoodToggle;
 };

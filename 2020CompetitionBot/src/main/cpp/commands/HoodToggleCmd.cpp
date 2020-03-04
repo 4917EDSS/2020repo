@@ -9,15 +9,25 @@
 #include "subsystems/ShooterSub.h"
 
 HoodToggleCmd::HoodToggleCmd(ShooterSub* shooterSub) 
-: m_ShooterSub(shooterSub)
+: m_ShooterSub(shooterSub), m_hoodUp(false), m_hoodToggle(true)
 {
   AddRequirements({shooterSub});
   // Use addRequirements() here to declare subsystem dependencies.
 }
+HoodToggleCmd::HoodToggleCmd(ShooterSub* shooterSub, bool hoodUp) :
+  m_ShooterSub(shooterSub), m_hoodUp(hoodUp), m_hoodToggle(false)
+{
 
+}
 // Called when the command is initially scheduled.
 void HoodToggleCmd::Initialize() {
-  m_ShooterSub->flipHoodUp(not m_ShooterSub->getHoodPosition());
+  if (m_hoodToggle) {
+    m_ShooterSub->flipHoodUp(not m_ShooterSub->getHoodPosition());
+  }
+  else {
+    m_ShooterSub->flipHoodUp(m_hoodUp)
+
+  }
 }
 
 // Called repeatedly when this Command is scheduled to run
