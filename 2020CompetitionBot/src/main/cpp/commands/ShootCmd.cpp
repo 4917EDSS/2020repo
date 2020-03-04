@@ -34,7 +34,7 @@ void ShootCmd::Initialize() {
   m_index = 0;
 }
 
-double ShootCmd::runPID(){
+double ShootCmd::runPID() {
   double currentDiff = m_targetSpeed - m_shooterSub->getSpeed();
   double feed = m_targetSpeed / ShooterConstants::kMaxRPM;
   uint64_t currentTime = frc::RobotController::GetFPGATime();
