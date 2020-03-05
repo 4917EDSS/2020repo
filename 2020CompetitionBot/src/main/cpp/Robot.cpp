@@ -48,7 +48,9 @@ void Robot::RobotPeriodic() {
  * can use it to reset any subsystem information you want to clear when the
  * robot is disabled.
  */
-void Robot::DisabledInit() {}
+void Robot::DisabledInit() {
+  m_isInitialized = false; 
+}
 
 void Robot::DisabledPeriodic() {}
 
@@ -57,10 +59,8 @@ void Robot::DisabledPeriodic() {}
  * RobotContainer} class.
  */
 void Robot::AutonomousInit() {
-  if (!m_isInitialized) {
-    m_container.initSubsystems();
-    m_isInitialized = true; 
-  }
+  m_container.initSubsystems();
+  m_isInitialized = true; 
   
   m_autonomousCommand = m_container.getAutonomousCommand();
 
@@ -72,7 +72,7 @@ void Robot::AutonomousInit() {
 void Robot::AutonomousPeriodic() {}
 
 void Robot::TeleopInit() {
-  if (!m_isInitialized) {
+  if(!m_isInitialized) {
     m_container.initSubsystems();
     m_isInitialized = true; 
   }
