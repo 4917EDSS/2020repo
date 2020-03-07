@@ -16,7 +16,6 @@ TurnControlPanelThreeTimesCmd::TurnControlPanelThreeTimesCmd(ControlPanelSub* co
 
 // Called when the command is initially scheduled.
 void TurnControlPanelThreeTimesCmd::Initialize() {
-  m_controlPanelSub->flipArmUp(true);
   // we probably have to wait before we read the colour
   m_startingColour = m_controlPanelSub->getColour();
   m_controlPanelSub->setWheelPower(ControlPanelConstants::kMaxWheelSpeed);
@@ -28,16 +27,19 @@ void TurnControlPanelThreeTimesCmd::Execute() {
   frc::Color currentColour = m_controlPanelSub->getColour();
   if(!m_inExpectedColour && (currentColour == m_startingColour)) {
     m_inExpectedColour = true;
-    m_numHalfRotations++;
+    m_numHalfRotations = m_numHalfRotations + 1;
+    // printf("[A]TurnControlPanelThreeTimesCmd.numHalfRotations = %d \n", m_numHalfRotations);
+    // printf("[A]TurnControlPanelThreeTimesCmd.inExpectedColour = %s \n", (m_inExpectedColour ? "True" : "False"));
   } 
   else if (m_inExpectedColour && !(currentColour == m_startingColour)) {
     m_inExpectedColour = false;
+    // printf("[B]TurnControlPanelThreeTimesCmd.inExpectedColour = %s \n", m_inExpectedColour ? "True" : "False");
   }
 }
 
 // Called once the command ends or is interrupted.
 void TurnControlPanelThreeTimesCmd::End(bool interrupted) {
-  m_controlPanelSub->flipArmUp(false);
+  m_controlPanelSub->setWheelPower(0);
 }
 
 // Returns true when the command should end.

@@ -9,14 +9,13 @@
 
 #include <frc2/command/CommandHelper.h>
 #include <frc2/command/SequentialCommandGroup.h>
-#include "subsystems/VisionSub.h"
-#include "subsystems/DrivetrainSub.h"
-#include "subsystems/IntakeSub.h"
-#include "subsystems/ShooterSub.h"
 
-class AimShootGrp
+#include "subsystems/ShooterSub.h"
+#include "subsystems/IntakeSub.h"
+
+class CloseShootGrp
     : public frc2::CommandHelper<frc2::SequentialCommandGroup,
-                                 AimShootGrp> {
+                                 CloseShootGrp> {
  public:
-  AimShootGrp(VisionSub* visionSub, DrivetrainSub* drivetrainSub, bool isFar, ShooterSub* shooterSub, IntakeSub* intakeSub);
+  CloseShootGrp(IntakeSub* intakeSub, ShooterSub* shooterSub);
 };

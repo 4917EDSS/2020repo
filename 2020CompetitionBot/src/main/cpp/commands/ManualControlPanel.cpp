@@ -5,37 +5,30 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/FlipUpCtrlPanelArmCmd.h"
-#include <frc/RobotController.h>
+#include "commands/ManualControlPanel.h"
 
-
-FlipUpCtrlPanelArmCmd::FlipUpCtrlPanelArmCmd(ControlPanelSub* controlPanelSub)
-  : m_controlPanelSub(controlPanelSub) {
+ManualControlPanel::ManualControlPanel(ControlPanelSub* controlPanelSub, frc::Joystick* joystick) 
+: m_controlPanelSub(controlPanelSub),
+  m_joystick(joystick) {
   // Use addRequirements() here to declare subsystem dependencies.
-  AddRequirements({controlPanelSub});
+  
+
 }
 
 // Called when the command is initially scheduled.
-void FlipUpCtrlPanelArmCmd::Initialize() {
-  m_initializedTime = frc::RobotController::GetFPGATime();
+void ManualControlPanel::Initialize() {
 }
 
-
-
 // Called repeatedly when this Command is scheduled to run
-void FlipUpCtrlPanelArmCmd::Execute() {
+void ManualControlPanel::Execute() {
+  double wheelPower = m_joystick->GetY();
+   m_controlPanelSub->setWheelPower(wheelPower);
 }
 
 // Called once the command ends or is interrupted.
-void FlipUpCtrlPanelArmCmd::End(bool interrupted) {}
+void ManualControlPanel::End(bool interrupted) {
+   m_controlPanelSub->setWheelPower(0);
+}
 
 // Returns true when the command should end.
-bool FlipUpCtrlPanelArmCmd::IsFinished() { 
-  // Wait X microseconds for the arm to flip up
-  if( (frc::RobotController::GetFPGATime() - m_initializedTime) > 500000) {
-    return true; 
-  }
-  else {
-    return false;
-  }
-}
+bool ManualControlPanel::IsFinished() { return false; }

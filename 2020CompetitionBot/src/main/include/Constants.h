@@ -35,7 +35,7 @@ namespace CanIds {
     constexpr int kTopIntakeMotor = 11;
     constexpr int kClimbBalanceMotor = 9;
     constexpr int kElevatorMotor = 13;
-    constexpr int kControlPanelMotor = 14;
+    constexpr int kControlPanelMotor = 15;
     constexpr int kFrontRollerIntakeMotor = 16;
     constexpr int kShootMotor1 = 25;
     constexpr int kShootMotor2 = 26;
@@ -91,7 +91,7 @@ namespace ControlPanelConstants {
     constexpr frc::Color kGreenTarget = frc::Color(0.197, 0.561, 0.240);
     constexpr frc::Color kRedTarget = frc::Color(0.473, 0.369, 0.154);
     constexpr frc::Color kYellowTarget = frc::Color(0.361, 0.524, 0.113);
-    constexpr double kMaxWheelSpeed = 0.2;
+    constexpr double kMaxWheelSpeed = 1;
 }
 
 namespace ShooterConstants {

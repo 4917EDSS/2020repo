@@ -24,7 +24,7 @@
 #include "subsystems/VisionSub.h"
 #include "commands/DriveWithJoystickCmd.h"
 #include "commands/DisableAutoShiftCmd.h"
-#include "commands/AimShootGrp.h"
+#include "commands/AimSpinFlywheelGrp.h"
 #include "commands/IntakeCmd.h"
 #include "commands/HoodToggleCmd.h"
 #include "commands/ClimbReleaseCmd.h"
@@ -39,7 +39,8 @@
 #include "commands/ToggleControlPanelArmCmd.h"
 #include "commands/ShootCmd.h"
 #include "commands/ExpelCmd.h"
-
+#include "commands/CloseShootGrp.h"
+#include "commands/ManualControlPanel.h"
 
 /*
  * ON LOGITECH F310 CONTROLLER:
@@ -96,7 +97,8 @@ RobotContainer::RobotContainer() {
 
   m_drivetrainSub.SetDefaultCommand(DriveWithJoystickCmd(&m_drivetrainSub, &m_driverController));
   //m_shooterSub.SetDefaultCommand(HoodToggleCmd(&m_shooterSub, &m_operatorController));
-  //m_climberSub.SetDefaultCommand(ClimbWinchCmd(&m_climberSub, &m_operatorController));
+  m_climberSub.SetDefaultCommand(ClimbWinchCmd(&m_climberSub, &m_operatorController));
+  m_controlPanelSub.SetDefaultCommand(ManualControlPanel(&m_controlPanelSub, &m_operatorController));
 
   frc::SmartDashboard::PutData("Hood Low", new HoodToggleCmd(&m_shooterSub));
 }
@@ -185,14 +187,14 @@ void RobotContainer::configureButtonBindings() {
   frc2::JoystickButton simpleCloseShotBtn(&m_operatorController, kSimpleCloseShotBtn);
   simpleCloseShotBtn.WhenHeld(ShootCmd(&m_shooterSub, &m_intakeSub, false));
 
+  frc2::JoystickButton shooterCloseBtn(&m_operatorController, kShooterCloseBtn);
+  shooterCloseBtn.WhenHeld(CloseShootGrp(&m_intakeSub, &m_shooterSub));
+
   frc2::JoystickButton simpleFarShotBtn(&m_operatorController, kSimpleFarShotBtn);
   simpleFarShotBtn.WhenHeld(ShootCmd(&m_shooterSub, &m_intakeSub, true));
 
   frc2::JoystickButton shooterFarBtn(&m_operatorController, kShooterFarBtn);
-  shooterFarBtn.WhenHeld(AimShootGrp(&m_visionSub, &m_drivetrainSub, true, &m_shooterSub, &m_intakeSub));
-
-  frc2::JoystickButton shooterCloseBtn(&m_operatorController, kShooterCloseBtn);
-  shooterCloseBtn.WhenHeld(AimShootGrp(&m_visionSub, &m_drivetrainSub, false, &m_shooterSub, &m_intakeSub));
+  shooterFarBtn.WhenHeld(AimSpinFlywheelGrp(&m_visionSub, &m_drivetrainSub, &m_shooterSub, &m_intakeSub, true));
 
   frc2::JoystickButton intakeBtn(&m_operatorController, kIntakeBtn);
   intakeBtn.WhenHeld(IntakeCmd(&m_intakeSub, &m_drivetrainSub));

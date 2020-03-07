@@ -9,7 +9,9 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+
 #include "subsystems/ControlPanelSub.h"
+#include <frc/Joystick.h>
 
 /**
  * An example command.
@@ -18,10 +20,10 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class TurnControlPanelThreeTimesCmd
-    : public frc2::CommandHelper<frc2::CommandBase, TurnControlPanelThreeTimesCmd> {
+class ManualControlPanel
+    : public frc2::CommandHelper<frc2::CommandBase, ManualControlPanel> {
  public:
-  TurnControlPanelThreeTimesCmd(ControlPanelSub* controlPanelSub);
+  ManualControlPanel(ControlPanelSub* controlPanelSub, frc::Joystick* joystick);
 
   void Initialize() override;
 
@@ -30,10 +32,7 @@ class TurnControlPanelThreeTimesCmd
   void End(bool interrupted) override;
 
   bool IsFinished() override;
-
- private:
+  private:
+  frc::Joystick* m_joystick;
   ControlPanelSub* m_controlPanelSub;
-  frc::Color m_startingColour;
-  bool m_inExpectedColour;
-  int m_numHalfRotations = 0;
 };

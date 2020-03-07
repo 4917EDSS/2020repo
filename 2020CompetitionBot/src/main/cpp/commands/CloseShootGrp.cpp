@@ -5,16 +5,15 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/AimShootGrp.h"
-#include "commands/AimSpinFlywheelGrp.h"
+#include "commands/CloseShootGrp.h"
 #include "commands/ShootCmd.h"
+#include "commands/SpinFlywheelCmd.h"
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.
 // For more information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-AimShootGrp::AimShootGrp(VisionSub* visionSub, DrivetrainSub* drivetrainSub, bool isFar, ShooterSub* shooterSub, IntakeSub* intakeSub) { 
+CloseShootGrp::CloseShootGrp(IntakeSub* intakeSub, ShooterSub* shooterSub) {
   // Add your commands here, e.g.
-  AddCommands(AimSpinFlywheelGrp(visionSub, drivetrainSub, shooterSub, isFar), ShootCmd(shooterSub, intakeSub, isFar));
-  // AddCommands(FooCommand(), BarCommand());
-}
   
+  AddCommands(SpinFlywheelCmd(shooterSub, false), ShootCmd(shooterSub, intakeSub, false));
+}
