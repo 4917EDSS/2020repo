@@ -87,6 +87,9 @@ constexpr int kTurnControlPanelToColourBtn = 10;
 // constexpr int kKillEverything1Btn = 11;  // Same as driver
 // constexpr int kKillEverything2Btn = 12;
 
+constexpr auto kMaxSpeed = 2.5_mps;
+constexpr auto kMaxAcceleration = 2.7_mps_sq;
+
 RobotContainer::RobotContainer() {
   // Configure the button bindings
   configureButtonBindings();
@@ -117,17 +120,18 @@ void RobotContainer::autoChooserSetup() {
     10_V);
 
   frc::TrajectoryConfig config(AutoConstants::kMaxSpeed, AutoConstants::kMaxAcceleration);
+  frc::TrajectoryConfig config(kMaxSpeed, kMaxAcceleration);
   config.SetKinematics(DriveConstants::kDriveKinematics);
   config.AddConstraint(autoVoltageConstraint);
 
   auto exampleTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
     frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
     {},
-    frc::Pose2d(1_m, 0_m, frc::Rotation2d(0_deg)),
+    frc::Pose2d(6_m, 0_m, frc::Rotation2d(0_deg)),
     config);
 
   // Create the list of auto options and put it up on the dashboard
-  m_autoChooser.AddOption("Ramsete", new RamseteCmd(exampleTrajectory, &m_drivetrainSub, frc2::PIDController(DriveConstants::kPDriveVel, 0, 0), frc2::PIDController(DriveConstants::kPDriveVel, 0, 0)));
+  m_autoChooser.AddOption("Ramsete", new RamseteCmd(exampleTrajectory, &m_drivetrainSub));
   m_autoChooser.SetDefaultOption("IntakeCmd", new IntakeCmd(&m_intakeSub,&m_drivetrainSub));
   frc::SmartDashboard::PutData("Auto Chooser", &m_autoChooser);
 }

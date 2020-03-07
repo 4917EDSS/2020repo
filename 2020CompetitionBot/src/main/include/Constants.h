@@ -60,26 +60,23 @@ namespace DioIds {
 }
 
 namespace DriveConstants {
-    constexpr auto kTrackwidth = 0.67_m; // This is the human measured constant (characterized number was 0.797108131)
+    constexpr auto kTrackwidth = 0.797108131_m; // This is the human measured constant (characterized number was 0.797108131) (measured was 0.67)
     extern const frc::DifferentialDriveKinematics kDriveKinematics;
     constexpr int kSmartCurrentLimit = 30;
     constexpr bool kGyroReversed = true;
 
     constexpr auto ks = 0.102_V;
-    constexpr auto kv = 3.95 * 1_V * 1_s / 1_m;
-    constexpr auto ka = 0.428 * 1_V * 1_s * 1_s / 1_m;
+    constexpr auto kv = 4.25 * 1_V * 1_s / 1_m;
+    constexpr auto ka = 0.368 * 1_V * 1_s * 1_s / 1_m;
 
-    constexpr double kPDriveVel = 14.3;
 }
 
 namespace AutoConstants {
-    constexpr auto kMaxSpeed = 2.93_mps;
-    constexpr auto kMaxAcceleration = 7_mps_sq;
 
     // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
-    constexpr double kRamseteB = 2;
-    constexpr double kRamseteZeta = 0.7;
+
 }
+
 
 namespace OIConstants {
     constexpr int kDriverControllerPort = 1;

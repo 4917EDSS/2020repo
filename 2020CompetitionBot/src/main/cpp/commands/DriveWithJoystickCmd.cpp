@@ -66,6 +66,7 @@ double capAcceleration (double power, double powerPrevious, double maxAccel) {
 
 // Called repeatedly when this Command is scheduled to run
 void DriveWithJoystickCmd::Execute() {
+
   double forwardPower = m_joystick->GetY();
   double turnPower = -m_joystick->GetZ();
   
