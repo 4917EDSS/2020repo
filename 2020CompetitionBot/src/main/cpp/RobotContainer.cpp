@@ -40,7 +40,7 @@
 #include "commands/ShootCmd.h"
 #include "commands/ExpelCmd.h"
 #include "commands/CloseShootGrp.h"
-
+#include "commands/ManualControlPanel.h"
 
 /*
  * ON LOGITECH F310 CONTROLLER:
@@ -98,6 +98,7 @@ RobotContainer::RobotContainer() {
   m_drivetrainSub.SetDefaultCommand(DriveWithJoystickCmd(&m_drivetrainSub, &m_driverController));
   //m_shooterSub.SetDefaultCommand(HoodToggleCmd(&m_shooterSub, &m_operatorController));
   m_climberSub.SetDefaultCommand(ClimbWinchCmd(&m_climberSub, &m_operatorController));
+  m_controlPanelSub.SetDefaultCommand(ManualControlPanel(&m_controlPanelSub, &m_operatorController));
 
   frc::SmartDashboard::PutData("Hood Low", new HoodToggleCmd(&m_shooterSub));
 }
