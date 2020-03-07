@@ -17,5 +17,5 @@ class CloseShootGrp
     : public frc2::CommandHelper<frc2::SequentialCommandGroup,
                                  CloseShootGrp> {
  public:
-  CloseShootGrp(IntakeSub* m_intakeSub, ShooterSub* m_shooterSub, bool isFar);
+  CloseShootGrp(IntakeSub* intakeSub, ShooterSub* shooterSub);
 };

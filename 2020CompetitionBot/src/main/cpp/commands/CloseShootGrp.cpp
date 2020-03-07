@@ -6,12 +6,14 @@
 /*----------------------------------------------------------------------------*/
 
 #include "commands/CloseShootGrp.h"
+#include "commands/ShootCmd.h"
+#include "commands/SpinFlywheelCmd.h"
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.
 // For more information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-CloseShootGrp::CloseShootGrp(IntakeSub* m_intakeSub, ShooterSub* m_shooterSub, bool isFar) {
+CloseShootGrp::CloseShootGrp(IntakeSub* intakeSub, ShooterSub* shooterSub) {
   // Add your commands here, e.g.
   
-  // AddCommands(FooCommand(), BarCommand());
+  AddCommands(SpinFlywheelCmd(shooterSub, false), ShootCmd(shooterSub, intakeSub, false));
 }

@@ -27,7 +27,7 @@ ShooterSub::ShooterSub()
 
 void ShooterSub::init() {
   setPower(0.0);
-  frc::SmartDashboard::PutNumber("FlySpeed", 15800);
+  //frc::SmartDashboard::PutNumber("FlySpeed", 15800);
   flipHoodUp(false);
 
 }

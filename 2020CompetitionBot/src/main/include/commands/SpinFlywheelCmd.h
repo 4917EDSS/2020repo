@@ -22,7 +22,7 @@ class SpinFlywheelCmd
     : public frc2::CommandHelper<frc2::CommandBase, SpinFlywheelCmd> {
  public:
   
-  SpinFlywheelCmd(ShooterSub* shooterSub, double targetSpeed);
+  SpinFlywheelCmd(ShooterSub* shooterSub, bool isFar);
   
 
   void Initialize() override;
@@ -32,6 +32,6 @@ class SpinFlywheelCmd
 
   private:
   ShooterSub* m_shooterSub;
+  double m_isFar;
   double m_targetSpeed;
-
 };
