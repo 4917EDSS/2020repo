@@ -26,7 +26,11 @@ void ExpelCmd::Execute() {
   // Robot needs to be moving forward so we drop balls behind us and they don't jam under us
   if(leftSpeed > 0 && rightSpeed > 0) {
     m_intakeSub->setFrontRollerIntakePower(-1.0);
-   m_intakeSub->setMagazineIntakePower(-1.0);
+    m_intakeSub->setMagazineIntakePower(-1.0);
+  }
+  else {
+    m_intakeSub->setFrontRollerIntakePower(0.0);
+    m_intakeSub->setMagazineIntakePower(0.0);
   }
 }
 
