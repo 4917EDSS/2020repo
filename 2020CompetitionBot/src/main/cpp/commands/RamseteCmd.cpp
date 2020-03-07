@@ -11,7 +11,7 @@
 
 constexpr double kRamseteB = 2;
 constexpr double kRamseteZeta = 0.7;
-constexpr double kPDriveVel = 1.43;
+constexpr double kPDriveVel = 2.43;
 
 RamseteCmd::RamseteCmd(Trajectory t, DrivetrainSub* drivetrainSub)
   : frc2::RamseteCommand(t, 

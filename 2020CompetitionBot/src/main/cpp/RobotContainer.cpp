@@ -96,7 +96,7 @@ RobotContainer::RobotContainer() {
 
   m_drivetrainSub.SetDefaultCommand(DriveWithJoystickCmd(&m_drivetrainSub, &m_driverController));
   //m_shooterSub.SetDefaultCommand(HoodToggleCmd(&m_shooterSub, &m_operatorController));
-  m_climberSub.SetDefaultCommand(ClimbWinchCmd(&m_climberSub, &m_operatorController));
+  //m_climberSub.SetDefaultCommand(ClimbWinchCmd(&m_climberSub, &m_operatorController));
 
   frc::SmartDashboard::PutData("Hood Low", new HoodToggleCmd(&m_shooterSub));
 }
@@ -122,14 +122,32 @@ void RobotContainer::autoChooserSetup() {
   config.SetKinematics(DriveConstants::kDriveKinematics);
   config.AddConstraint(autoVoltageConstraint);
 
+  frc::TrajectoryConfig reverseConfig(kMaxSpeed, kMaxAcceleration);
+  reverseConfig.SetKinematics(DriveConstants::kDriveKinematics);
+  reverseConfig.AddConstraint(autoVoltageConstraint);
+  reverseConfig.SetReversed(true);
+
+  // All autos are from the blue side, (0,0) is top left corner (red scoring side)
+
   auto exampleTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
     frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
     {},
-    frc::Pose2d(6_m, 0_m, frc::Rotation2d(0_deg)),
+    frc::Pose2d(2_m, 2_m, frc::Rotation2d(90_deg)),
     config);
+
+  auto backwardsStraight = frc::TrajectoryGenerator::GenerateTrajectory(
+    frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
+    {},
+    frc::Pose2d(-3_m, 0_m, frc::Rotation2d(0_deg)),
+    reverseConfig);
+
+ // frc::Pose2d bOrigin{12.435_m, -7.507_m, frc::Rotation2d(0_deg)};
+ // auto trenchAuto = frc::TrajectoryGenerator::GenerateTrajectory( )
+
 
   // Create the list of auto options and put it up on the dashboard
   m_autoChooser.AddOption("Ramsete", new RamseteCmd(exampleTrajectory, &m_drivetrainSub));
+  m_autoChooser.AddOption("Backwards", new RamseteCmd(backwardsStraight, &m_drivetrainSub));
   m_autoChooser.SetDefaultOption("IntakeCmd", new IntakeCmd(&m_intakeSub,&m_drivetrainSub));
   frc::SmartDashboard::PutData("Auto Chooser", &m_autoChooser);
 }
