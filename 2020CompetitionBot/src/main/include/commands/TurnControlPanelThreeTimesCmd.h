@@ -35,5 +35,5 @@ class TurnControlPanelThreeTimesCmd
   ControlPanelSub* m_controlPanelSub;
   frc::Color m_startingColour;
   bool m_inExpectedColour;
-  int m_numHalfRotations;
+  int m_numHalfRotations = 0;
 };

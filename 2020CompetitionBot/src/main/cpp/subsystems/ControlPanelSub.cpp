@@ -19,7 +19,7 @@ ControlPanelSub::ControlPanelSub()
 }
 
 void ControlPanelSub::init() {
-  flipArmUp(false);
+  flipArmUp(true);
 }
 
 void ControlPanelSub::Periodic() {}
