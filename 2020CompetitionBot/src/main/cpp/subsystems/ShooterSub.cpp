@@ -27,7 +27,7 @@ ShooterSub::ShooterSub()
 
 void ShooterSub::init() {
   setPower(0.0);
-  frc::SmartDashboard::PutNumber("FlySpeed", 0);
+  frc::SmartDashboard::PutNumber("FlySpeed", 15800);
   flipHoodUp(true);
 
 }
@@ -46,11 +46,11 @@ void ShooterSub::setPower(double power) {
 
 
 bool ShooterSub::getHoodPosition() {
-  return m_hoodAdjuster.Get();
+  return !m_hoodAdjuster.Get();
 }
 
 void ShooterSub::flipHoodUp(bool location){
-  m_hoodAdjuster.Set(location);
+  m_hoodAdjuster.Set(!location);
 }
 
 // Gets maximum absolute speeds of both motors
