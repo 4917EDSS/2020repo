@@ -71,12 +71,6 @@ namespace DriveConstants {
 
 }
 
-namespace AutoConstants {
-
-    // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
-
-}
-
 
 namespace OIConstants {
     constexpr int kDriverControllerPort = 1;

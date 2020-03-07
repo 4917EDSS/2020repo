@@ -119,7 +119,6 @@ void RobotContainer::autoChooserSetup() {
     DriveConstants::kDriveKinematics, 
     10_V);
 
-  frc::TrajectoryConfig config(AutoConstants::kMaxSpeed, AutoConstants::kMaxAcceleration);
   frc::TrajectoryConfig config(kMaxSpeed, kMaxAcceleration);
   config.SetKinematics(DriveConstants::kDriveKinematics);
   config.AddConstraint(autoVoltageConstraint);
