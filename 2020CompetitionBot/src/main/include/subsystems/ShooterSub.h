@@ -16,7 +16,7 @@ class ShooterSub : public frc2::SubsystemBase {
   ShooterSub();
   void init();
   void Periodic() override;
-  void setSpeed(double speed);
+  void setPower(double speed);
   void setFeedSpeed(double feedSpeed);
   int getSpeed();
   bool getHoodPosition();

@@ -21,7 +21,7 @@ SpinFlywheelCmd::SpinFlywheelCmd(ShooterSub* shooterSub, double targetSpeed)
 // Called when the command is initially scheduled.
 void SpinFlywheelCmd::Initialize() {
   double feed = m_targetSpeed / ShooterConstants::kMaxRPM;
-  m_shooterSub->setSpeed(feed);
+  m_shooterSub->setPower(feed);
 }
 
 // Called repeatedly when this Command is scheduled to run
