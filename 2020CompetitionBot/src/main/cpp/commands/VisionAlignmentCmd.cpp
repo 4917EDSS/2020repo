@@ -16,7 +16,7 @@ VisionAlignmentCmd::VisionAlignmentCmd(VisionSub* visionSub, DrivetrainSub* driv
     m_drivetrainSub(drivetrainSub),
     m_isFar(isFar),
     m_lastX(0),
-    m_pController(0, 20, VisionConstants::kXAllignmentTolerence, 0.2, 0.5) {
+    m_pController(0, 20, VisionConstants::kXAllignmentTolerence, 0.10, 0.2) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({visionSub, drivetrainSub});
 }

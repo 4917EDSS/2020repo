@@ -39,7 +39,6 @@
 #include "commands/ToggleControlPanelArmCmd.h"
 #include "commands/ShootCmd.h"
 #include "commands/ExpelCmd.h"
-#include "commands/HoodToggleCmd.h"
 
 
 /*
@@ -181,7 +180,7 @@ void RobotContainer::configureButtonBindings() {
   intakeBtn.WhenHeld(IntakeCmd(&m_intakeSub, &m_drivetrainSub));
 
   frc2::JoystickButton expelBtn(&m_operatorController, kExpelBtn);
-  expelBtn.WhenHeld(ExpelCmd(&m_intakeSub));
+  expelBtn.WhenHeld(ExpelCmd(&m_intakeSub, &m_drivetrainSub));
 
   frc2::JoystickButton climbWinchReleaseBtn(&m_operatorController, kClimbWinchReleaseBtn);
    climbWinchReleaseBtn.WhenPressed(ClimbReleaseCmd(&m_climberSub, &m_operatorController));

@@ -17,7 +17,7 @@ KillEverythingCmd::KillEverythingCmd(ClimberSub* climberSub, ControlPanelSub* co
 
 // Called when the command is initially scheduled.
 void KillEverythingCmd::Initialize() {
-   m_shooterSub->setSpeed(0); // TODO:  This shouldn't be necesssary.  Must be missing something in shoot command(s)
+   m_shooterSub->setPower(0); // TODO:  This shouldn't be necesssary.  Must be missing something in shoot command(s)
 }
 
 // Called repeatedly when this Command is scheduled to run

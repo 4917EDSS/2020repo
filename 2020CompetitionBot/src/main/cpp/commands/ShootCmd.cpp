@@ -25,6 +25,7 @@ ShootCmd::ShootCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, bool isFar)
 
 // Called when the command is initially scheduled.
 void ShootCmd::Initialize() {
+  m_shooterSub->flipHoodUp(!m_isFar);
   m_intakeSub->setFrontRollerIntakePower(1.0);
   m_targetSpeed = frc::SmartDashboard::GetNumber("FlySpeed", 0);
   //(m_isFar ? ShooterConstants::kFarTargetSpeed : ShooterConstants::kCloseTargetSpeed);
@@ -52,14 +53,15 @@ double ShootCmd::runPID() {
 }
 
 void ShootCmd::Execute() {
-  m_shooterSub->setSpeed(runPID());
+  m_shooterSub->setPower(runPID());
   m_intakeSub->setMagazineIntakePower(-0.5);
 }
 
 // Called once the command ends or is interrupted.
 void ShootCmd::End(bool interrupted) {
-  m_shooterSub->setSpeed(0);
+  m_shooterSub->setPower(0);
   m_intakeSub->setMagazineIntakePower(0);
   m_intakeSub->setFrontRollerIntakePower(0);
+  m_shooterSub->flipHoodUp(false);
 }
  
