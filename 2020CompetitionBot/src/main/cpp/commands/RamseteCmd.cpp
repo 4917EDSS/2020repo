@@ -20,8 +20,8 @@ RamseteCmd::RamseteCmd(Trajectory t, DrivetrainSub* drivetrainSub, frc2::PIDCont
       rightController,
       [=](auto left, auto right) {
         drivetrainSub->tankDriveVolts(left, right);
-        std::cout << "L Target: " << leftController.GetSetpoint() << " a "<< drivetrainSub->getWheelSpeeds().leftMetersPerSecond << std::endl;
-        std::cout << "R Target: " << rightController.GetSetpoint() << " a "<< drivetrainSub->getWheelSpeeds().rightMetersPerSecond << std::endl;
+        std::cout << "L Target: " << leftController.GetSetpoint() << " a "<< drivetrainSub->getWheelSpeeds().left << std::endl;
+        std::cout << "R Target: " << rightController.GetSetpoint() << " a "<< drivetrainSub->getWheelSpeeds().right << std::endl;
       },
       {drivetrainSub}),
     m_drivetrainSub(drivetrainSub) {
