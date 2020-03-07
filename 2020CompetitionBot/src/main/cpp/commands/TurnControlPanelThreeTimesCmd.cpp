@@ -28,12 +28,12 @@ void TurnControlPanelThreeTimesCmd::Execute() {
   if(!m_inExpectedColour && (currentColour == m_startingColour)) {
     m_inExpectedColour = true;
     m_numHalfRotations = m_numHalfRotations + 1;
-    printf("[A]TurnControlPanelThreeTimesCmd.numHalfRotations = %d \n", m_numHalfRotations);
-    printf("[A]TurnControlPanelThreeTimesCmd.inExpectedColour = %s \n", (m_inExpectedColour ? "True" : "False"));
+    // printf("[A]TurnControlPanelThreeTimesCmd.numHalfRotations = %d \n", m_numHalfRotations);
+    // printf("[A]TurnControlPanelThreeTimesCmd.inExpectedColour = %s \n", (m_inExpectedColour ? "True" : "False"));
   } 
   else if (m_inExpectedColour && !(currentColour == m_startingColour)) {
     m_inExpectedColour = false;
-    printf("[B]TurnControlPanelThreeTimesCmd.inExpectedColour = %s \n", m_inExpectedColour ? "True" : "False");
+    // printf("[B]TurnControlPanelThreeTimesCmd.inExpectedColour = %s \n", m_inExpectedColour ? "True" : "False");
   }
 }
 
