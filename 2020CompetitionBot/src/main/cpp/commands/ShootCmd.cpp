@@ -62,5 +62,6 @@ void ShootCmd::End(bool interrupted) {
   m_shooterSub->setSpeed(0);
   m_intakeSub->setMagazineIntakePower(0);
   m_intakeSub->setFrontRollerIntakePower(0);
+  m_shooterSub->flipHoodUp(false);
 }
  

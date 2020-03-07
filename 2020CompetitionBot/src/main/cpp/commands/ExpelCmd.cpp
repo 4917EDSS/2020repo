@@ -7,21 +7,28 @@
 
 #include "commands/ExpelCmd.h"
 
-ExpelCmd::ExpelCmd(IntakeSub* intakeSub) 
-  : m_intakeSub(intakeSub){
+ExpelCmd::ExpelCmd(IntakeSub* intakeSub, DrivetrainSub* drivetrainSub) 
+  : m_intakeSub(intakeSub),
+    m_drivetrainSub(drivetrainSub) { 
 
   AddRequirements({intakeSub});
   // Use addRequirements() here to declare subsystem dependencies.
 }
 
 // Called when the command is initially scheduled.
-void ExpelCmd::Initialize() {
-  m_intakeSub->setFrontRollerIntakePower(-1.0);
-  m_intakeSub->setMagazineIntakePower(-1.0);
-}
+void ExpelCmd::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void ExpelCmd::Execute() {}
+void ExpelCmd::Execute() {
+  double leftSpeed = m_drivetrainSub->getLeftVelocity();
+  double rightSpeed = m_drivetrainSub->getRightVelocity();
+
+  // Robot needs to be moving forward so we drop balls behind us and they don't jam under us
+  if(leftSpeed > 0 && rightSpeed > 0) {
+    m_intakeSub->setFrontRollerIntakePower(-1.0);
+   m_intakeSub->setMagazineIntakePower(-1.0);
+  }
+}
 
 // Called once the command ends or is interrupted.
 void ExpelCmd::End(bool interrupted) {
