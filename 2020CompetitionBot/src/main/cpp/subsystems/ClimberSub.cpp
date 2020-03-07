@@ -23,7 +23,7 @@ void ClimberSub::init() {
 void ClimberSub::Periodic() {}
 
 void ClimberSub::releaseLatch(bool position) {
-  m_climbReleaseLatch.Set(position);
+  m_climbReleaseLatch.Set(!position);
 }
 
 void ClimberSub::setWinchPower(double power) {
