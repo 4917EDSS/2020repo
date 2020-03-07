@@ -25,10 +25,10 @@ void ControlPanelSub::init() {
 void ControlPanelSub::Periodic() {}
 
 bool ControlPanelSub::getArmPosition() {
-  return m_controlPanelFlipper.Get();
+  return !m_controlPanelFlipper.Get();
 }
 void ControlPanelSub::flipArmUp(bool position){
-  m_controlPanelFlipper.Set(position);
+  m_controlPanelFlipper.Set(!position);
 }
 
 void ControlPanelSub::setWheelPower(double speed){

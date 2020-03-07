@@ -21,7 +21,6 @@ TurnControlPanelToColourCmd::TurnControlPanelToColourCmd(ControlPanelSub* contro
 // Called when the command is initially scheduled.
 void TurnControlPanelToColourCmd::Initialize() {
   DetermineColourToTurnTo();
-  m_controlPanelSub->flipArmUp(true);
   // we probably have to wait before we read the colour
   m_startingColour = m_controlPanelSub->getColour();
   m_controlPanelSub->setWheelPower(ControlPanelConstants::kMaxWheelSpeed);
@@ -34,7 +33,6 @@ void TurnControlPanelToColourCmd::Execute() {
 
 // Called once the command ends or is interrupted.
 void TurnControlPanelToColourCmd::End(bool interrupted) {
-  m_controlPanelSub->flipArmUp(false);
 }
 
 // Returns true when the command should end.

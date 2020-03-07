@@ -39,6 +39,7 @@
 #include "commands/ToggleControlPanelArmCmd.h"
 #include "commands/ShootCmd.h"
 #include "commands/ExpelCmd.h"
+#include "commands/CloseShootGrp.h"
 
 
 /*
@@ -167,14 +168,14 @@ void RobotContainer::configureButtonBindings() {
   frc2::JoystickButton simpleCloseShotBtn(&m_operatorController, kSimpleCloseShotBtn);
   simpleCloseShotBtn.WhenHeld(ShootCmd(&m_shooterSub, &m_intakeSub, false));
 
+  frc2::JoystickButton shooterCloseBtn(&m_operatorController, kShooterCloseBtn);
+  shooterCloseBtn.WhenHeld(CloseShootGrp(&m_intakeSub, &m_shooterSub, false));
+
   frc2::JoystickButton simpleFarShotBtn(&m_operatorController, kSimpleFarShotBtn);
   simpleFarShotBtn.WhenHeld(ShootCmd(&m_shooterSub, &m_intakeSub, true));
 
   frc2::JoystickButton shooterFarBtn(&m_operatorController, kShooterFarBtn);
   shooterFarBtn.WhenHeld(AimShootGrp(&m_visionSub, &m_drivetrainSub, true, &m_shooterSub, &m_intakeSub));
-
-  frc2::JoystickButton shooterCloseBtn(&m_operatorController, kShooterCloseBtn);
-  shooterCloseBtn.WhenHeld(AimShootGrp(&m_visionSub, &m_drivetrainSub, false, &m_shooterSub, &m_intakeSub));
 
   frc2::JoystickButton intakeBtn(&m_operatorController, kIntakeBtn);
   intakeBtn.WhenHeld(IntakeCmd(&m_intakeSub, &m_drivetrainSub));
