@@ -52,13 +52,13 @@ double ShootCmd::runPID() {
 }
 
 void ShootCmd::Execute() {
-  m_shooterSub->setSpeed(runPID());
+  m_shooterSub->setPower(runPID());
   m_intakeSub->setMagazineIntakePower(-0.5);
 }
 
 // Called once the command ends or is interrupted.
 void ShootCmd::End(bool interrupted) {
-  m_shooterSub->setSpeed(0);
+  m_shooterSub->setPower(0);
   m_intakeSub->setMagazineIntakePower(0);
   m_intakeSub->setFrontRollerIntakePower(0);
 }
