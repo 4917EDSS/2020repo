@@ -12,10 +12,11 @@
 #include "subsystems/VisionSub.h"
 #include "subsystems/DrivetrainSub.h"
 #include "subsystems/ShooterSub.h"
+#include "subsystems/IntakeSub.h"
 
 class AimSpinFlywheelGrp
     : public frc2::CommandHelper<frc2::ParallelDeadlineGroup,
                                  AimSpinFlywheelGrp> {
  public:
-  AimSpinFlywheelGrp(VisionSub* visionSub, DrivetrainSub* drivetrainSub, ShooterSub* shooterSub, bool isFar);
+  AimSpinFlywheelGrp(VisionSub* visionSub, DrivetrainSub* drivetrainSub, ShooterSub* shooterSub, IntakeSub* intakeSub, bool isFar);
 };

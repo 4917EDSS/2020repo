@@ -27,8 +27,8 @@ ShootCmd::ShootCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, bool isFar)
 void ShootCmd::Initialize() {
   m_shooterSub->flipHoodUp(!m_isFar);
   m_intakeSub->setFrontRollerIntakePower(1.0);
-  m_targetSpeed = frc::SmartDashboard::GetNumber("FlySpeed", 0);
-  //(m_isFar ? ShooterConstants::kFarTargetSpeed : ShooterConstants::kCloseTargetSpeed);
+  //m_targetSpeed = frc::SmartDashboard::GetNumber("FlySpeed", 0); // enable (uncomment) put number in shootersub to use this function
+  m_targetSpeed = (m_isFar ? ShooterConstants::kFarTargetSpeed : ShooterConstants::kCloseTargetSpeed);
   m_lastDiff = 0.0; 
   m_lastTime = frc::RobotController::GetFPGATime();
   m_integralDiff = 0.0;

@@ -9,17 +9,23 @@
 #include "commands/ShootCmd.h"
 #include "Constants.h"
 
-// This command has to be used in a Deadline command group because it never finishes
+//                          READ THIS
+//                          READ THIS
+// This command has to be used with shootCmd or the flywheel will never stop
+//                          READ THIS
+//                          READ THIS
 
-SpinFlywheelCmd::SpinFlywheelCmd(ShooterSub* shooterSub, double targetSpeed) 
+SpinFlywheelCmd::SpinFlywheelCmd(ShooterSub* shooterSub, bool isFar) 
   : m_shooterSub(shooterSub),
-    m_targetSpeed(targetSpeed) {
+    m_isFar(isFar),
+    m_targetSpeed(0) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({shooterSub});
 }
 
 // Called when the command is initially scheduled.
 void SpinFlywheelCmd::Initialize() {
+  m_targetSpeed = (m_isFar ? ShooterConstants::kFarTargetSpeed : ShooterConstants::kCloseTargetSpeed);
   double feed = m_targetSpeed / ShooterConstants::kMaxRPM;
   m_shooterSub->setPower(feed);
 }
@@ -31,4 +37,11 @@ void SpinFlywheelCmd::Execute() {}
 void SpinFlywheelCmd::End(bool interrupted) {}
 
 // Returns true when the command should end.
-bool SpinFlywheelCmd::IsFinished() { return false; }
+bool SpinFlywheelCmd::IsFinished() { 
+  if(m_shooterSub->getSpeed() >= (m_targetSpeed * 0.9)) {
+    return true;
+  }
+  else {
+    return false;
+  }
+}

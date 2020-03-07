@@ -24,7 +24,7 @@
 #include "subsystems/VisionSub.h"
 #include "commands/DriveWithJoystickCmd.h"
 #include "commands/DisableAutoShiftCmd.h"
-#include "commands/AimShootGrp.h"
+#include "commands/AimSpinFlywheelGrp.h"
 #include "commands/IntakeCmd.h"
 #include "commands/HoodToggleCmd.h"
 #include "commands/ClimbReleaseCmd.h"
@@ -169,13 +169,13 @@ void RobotContainer::configureButtonBindings() {
   simpleCloseShotBtn.WhenHeld(ShootCmd(&m_shooterSub, &m_intakeSub, false));
 
   frc2::JoystickButton shooterCloseBtn(&m_operatorController, kShooterCloseBtn);
-  shooterCloseBtn.WhenHeld(CloseShootGrp(&m_intakeSub, &m_shooterSub, false));
+  shooterCloseBtn.WhenHeld(CloseShootGrp(&m_intakeSub, &m_shooterSub));
 
   frc2::JoystickButton simpleFarShotBtn(&m_operatorController, kSimpleFarShotBtn);
   simpleFarShotBtn.WhenHeld(ShootCmd(&m_shooterSub, &m_intakeSub, true));
 
   frc2::JoystickButton shooterFarBtn(&m_operatorController, kShooterFarBtn);
-  shooterFarBtn.WhenHeld(AimShootGrp(&m_visionSub, &m_drivetrainSub, true, &m_shooterSub, &m_intakeSub));
+  shooterFarBtn.WhenHeld(AimSpinFlywheelGrp(&m_visionSub, &m_drivetrainSub, &m_shooterSub, &m_intakeSub, true));
 
   frc2::JoystickButton intakeBtn(&m_operatorController, kIntakeBtn);
   intakeBtn.WhenHeld(IntakeCmd(&m_intakeSub, &m_drivetrainSub));
