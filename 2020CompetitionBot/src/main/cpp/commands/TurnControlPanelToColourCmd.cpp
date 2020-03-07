@@ -33,6 +33,7 @@ void TurnControlPanelToColourCmd::Execute() {
 
 // Called once the command ends or is interrupted.
 void TurnControlPanelToColourCmd::End(bool interrupted) {
+  m_controlPanelSub->setWheelPower(0);
 }
 
 // Returns true when the command should end.

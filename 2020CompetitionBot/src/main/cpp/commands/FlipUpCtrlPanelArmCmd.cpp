@@ -17,7 +17,6 @@ FlipUpCtrlPanelArmCmd::FlipUpCtrlPanelArmCmd(ControlPanelSub* controlPanelSub)
 
 // Called when the command is initially scheduled.
 void FlipUpCtrlPanelArmCmd::Initialize() {
-  m_controlPanelSub->flipArmUp(true);
   m_initializedTime = frc::RobotController::GetFPGATime();
 }
 
