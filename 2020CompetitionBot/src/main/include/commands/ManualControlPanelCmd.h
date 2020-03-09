@@ -9,7 +9,9 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include "subsystems/ClimberSub.h"
+
+#include "subsystems/ControlPanelSub.h"
+#include <frc/Joystick.h>
 
 /**
  * An example command.
@@ -18,16 +20,17 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class ClimbReleaseCmd
-    : public frc2::CommandHelper<frc2::CommandBase, ClimbReleaseCmd> {
+class ManualControlPanelCmd
+    : public frc2::CommandHelper<frc2::CommandBase, ManualControlPanelCmd> {
  public:
-  ClimbReleaseCmd(ClimberSub* climbSub, frc::Joystick* joystick);
+  ManualControlPanelCmd(ControlPanelSub* controlPanelSub, frc::Joystick* joystick);
 
   void Initialize() override;
-
+  void Execute() override;
+  void End(bool interrupted) override;
   bool IsFinished() override;
 
-  private:
-  ClimberSub* m_climbSub;
+ private:
+  ControlPanelSub* m_controlPanelSub;
   frc::Joystick* m_joystick;
 };

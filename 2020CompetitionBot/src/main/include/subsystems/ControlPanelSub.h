@@ -15,15 +15,23 @@
 #include <frc/Solenoid.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 
+namespace ControlPanelConstants {
+    constexpr frc::Color kBlueTarget = frc::Color(0.143, 0.427, 0.429);
+    constexpr frc::Color kGreenTarget = frc::Color(0.197, 0.561, 0.240);
+    constexpr frc::Color kRedTarget = frc::Color(0.473, 0.369, 0.154);
+    constexpr frc::Color kYellowTarget = frc::Color(0.361, 0.524, 0.113);
+    constexpr double kMaxWheelSpeed = 1;
+}
+
 class ControlPanelSub : public frc2::SubsystemBase {
  public:
   ControlPanelSub();
 
   void init();
   void Periodic();
-  bool getArmPosition();
+  bool isArmUp();
   void flipArmUp(bool position);
-  void setWheelPower(double speed);
+  void setWheelPower(double power);
   frc::Color getColour();
 
  private:

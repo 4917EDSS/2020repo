@@ -5,28 +5,34 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/KillEverythingCmd.h"
+#include "commands/ManualControlPanelCmd.h"
 
+constexpr double kDeadBand = 0.03;
 
-KillEverythingCmd::KillEverythingCmd(ClimberSub* climberSub, ControlPanelSub* controlPanelSub,
-  DrivetrainSub* driveTrainSub, IntakeSub* intakeSub, ShooterSub* shooterSub, VisionSub* visionSub) 
-  : m_shooterSub(shooterSub) {
-  
-  AddRequirements({climberSub, controlPanelSub, driveTrainSub, intakeSub, shooterSub, visionSub});
+ManualControlPanelCmd::ManualControlPanelCmd(ControlPanelSub* controlPanelSub, frc::Joystick* joystick) 
+   : m_controlPanelSub(controlPanelSub),
+     m_joystick(joystick) {
+
+  AddRequirements({controlPanelSub});  
 }
 
 // Called when the command is initially scheduled.
-void KillEverythingCmd::Initialize() {
-   m_shooterSub->setPower(0); // TODO:  This shouldn't be necesssary.  Must be missing something in shoot command(s)
+void ManualControlPanelCmd::Initialize() {
 }
 
 // Called repeatedly when this Command is scheduled to run
-void KillEverythingCmd::Execute() {}
+void ManualControlPanelCmd::Execute() {
+  double wheelPower = m_joystick->GetX();
+  if(fabs(wheelPower) <= kDeadBand) {
+    wheelPower = 0.0;
+  }
+  m_controlPanelSub->setWheelPower(wheelPower);
+}
 
 // Called once the command ends or is interrupted.
-void KillEverythingCmd::End(bool interrupted) {
-
+void ManualControlPanelCmd::End(bool interrupted) {
+  // Joystick-controller commands don't usually have an End
 }
 
 // Returns true when the command should end.
-bool KillEverythingCmd::IsFinished() { return true; }
+bool ManualControlPanelCmd::IsFinished() { return false; }

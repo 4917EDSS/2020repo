@@ -12,15 +12,22 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 
 constexpr int kSensitivityPower=2;
-constexpr double kMaxForwardAccel = 0.045;
+constexpr double kMaxForwardAccel = 0.02;
 constexpr double kMaxTurnAccel = 0.08;
 constexpr double kDeadBand = 0.03;
+
+double m_maxForwardAccel = kMaxForwardAccel;
+
 DriveWithJoystickCmd::DriveWithJoystickCmd(DrivetrainSub* drivetrainSub, frc::Joystick* joystick)
   : m_drivetrainSub(drivetrainSub),
     m_joystick(joystick) {
-  // Use addRequirements() here to declare subsystem dependencies.
+  
   AddRequirements({drivetrainSub});
+
+  //frc::SmartDashboard::PutNumber("MaxForwardAccel", m_maxForwardAccel);
+
 }
+
 
 // Called when the command is initially scheduled.
 void DriveWithJoystickCmd::Initialize() {
@@ -30,7 +37,7 @@ void DriveWithJoystickCmd::Initialize() {
 
 double adjustSensitivity (double power) {
   double sign = -1.0;
-  if (power >= 0) {
+  if(power >= 0) {
     sign = 1.0;
   }
   power = pow(power, kSensitivityPower);
@@ -66,6 +73,9 @@ double capAcceleration (double power, double powerPrevious, double maxAccel) {
 
 // Called repeatedly when this Command is scheduled to run
 void DriveWithJoystickCmd::Execute() {
+  
+  //m_maxForwardAccel = frc::SmartDashboard::GetNumber("MaxForwardAccel", m_maxForwardAccel);
+
   double forwardPower = m_joystick->GetY();
   double turnPower = -m_joystick->GetZ();
   
@@ -75,7 +85,7 @@ void DriveWithJoystickCmd::Execute() {
   forwardPower = applyDeadBand(forwardPower, kMinimumForwardPower);
   turnPower =  applyDeadBand(turnPower, kMinimumTurningPower);
 
-  forwardPower = capAcceleration(forwardPower, m_forwardPowerPrevious, kMaxForwardAccel);
+  forwardPower = capAcceleration(forwardPower, m_forwardPowerPrevious, m_maxForwardAccel);
   turnPower = capAcceleration(turnPower, m_turnPowerPrevious, kMaxTurnAccel);
  
   m_drivetrainSub->arcadeDrive(forwardPower,turnPower);
@@ -86,7 +96,9 @@ void DriveWithJoystickCmd::Execute() {
 }
 
 // Called once the command ends or is interrupted.
-void DriveWithJoystickCmd::End(bool interrupted) {}
+void DriveWithJoystickCmd::End(bool interrupted) {
+  // Joystick-controller commands don't usually have an End
+}
 
 // Returns true when the command should end.
 bool DriveWithJoystickCmd::IsFinished() { return false; }

@@ -11,9 +11,10 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/RobotController.h>
 
+#include "Constants.h"
 #include "subsystems/DrivetrainSub.h"
 
-constexpr float kEncoderRotationsToMLowGear = 5.0/(160.162);
+constexpr float kEncoderRotationsToMLowGear = 5.0/(160.162) / 1.039; // We drove 5.75m but it thought we drove 5.98 so to compensate, divide by by 1.04
 constexpr float kEncoderRotationsToMHighGear = 5.0/(102.264);
 constexpr double kShiftUpSpeed = 2.35;    // In m/s
 constexpr double kShiftDownSpeed = 1.15;  // In m/s
@@ -94,7 +95,7 @@ void DrivetrainSub::setDrivetrainEncoderZero() {
 
 void DrivetrainSub::resetOdometry(frc::Pose2d pose) {
   setDrivetrainEncoderZero();
-  m_odometry.ResetPosition(pose, frc::Rotation2d(units::degree_t(getHeading())));
+  m_odometry.ResetPosition(pose, pose.Rotation());
 }
 
 void DrivetrainSub::arcadeDrive(double fwd, double rot) {

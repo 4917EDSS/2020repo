@@ -14,7 +14,6 @@ HoodToggleCmd::HoodToggleCmd(ShooterSub* shooterSub)
     m_hoodToggle(true) {
 
   AddRequirements({shooterSub});
-  // Use addRequirements() here to declare subsystem dependencies.
 }
 HoodToggleCmd::HoodToggleCmd(ShooterSub* shooterSub, bool hoodUp) 
   : m_ShooterSub(shooterSub), 

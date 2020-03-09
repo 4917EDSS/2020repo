@@ -14,6 +14,10 @@
 #include <ctre/Phoenix.h>
 #include <frc/Joystick.h>
 
+namespace ClimbConstants {
+    constexpr double kMoveOnGenSwitchPower = 1.0;
+}
+
 class ClimberSub : public frc2::SubsystemBase {
  public:
   ClimberSub();

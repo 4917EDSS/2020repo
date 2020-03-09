@@ -19,20 +19,21 @@ ControlPanelSub::ControlPanelSub()
 }
 
 void ControlPanelSub::init() {
-  flipArmUp(false);
+  flipArmUp(true);
 }
 
 void ControlPanelSub::Periodic() {}
 
-bool ControlPanelSub::getArmPosition() {
-  return m_controlPanelFlipper.Get();
-}
-void ControlPanelSub::flipArmUp(bool position){
-  m_controlPanelFlipper.Set(position);
+bool ControlPanelSub::isArmUp() {
+  return !m_controlPanelFlipper.Get();
 }
 
-void ControlPanelSub::setWheelPower(double speed){
-  m_controlPanelMotor.Set(speed);
+void ControlPanelSub::flipArmUp(bool position){
+  m_controlPanelFlipper.Set(!position);
+}
+
+void ControlPanelSub::setWheelPower(double power){
+  m_controlPanelMotor.Set(power);
 }
 
 frc::Color ControlPanelSub::getColour(){

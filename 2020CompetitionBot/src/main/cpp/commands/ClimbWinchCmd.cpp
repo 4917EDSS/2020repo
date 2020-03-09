@@ -39,75 +39,55 @@ constexpr double kMinArmMotorEncoderValue = 10.0; // WARNING: This must be > 0.
 ClimbWinchCmd::ClimbWinchCmd(ClimberSub* climberSub, frc::Joystick* joystick)
   : m_climberSub(climberSub),
     m_joystick(joystick) {
-    // ----------------------------------------------------------------------------------------
-    // This was added for the proportional controller approach. We abandoned it.
-    // ----------------------------------------------------------------------------------------
-    // m_pcUp(kMaxArmMotorEncoderValue, kControlStartDelta, kTolerance, kMinPower, kMaxPower), 
-    // m_pcDown(kMinArmMotorEncoderValue, kControlStartDelta, kTolerance, kMinPower, kMaxPower) {
-    // ----------------------------------------------------------------------------------------
-  // Use addRequirements() here to declare subsystem dependencies.
+  
   AddRequirements({climberSub});
 }
 
 // Called when the command is initially scheduled.
 // We just turn the power on and leave it until command is interrupted calling End
 void ClimbWinchCmd::Initialize() {
-  // Get inisual incoder for start configuration
-  // This will be the minimum incoder value allowed when retracting the arm
+  
 }
 
 // Called repeatedly when this Command is scheduled to run
 void ClimbWinchCmd::Execute() {
-  double pRaw = -1 * (m_joystick->GetThrottle());
+  
+  double power = -1 * (m_joystick->GetThrottle());
   // Accomodate drift on controller joystick by ignoring tiny values.
-  if (fabs(pRaw) < 0.1) {
-    pRaw = 0;
+
+  if(fabs(power) < 0.1) {
+    power = 0;
   }
-  double e = (m_climberSub->getArmMotorEncoder());
-  frc::SmartDashboard::PutNumber("Climb Winch Encoder", e);
+
+  double e = m_climberSub->getArmMotorEncoder();
 
   bool isShiftDownPressed = (m_climberSub->getOperatorShiftState(m_joystick) == DpadConstants::kDown);
-  
-  // ----------------------------------------------------------------------------------------
-  // This was added for the proportional controller approach. We abandoned it.
-  // ----------------------------------------------------------------------------------------
-  // Apply power
-  // if (isShiftDownPressed) {
-  //   m_climbSub->setWinchPower(pRaw);
-  // } else {
-  //   double pProportional;
-  //   if (pRaw < 0) {
-  //     pProportional = m_pcDown.getPower(e);
-  //   } else {
-  //     pProportional = m_pcUp.getPower(e);
-  //   }
-  //   m_climbSub->setWinchPower(pProportional);  
-  // }
-  // ----------------------------------------------------------------------------------------
 
   // Apply power
   if (isShiftDownPressed) {
-    m_climberSub->setWinchPower(pRaw);
+    m_climberSub->setWinchPower(power);
   }
-  else if ((pRaw > 0) && (e >= kMaxArmMotorEncoderValue)) {
+  else if ((power > 0) && (e >= kMaxArmMotorEncoderValue)) {
     m_climberSub->setWinchPower(0.0);
   }
-  else if (pRaw > 0 && e >= kMaxArmMotorEncoderValue - 10) {
-    m_climberSub->setWinchPower(pRaw / (11 - (kMaxArmMotorEncoderValue - e)));
+  else if (power > 0 && e >= kMaxArmMotorEncoderValue - 10) {
+    m_climberSub->setWinchPower(power / (11 - (kMaxArmMotorEncoderValue - e)));
   }
-  else if ((pRaw < 0) && (e <= 0)) {
+  else if ((power < 0) && (e <= 0)) {
     m_climberSub->setWinchPower(0.0);
   }
-  else if (pRaw < 0 && e <= 10) {
-    m_climberSub->setWinchPower(pRaw / (11 - (kMaxArmMotorEncoderValue - e)));
+  else if (power < 0 && e <= 10) {
+    m_climberSub->setWinchPower(power / (11 - (kMaxArmMotorEncoderValue - e)));
   }
   else {
-    m_climberSub->setWinchPower(pRaw);
+    m_climberSub->setWinchPower(power);
   }
+
 }
 
 // Relying on command inrerruption to end this
 void ClimbWinchCmd::End(bool interrupted) {
+  // Joystick-controller commands don't usually have an End
 }
 
 // Returns true when the command should end.

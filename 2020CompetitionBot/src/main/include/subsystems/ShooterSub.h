@@ -11,6 +11,14 @@
 #include <ctre/Phoenix.h>
 #include <frc/Solenoid.h>
 
+namespace ShooterConstants {
+    constexpr double kHighHood = 0.0;
+    constexpr double kLowHood = 15500;
+    constexpr double kMaxRPM = 21750;
+    constexpr double kCloseTargetSpeed = 15000;
+    constexpr double kFarTargetSpeed = 17800;   
+}
+
 class ShooterSub : public frc2::SubsystemBase {
  public:
   ShooterSub();

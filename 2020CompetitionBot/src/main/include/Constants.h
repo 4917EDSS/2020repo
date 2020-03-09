@@ -35,7 +35,7 @@ namespace CanIds {
     constexpr int kTopIntakeMotor = 11;
     constexpr int kClimbBalanceMotor = 9;
     constexpr int kElevatorMotor = 13;
-    constexpr int kControlPanelMotor = 14;
+    constexpr int kControlPanelMotor = 15;
     constexpr int kFrontRollerIntakeMotor = 16;
     constexpr int kShootMotor1 = 25;
     constexpr int kShootMotor2 = 26;
@@ -57,58 +57,6 @@ namespace DioIds {
     constexpr int kMagazineFrontSensorL = 2;
     constexpr int kMagazineFrontSensorR = 3;
     constexpr int kMagazineFullSensor = 4;
-}
-
-namespace DriveConstants {
-    constexpr auto kTrackwidth = 0.67_m; // This is the human measured constant (characterized number was 0.797108131)
-    extern const frc::DifferentialDriveKinematics kDriveKinematics;
-    constexpr int kSmartCurrentLimit = 30;
-    constexpr bool kGyroReversed = true;
-
-    constexpr auto ks = 0.102_V;
-    constexpr auto kv = 3.95 * 1_V * 1_s / 1_m;
-    constexpr auto ka = 0.428 * 1_V * 1_s * 1_s / 1_m;
-
-    constexpr double kPDriveVel = 14.3;
-}
-
-namespace AutoConstants {
-    constexpr auto kMaxSpeed = 2.93_mps;
-    constexpr auto kMaxAcceleration = 7_mps_sq;
-
-    // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
-    constexpr double kRamseteB = 2;
-    constexpr double kRamseteZeta = 0.7;
-}
-
-namespace OIConstants {
-    constexpr int kDriverControllerPort = 1;
-}
-
-namespace VisionConstants {
-    constexpr double kXAllignmentTolerence = 0.5;
-    constexpr double kXMax = 30.0;
-    constexpr double kFrontCameraId = 1;
-}
-
-namespace ClimbConstants {
-    constexpr double kMoveOnGenSwitchPower = 1.0;
-}
-
-namespace ControlPanelConstants {
-    constexpr frc::Color kBlueTarget = frc::Color(0.143, 0.427, 0.429);
-    constexpr frc::Color kGreenTarget = frc::Color(0.197, 0.561, 0.240);
-    constexpr frc::Color kRedTarget = frc::Color(0.473, 0.369, 0.154);
-    constexpr frc::Color kYellowTarget = frc::Color(0.361, 0.524, 0.113);
-    constexpr double kMaxWheelSpeed = 0.2;
-}
-
-namespace ShooterConstants {
-    constexpr double kHighHood = 0.0;
-    constexpr double kLowHood = 15500;
-    constexpr double kMaxRPM = 21750;
-    constexpr double kCloseTargetSpeed = 15000;
-    constexpr double kFarTargetSpeed = 17800;   
 }
 
 namespace DpadConstants {

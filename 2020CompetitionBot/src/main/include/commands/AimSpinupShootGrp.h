@@ -8,15 +8,15 @@
 #pragma once
 
 #include <frc2/command/CommandHelper.h>
-#include <frc2/command/SequentialCommandGroup.h>
+#include <frc2/command/ParallelDeadlineGroup.h>
 #include "subsystems/VisionSub.h"
 #include "subsystems/DrivetrainSub.h"
-#include "subsystems/IntakeSub.h"
 #include "subsystems/ShooterSub.h"
+#include "subsystems/IntakeSub.h"
 
-class AimShootGrp
-    : public frc2::CommandHelper<frc2::SequentialCommandGroup,
-                                 AimShootGrp> {
+class AimSpinupShootGrp
+    : public frc2::CommandHelper<frc2::ParallelDeadlineGroup,
+                                 AimSpinupShootGrp> {
  public:
-  AimShootGrp(VisionSub* visionSub, DrivetrainSub* drivetrainSub, bool isFar, ShooterSub* shooterSub, IntakeSub* intakeSub);
+  AimSpinupShootGrp(VisionSub* visionSub, DrivetrainSub* drivetrainSub, ShooterSub* shooterSub, IntakeSub* intakeSub, bool isFar);
 };

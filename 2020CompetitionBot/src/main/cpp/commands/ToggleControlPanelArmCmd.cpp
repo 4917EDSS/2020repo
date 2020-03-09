@@ -8,14 +8,15 @@
 #include "commands/ToggleControlPanelArmCmd.h"
 #include "subsystems/ControlPanelSub.h"
 
-ToggleControlPanelArmCmd::ToggleControlPanelArmCmd(ControlPanelSub * controlPanelSub) : m_controlPanelSub(controlPanelSub) {
-  // Use addRequirements() here to declare subsystem dependencies.
+ToggleControlPanelArmCmd::ToggleControlPanelArmCmd(ControlPanelSub * controlPanelSub) 
+  : m_controlPanelSub(controlPanelSub) {
+  
   AddRequirements({controlPanelSub});
 }
 
 // Called when the command is initially scheduled.
 void ToggleControlPanelArmCmd::Initialize() {
-  m_controlPanelSub->flipArmUp(not m_controlPanelSub->getArmPosition());
+  m_controlPanelSub->flipArmUp(!m_controlPanelSub->isArmUp());
 }
 
 // Called repeatedly when this Command is scheduled to run

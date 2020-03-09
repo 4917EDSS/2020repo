@@ -1,5 +1,3 @@
-#include "Constants.h"
+#include "subsystems/DrivetrainSub.h"
 
-using namespace DriveConstants;
-
-const frc::DifferentialDriveKinematics DriveConstants::kDriveKinematics(kTrackwidth);
+const frc::DifferentialDriveKinematics DriveConstants::kDriveKinematics(DriveConstants::kTrackwidth);
