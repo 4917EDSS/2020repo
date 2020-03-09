@@ -9,6 +9,12 @@
 
 #include <frc2/command/SubsystemBase.h>
 
+namespace VisionConstants {
+    constexpr double kXAllignmentTolerence = 0.5;
+    constexpr double kXMax = 30.0;
+    constexpr double kFrontCameraId = 1;
+}
+
 class VisionSub : public frc2::SubsystemBase {
  public:
   VisionSub();

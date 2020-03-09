@@ -11,7 +11,7 @@
 #include <networktables/NetworkTableInstance.h>
 
 VisionSub::VisionSub() {
-  frc::SmartDashboard::PutNumber("LPower", 0);
+
 }
 
 void VisionSub::init() {

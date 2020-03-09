@@ -5,30 +5,34 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/ManualControlPanel.h"
+#include "commands/ManualControlPanelCmd.h"
 
-ManualControlPanel::ManualControlPanel(ControlPanelSub* controlPanelSub, frc::Joystick* joystick) 
-: m_controlPanelSub(controlPanelSub),
-  m_joystick(joystick) {
-  // Use addRequirements() here to declare subsystem dependencies.
-  
+constexpr double kDeadBand = 0.03;
 
+ManualControlPanelCmd::ManualControlPanelCmd(ControlPanelSub* controlPanelSub, frc::Joystick* joystick) 
+   : m_controlPanelSub(controlPanelSub),
+     m_joystick(joystick) {
+
+  AddRequirements({controlPanelSub});  
 }
 
 // Called when the command is initially scheduled.
-void ManualControlPanel::Initialize() {
+void ManualControlPanelCmd::Initialize() {
 }
 
 // Called repeatedly when this Command is scheduled to run
-void ManualControlPanel::Execute() {
-  double wheelPower = m_joystick->GetY();
-   m_controlPanelSub->setWheelPower(wheelPower);
+void ManualControlPanelCmd::Execute() {
+  double wheelPower = m_joystick->GetX();
+  if(fabs(wheelPower) <= kDeadBand) {
+    wheelPower = 0.0;
+  }
+  m_controlPanelSub->setWheelPower(wheelPower);
 }
 
 // Called once the command ends or is interrupted.
-void ManualControlPanel::End(bool interrupted) {
-   m_controlPanelSub->setWheelPower(0);
+void ManualControlPanelCmd::End(bool interrupted) {
+  // Joystick-controller commands don't usually have an End
 }
 
 // Returns true when the command should end.
-bool ManualControlPanel::IsFinished() { return false; }
+bool ManualControlPanelCmd::IsFinished() { return false; }

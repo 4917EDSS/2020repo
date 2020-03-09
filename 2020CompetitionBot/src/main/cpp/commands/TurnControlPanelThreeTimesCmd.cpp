@@ -10,7 +10,7 @@
 
 TurnControlPanelThreeTimesCmd::TurnControlPanelThreeTimesCmd(ControlPanelSub* controlPanelSub)
   : m_controlPanelSub(controlPanelSub) {
-  // Use addRequirements() here to declare subsystem dependencies.
+  
   AddRequirements({controlPanelSub});
 }
 

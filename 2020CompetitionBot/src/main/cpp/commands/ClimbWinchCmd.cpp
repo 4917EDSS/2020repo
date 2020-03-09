@@ -39,21 +39,14 @@ constexpr double kMinArmMotorEncoderValue = 10.0; // WARNING: This must be > 0.
 ClimbWinchCmd::ClimbWinchCmd(ClimberSub* climberSub, frc::Joystick* joystick)
   : m_climberSub(climberSub),
     m_joystick(joystick) {
-    // ----------------------------------------------------------------------------------------
-    // This was added for the proportional controller approach. We abandoned it.
-    // ----------------------------------------------------------------------------------------
-    // m_pcUp(kMaxArmMotorEncoderValue, kControlStartDelta, kTolerance, kMinPower, kMaxPower), 
-    // m_pcDown(kMinArmMotorEncoderValue, kControlStartDelta, kTolerance, kMinPower, kMaxPower) {
-    // ----------------------------------------------------------------------------------------
-  // Use addRequirements() here to declare subsystem dependencies.
+  
   AddRequirements({climberSub});
 }
 
 // Called when the command is initially scheduled.
 // We just turn the power on and leave it until command is interrupted calling End
 void ClimbWinchCmd::Initialize() {
-  // Get inisual incoder for start configuration
-  // This will be the minimum incoder value allowed when retracting the arm
+  
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -62,11 +55,11 @@ void ClimbWinchCmd::Execute() {
   double power = -1 * (m_joystick->GetThrottle());
   // Accomodate drift on controller joystick by ignoring tiny values.
 
-  if (fabs(power) < 0.1) {
+  if(fabs(power) < 0.1) {
     power = 0;
   }
 
-  double e = (m_climberSub->getArmMotorEncoder());
+  double e = m_climberSub->getArmMotorEncoder();
 
   bool isShiftDownPressed = (m_climberSub->getOperatorShiftState(m_joystick) == DpadConstants::kDown);
 
@@ -94,6 +87,7 @@ void ClimbWinchCmd::Execute() {
 
 // Relying on command inrerruption to end this
 void ClimbWinchCmd::End(bool interrupted) {
+  // Joystick-controller commands don't usually have an End
 }
 
 // Returns true when the command should end.

@@ -12,7 +12,6 @@ ExpelCmd::ExpelCmd(IntakeSub* intakeSub, DrivetrainSub* drivetrainSub)
     m_drivetrainSub(drivetrainSub) { 
 
   AddRequirements({intakeSub});
-  // Use addRequirements() here to declare subsystem dependencies.
 }
 
 // Called when the command is initially scheduled.

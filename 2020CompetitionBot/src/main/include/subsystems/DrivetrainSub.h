@@ -20,7 +20,16 @@
 #include <AHRS.h>
 #include <frc/solenoid.h>
 
-#include "Constants.h"
+namespace DriveConstants {
+    constexpr auto kTrackwidth = 0.797108131_m; // This is the human measured constant (characterized number was 0.797108131) (measured was 0.67)
+    extern const frc::DifferentialDriveKinematics kDriveKinematics;
+    constexpr int kSmartCurrentLimit = 30;
+    constexpr bool kGyroReversed = true;
+
+    constexpr auto ks = 0.102_V;
+    constexpr auto kv = 4.25 * 1_V * 1_s / 1_m;
+    constexpr auto ka = 0.368 * 1_V * 1_s * 1_s / 1_m;
+}
 
 // Uncomment to disable logging of Ramsete command data (path following)
 //#define RAMSETE_LOG 1

@@ -19,20 +19,17 @@
 #include <frc2/command/SequentialCommandGroup.h>
 #include <frc2/command/button/JoystickButton.h>
 #include <frc2/command/RunCommand.h>
+
 #include "Constants.h"
-#include "subsystems/ClimberSub.h"
-#include "subsystems/VisionSub.h"
 #include "commands/DriveWithJoystickCmd.h"
 #include "commands/DisableAutoShiftCmd.h"
-#include "commands/AimSpinFlywheelGrp.h"
+#include "commands/AimSpinupShootGrp.h"
 #include "commands/IntakeCmd.h"
-#include "commands/HoodToggleCmd.h"
-#include "commands/ClimbReleaseCmd.h"
+#include "commands/ClimbReleaseArmCmd.h"
 #include "commands/ClimbWinchCmd.h"
 #include "commands/VisionAlignmentCmd.h"
 #include "commands/ClimbBalanceCmd.h"
 #include "commands/TurnControlPanelThreeTimesCmd.h"
-#include "commands/FlipUpCtrlPanelArmCmd.h"
 #include "commands/TurnControlPanelToColourCmd.h"
 #include "commands/KillEverythingCmd.h"
 #include "commands/RamseteCmd.h"
@@ -40,7 +37,7 @@
 #include "commands/ShootCmd.h"
 #include "commands/ExpelCmd.h"
 #include "commands/CloseShootGrp.h"
-#include "commands/ManualControlPanel.h"
+#include "commands/ManualControlPanelCmd.h"
 
 /*
  * ON LOGITECH F310 CONTROLLER:
@@ -64,17 +61,17 @@
  */
 
 //Driver Buttons
+// constexpr int kBackupFromPowerPort = 2; // To be added
 constexpr int kDisableAutoShiftBtn = 6;
 constexpr int kClimbBalanceLeftBtn = 7;
 constexpr int kClimbBalanceRightBtn = 8;
-constexpr int kShortCameraAlignmentBtn = 9; //Going to integrate the alignment with shooterBtn, just hasn't happened yet
+constexpr int kShortCameraAlignmentBtn = 9;
 constexpr int kFarCameraAlignmentBtn = 10;
 constexpr int kKillEverything1Btn = 11;
 constexpr int kKillEverything2Btn = 12;
 
 //Operator Buttons
-constexpr int kClimbWinchReleaseBtn = 1; // This is just for testing the hood toggle. NOT PERMAMENT
-//constexpr int kHoodToggle = 1;// This is temporary
+constexpr int kClimbReleaseArmBtn = 1; // This is just for testing the hood toggle. NOT PERMAMENT
 constexpr int kIntakeBtn = 2;
 constexpr int kExpelBtn = 3;
 constexpr int kControlPanelArmToggleBtn = 4;
@@ -91,16 +88,12 @@ constexpr auto kMaxSpeed = 2.5_mps;
 constexpr auto kMaxAcceleration = 2.7_mps_sq;
 
 RobotContainer::RobotContainer() {
-  // Configure the button bindings
   configureButtonBindings();
   autoChooserSetup();
 
   m_drivetrainSub.SetDefaultCommand(DriveWithJoystickCmd(&m_drivetrainSub, &m_driverController));
-  //m_shooterSub.SetDefaultCommand(HoodToggleCmd(&m_shooterSub, &m_operatorController));
   m_climberSub.SetDefaultCommand(ClimbWinchCmd(&m_climberSub, &m_operatorController));
-  m_controlPanelSub.SetDefaultCommand(ManualControlPanel(&m_controlPanelSub, &m_operatorController));
-
-  frc::SmartDashboard::PutData("Hood Low", new HoodToggleCmd(&m_shooterSub));
+  m_controlPanelSub.SetDefaultCommand(ManualControlPanelCmd(&m_controlPanelSub, &m_operatorController));
 }
 
 // Make sure that all of the subsystems are in a known state
@@ -194,7 +187,7 @@ void RobotContainer::configureButtonBindings() {
   simpleFarShotBtn.WhenHeld(ShootCmd(&m_shooterSub, &m_intakeSub, true));
 
   frc2::JoystickButton shooterFarBtn(&m_operatorController, kShooterFarBtn);
-  shooterFarBtn.WhenHeld(AimSpinFlywheelGrp(&m_visionSub, &m_drivetrainSub, &m_shooterSub, &m_intakeSub, true));
+  shooterFarBtn.WhenHeld(AimSpinupShootGrp(&m_visionSub, &m_drivetrainSub, &m_shooterSub, &m_intakeSub, true));
 
   frc2::JoystickButton intakeBtn(&m_operatorController, kIntakeBtn);
   intakeBtn.WhenHeld(IntakeCmd(&m_intakeSub, &m_drivetrainSub));
@@ -202,14 +195,11 @@ void RobotContainer::configureButtonBindings() {
   frc2::JoystickButton expelBtn(&m_operatorController, kExpelBtn);
   expelBtn.WhenHeld(ExpelCmd(&m_intakeSub, &m_drivetrainSub));
 
-  frc2::JoystickButton climbWinchReleaseBtn(&m_operatorController, kClimbWinchReleaseBtn);
-   climbWinchReleaseBtn.WhenPressed(ClimbReleaseCmd(&m_climberSub, &m_operatorController));
-
-  //frc2::JoystickButton hoodToggleBtn(&m_operatorController, kHoodToggle);
-  //hoodToggleBtn.WhenPressed(HoodToggleCmd(&m_shooterSub));
+  frc2::JoystickButton climbReleaseArmBtn(&m_operatorController, kClimbReleaseArmBtn);
+  climbReleaseArmBtn.WhenPressed(ClimbReleaseArmCmd(&m_climberSub, &m_operatorController));
 
   frc2::JoystickButton turnControlPanelThreeTimesBtn(&m_operatorController, kTurnControlPanelThreeTimesBtn);
-  turnControlPanelThreeTimesBtn.WhenPressed(frc2::SequentialCommandGroup{FlipUpCtrlPanelArmCmd(&m_controlPanelSub), TurnControlPanelThreeTimesCmd(&m_controlPanelSub)});
+  turnControlPanelThreeTimesBtn.WhenPressed(TurnControlPanelThreeTimesCmd(&m_controlPanelSub));
 
   frc2::JoystickButton turnControlPanelToColourBtn(&m_operatorController, kTurnControlPanelToColourBtn);
   turnControlPanelToColourBtn.WhenPressed(TurnControlPanelToColourCmd(&m_controlPanelSub));

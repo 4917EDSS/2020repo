@@ -12,6 +12,7 @@
 ClimbBalanceCmd::ClimbBalanceCmd(ClimberSub* climbSub, bool isRight)
   : m_climbSub(climbSub),
     m_isRight(isRight) {
+      
   // Intentional lack of addRequirements because we want this to run simultaneously with climb winch
   frc::SmartDashboard::PutNumber("MoveOnGenSwitchPower", ClimbConstants::kMoveOnGenSwitchPower);
 }

@@ -12,7 +12,7 @@ IntakeCmd::IntakeCmd(IntakeSub* intakeSub, DrivetrainSub* drivetrainSub)
     m_drivetrainSub(drivetrainSub),
     m_state(0),
     m_startingEncDistance(0) {
-  // Use addRequirements() here to declare subsystem dependencies.
+  
   AddRequirements({intakeSub});
 }
 

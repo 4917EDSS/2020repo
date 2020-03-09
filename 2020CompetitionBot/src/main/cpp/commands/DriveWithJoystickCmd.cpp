@@ -18,7 +18,7 @@ constexpr double kDeadBand = 0.03;
 DriveWithJoystickCmd::DriveWithJoystickCmd(DrivetrainSub* drivetrainSub, frc::Joystick* joystick)
   : m_drivetrainSub(drivetrainSub),
     m_joystick(joystick) {
-  // Use addRequirements() here to declare subsystem dependencies.
+  
   AddRequirements({drivetrainSub});
 }
 
@@ -30,7 +30,7 @@ void DriveWithJoystickCmd::Initialize() {
 
 double adjustSensitivity (double power) {
   double sign = -1.0;
-  if (power >= 0) {
+  if(power >= 0) {
     sign = 1.0;
   }
   power = pow(power, kSensitivityPower);
@@ -87,7 +87,9 @@ void DriveWithJoystickCmd::Execute() {
 }
 
 // Called once the command ends or is interrupted.
-void DriveWithJoystickCmd::End(bool interrupted) {}
+void DriveWithJoystickCmd::End(bool interrupted) {
+  // Joystick-controller commands don't usually have an End
+}
 
 // Returns true when the command should end.
 bool DriveWithJoystickCmd::IsFinished() { return false; }

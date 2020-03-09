@@ -16,11 +16,10 @@
 #include "subsystems/ShooterSub.h"
 #include "subsystems/ClimberSub.h"
 #include "subsystems/ControlPanelSub.h"
-#include "commands/ClimbReleaseCmd.h"
 #include "subsystems/VisionSub.h"
 
-constexpr int DRIVER_JOYSTICK_PORT=0;
-constexpr int OPERATOR_JOYSTICK_PORT=1;
+constexpr int kDriverControllerPort = 0;
+constexpr int kOperatorControllerPort = 1;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -49,8 +48,8 @@ class RobotContainer {
   VisionSub m_visionSub;
 
   //Controllers and Buttons
-  frc::Joystick m_driverController{DRIVER_JOYSTICK_PORT};
-  frc::Joystick m_operatorController{OPERATOR_JOYSTICK_PORT};
+  frc::Joystick m_driverController{kDriverControllerPort};
+  frc::Joystick m_operatorController{kOperatorControllerPort};
 
   void autoChooserSetup();
   void configureButtonBindings();

@@ -19,7 +19,7 @@ SpinFlywheelCmd::SpinFlywheelCmd(ShooterSub* shooterSub, bool isFar)
   : m_shooterSub(shooterSub),
     m_isFar(isFar),
     m_targetSpeed(0) {
-  // Use addRequirements() here to declare subsystem dependencies.
+  
   AddRequirements({shooterSub});
 }
 

@@ -11,7 +11,7 @@
 KillEverythingCmd::KillEverythingCmd(ClimberSub* climberSub, ControlPanelSub* controlPanelSub,
   DrivetrainSub* driveTrainSub, IntakeSub* intakeSub, ShooterSub* shooterSub, VisionSub* visionSub) 
   : m_shooterSub(shooterSub) {
-  // Use addRequirements() here to declare subsystem dependencies.
+  
   AddRequirements({climberSub, controlPanelSub, driveTrainSub, intakeSub, shooterSub, visionSub});
 }
 

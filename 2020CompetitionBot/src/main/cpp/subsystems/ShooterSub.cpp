@@ -38,12 +38,11 @@ void ShooterSub::Periodic() {
 
 }
 
-//Sets speed of all motors
+// Sets speed of all motors
 void ShooterSub::setPower(double power) {
   m_shooterMotor1.SetVoltage(-power * 12_V);
   m_shooterMotor2.SetVoltage(power * 12_V);
 }
-
 
 bool ShooterSub::getHoodPosition() {
   return !m_hoodAdjuster.Get();
