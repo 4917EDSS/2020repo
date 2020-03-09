@@ -34,7 +34,7 @@ void ShooterSub::init() {
 
 void ShooterSub::Periodic() {
   // Implementation of subsystem periodic method goes here.
-  frc::SmartDashboard::PutNumber("ShooterSpeed", getSpeed());
+  frc::SmartDashboard::PutNumber("Shooter Speed Ticks", getSpeed());
 
 }
 
@@ -51,6 +51,7 @@ bool ShooterSub::getHoodPosition() {
 
 void ShooterSub::flipHoodUp(bool location){
   m_hoodAdjuster.Set(!location);
+  frc::SmartDashboard::PutBoolean("Hood Up", location);
 }
 
 // Gets maximum absolute speeds of both motors

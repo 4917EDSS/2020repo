@@ -5,6 +5,8 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+#include <frc/smartdashboard/SmartDashboard.h>
+
 #include "subsystems/ClimberSub.h"
 #include "Constants.h"
 
@@ -23,6 +25,7 @@ void ClimberSub::init() {
 void ClimberSub::Periodic() {}
 
 void ClimberSub::releaseLatch(bool position) {
+  frc::SmartDashboard::PutBoolean("Arm Unlocked", position);
   m_climbReleaseLatch.Set(!position);
 }
 
