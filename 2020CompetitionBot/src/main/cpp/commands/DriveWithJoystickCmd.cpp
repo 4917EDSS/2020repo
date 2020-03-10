@@ -12,7 +12,7 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 
 constexpr int kSensitivityPower=2;
-constexpr double kMaxForwardAccel = 0.02;
+constexpr double kMaxForwardAccel = 0.045;
 constexpr double kMaxTurnAccel = 0.08;
 constexpr double kDeadBand = 0.03;
 

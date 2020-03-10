@@ -26,12 +26,17 @@ RamseteCmd::RamseteCmd(Trajectory t, DrivetrainSub* drivetrainSub, bool isReset)
         drivetrainSub->tankDriveVolts(left, right);
       },
       {drivetrainSub}),
-    m_drivetrainSub(drivetrainSub) {
+    m_drivetrainSub(drivetrainSub),
+    m_isReset(isReset) {
   
   AddRequirements({drivetrainSub});
 }
 void RamseteCmd::Initialize() {
-  //m_drivetrainSub->init();
+  if (m_isReset) {
+  m_drivetrainSub->init();
+  }
+  
+  frc2::RamseteCommand::Initialize();
 }
 void RamseteCmd::End(bool interrupted) {
   frc2::RamseteCommand::End(interrupted);

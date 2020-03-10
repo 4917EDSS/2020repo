@@ -177,6 +177,8 @@ class DrivetrainSub : public frc2::SubsystemBase {
   frc::DifferentialDriveOdometry m_odometry;
 
   frc::Solenoid m_shifter;
+  
+  double m_lastAngle;
 
 #ifdef RAMSETE_LOG
   struct RamseteLog m_ramseteLog;

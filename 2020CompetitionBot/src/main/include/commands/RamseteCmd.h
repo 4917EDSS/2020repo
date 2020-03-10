@@ -30,4 +30,5 @@ class RamseteCmd
   
  private:
   DrivetrainSub* m_drivetrainSub;
+  bool m_isReset;
 };

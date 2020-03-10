@@ -18,6 +18,7 @@ constexpr float kEncoderRotationsToMLowGear = 5.0/(160.162) / 1.039; // We drove
 constexpr float kEncoderRotationsToMHighGear = 5.0/(102.264);
 constexpr double kShiftUpSpeed = 2.35;    // In m/s
 constexpr double kShiftDownSpeed = 1.15;  // In m/s
+constexpr double kScrubFactor = 0.0;
 
 DrivetrainSub::DrivetrainSub() 
   : m_leftMotor1{CanIds::kLeftMotor1, rev::CANSparkMaxLowLevel::MotorType::kBrushless},
@@ -61,9 +62,15 @@ void DrivetrainSub::init() {
 // This method will be called once per scheduler run
 void DrivetrainSub::Periodic() {
 
-  m_odometry.Update(frc::Rotation2d(units::degree_t(getHeading())),
-                    units::meter_t(getLeftEncoderDistanceM()),
-                    units::meter_t(getRightEncoderDistanceM()));
+  double currentHeading = getHeading();
+  double angleDiff = fabs(m_lastAngle - currentHeading);
+  if (angleDiff > 180) {
+   angleDiff = fabs(angleDiff - 360);
+  }
+
+  m_odometry.Update(frc::Rotation2d(units::degree_t(currentHeading)),
+                    units::meter_t(getLeftEncoderDistanceM()*(1.0 - angleDiff*kScrubFactor)),
+                    units::meter_t(getRightEncoderDistanceM()*(1.0 - angleDiff*kScrubFactor)));
 
   // frc::SmartDashboard::PutNumber("RawEnc R", getRightEncoderRaw());
   // frc::SmartDashboard::PutNumber("RawEnc L", getLeftEncoderRaw());
@@ -79,6 +86,9 @@ void DrivetrainSub::Periodic() {
             << "," << m_ramseteLog.m_wheelSpeedL << "," << m_ramseteLog.m_wheelSpeedR << "," << m_ramseteLog.m_wheelVoltageL << "," << m_ramseteLog.m_wheelVoltageR 
             << std::endl;
 #endif
+
+m_lastAngle = currentHeading;
+
 }
 
 void DrivetrainSub::setDrivetrainEncoderZero() {
