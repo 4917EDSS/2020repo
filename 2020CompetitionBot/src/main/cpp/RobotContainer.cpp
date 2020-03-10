@@ -16,6 +16,8 @@
 #include <frc/trajectory/constraint/DifferentialDriveVoltageConstraint.h>
 #include <frc2/command/InstantCommand.h>
 #include <frc2/command/RamseteCommand.h>
+#include <frc2/command/WaitCommand.h>
+#include <frc2/command/ParallelDeadlineGroup.h>
 #include <frc2/command/SequentialCommandGroup.h>
 #include <frc2/command/button/JoystickButton.h>
 #include <frc2/command/RunCommand.h>
@@ -130,6 +132,12 @@ void RobotContainer::autoChooserSetup() {
     frc::Pose2d(2_m, 2_m, frc::Rotation2d(90_deg)),
     config);
 
+  auto forwardsStraight = frc::TrajectoryGenerator::GenerateTrajectory(
+    frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
+    {},
+    frc::Pose2d(3_m, 0_m, frc::Rotation2d(0_deg)),
+    config);
+
   auto backwardsStraight = frc::TrajectoryGenerator::GenerateTrajectory(
     frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
     {},
@@ -143,6 +151,7 @@ void RobotContainer::autoChooserSetup() {
   // Create the list of auto options and put it up on the dashboard
   m_autoChooser.AddOption("Ramsete", new RamseteCmd(exampleTrajectory, &m_drivetrainSub, false));
   m_autoChooser.AddOption("Backwards", new RamseteCmd(backwardsStraight, &m_drivetrainSub, false));
+  m_autoChooser.AddOption("Trench Auto", new frc2::SequentialCommandGroup{frc2::ParallelDeadlineGroup(frc2::WaitCommand(2_s),ShootCmd(&m_shooterSub, &m_intakeSub, true, false)),frc2::ParallelDeadlineGroup(RamseteCmd(backwardsStraight, &m_drivetrainSub, false),IntakeCmd(&m_intakeSub, &m_drivetrainSub)),RamseteCmd(forwardsStraight, &m_drivetrainSub, false),AimSpinupShootGrp(&m_visionSub, &m_drivetrainSub, &m_shooterSub, &m_intakeSub, true)});
   m_autoChooser.SetDefaultOption("IntakeCmd", new IntakeCmd(&m_intakeSub,&m_drivetrainSub));
   frc::SmartDashboard::PutData("Auto Chooser", &m_autoChooser);
 }
