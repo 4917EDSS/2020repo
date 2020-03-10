@@ -15,18 +15,23 @@ constexpr double kI = 0.0002;
 constexpr double kD = 0.0;
 constexpr double kSpeedTolerance = 110.0;
 
-ShootCmd::ShootCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, bool isFar) 
+ShootCmd::ShootCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, bool isFar, bool isPreShoot) 
   : m_shooterSub(shooterSub), 
     m_intakeSub(intakeSub),
-    m_isFar(isFar) {
-  
+    m_isFar(isFar),
+    m_isPreShoot(isPreShoot) {
+
   AddRequirements({shooterSub, intakeSub});
 }
 
+
 // Called when the command is initially scheduled.
 void ShootCmd::Initialize() {
-  m_shooterSub->flipHoodUp(!m_isFar);
-  m_intakeSub->setFrontRollerIntakePower(1.0);
+  if(!m_isPreShoot){
+    m_shooterSub->flipHoodUp(!m_isFar);
+    m_intakeSub->setFrontRollerIntakePower(1.0);
+    m_intakeSub->setMagazineIntakePower(-0.5);
+  }
   //m_targetSpeed = frc::SmartDashboard::GetNumber("FlySpeed", 0); // enable (uncomment) put number in shootersub to use this function
   m_targetSpeed = (m_isFar ? ShooterConstants::kFarTargetSpeed : ShooterConstants::kCloseTargetSpeed);
   m_lastDiff = 0.0; 
@@ -54,7 +59,7 @@ double ShootCmd::runPID() {
 
 void ShootCmd::Execute() {
   m_shooterSub->setPower(runPID());
-  m_intakeSub->setMagazineIntakePower(-0.5);
+
 }
 
 // Called once the command ends or is interrupted.

@@ -15,5 +15,5 @@
 CloseShootGrp::CloseShootGrp(IntakeSub* intakeSub, ShooterSub* shooterSub) {
   // Add your commands here, e.g.
   
-  AddCommands(SpinFlywheelCmd(shooterSub, false), ShootCmd(shooterSub, intakeSub, false));
+  AddCommands(SpinFlywheelCmd(shooterSub, false), ShootCmd(shooterSub, intakeSub, false, false));
 }

@@ -7,7 +7,6 @@
 
 #include <rev/ColorSensorV3.h>
 #include <rev/ColorMatch.h>
-#include <frc/DriverStation.h>
 #include "commands/TurnControlPanelToColourCmd.h"
 #include "subsystems/ControlPanelSub.h"
 #include "Constants.h"
@@ -20,7 +19,7 @@ TurnControlPanelToColourCmd::TurnControlPanelToColourCmd(ControlPanelSub* contro
 
 // Called when the command is initially scheduled.
 void TurnControlPanelToColourCmd::Initialize() {
-  DetermineColourToTurnTo();
+  m_controlPanelSub->getColourToTurnTo();
   // we probably have to wait before we read the colour
   m_startingColour = m_controlPanelSub->getColour();
   m_controlPanelSub->setWheelPower(ControlPanelConstants::kMaxWheelSpeed);
@@ -48,38 +47,3 @@ bool TurnControlPanelToColourCmd::IsFinished() {
   }
 }
 
-// TODO:  Move this to the Control Panel subsystem
-void TurnControlPanelToColourCmd::DetermineColourToTurnTo() {
-  // Get colour from the field
-  std::string gameData = frc::DriverStation::GetInstance().GetGameSpecificMessage();
-
-  if(gameData.length() > 0) {
-    switch (gameData[0]) {
-      case 'G' :
-        //Green case code
-        m_ColourToTurnTo = ControlPanelConstants::kYellowTarget;
-        break;
-      case 'B' :
-        //Blue case code
-        m_ColourToTurnTo = ControlPanelConstants::kRedTarget;
-        break;
-      case 'Y' :
-        //Yellow case code
-        m_ColourToTurnTo = ControlPanelConstants::kGreenTarget;
-        break;
-      case 'R' :
-        //Red case code
-        m_ColourToTurnTo = ControlPanelConstants::kBlueTarget;
-        break;
-      default :
-        //This is corrupt data
-        // TODO : Throw an error?
-        break;
-    }
-
-  } 
-  else {
-    // Code for no data received yet
-    // TODO : Throw an error?
-  }
-}

@@ -75,7 +75,7 @@ constexpr int kClimbReleaseArmBtn = 1; // This is just for testing the hood togg
 constexpr int kIntakeBtn = 2;
 constexpr int kExpelBtn = 3;
 constexpr int kControlPanelArmToggleBtn = 4;
-constexpr int kSimpleCloseShotBtn = 5;
+constexpr int kSpinUpBtn = 5;
 constexpr int kSimpleFarShotBtn = 6;
 constexpr int kShooterCloseBtn = 7;
 constexpr int kShooterFarBtn = 8;
@@ -194,14 +194,14 @@ void RobotContainer::configureButtonBindings() {
 
 
   //Operator Commands...
-  frc2::JoystickButton simpleCloseShotBtn(&m_operatorController, kSimpleCloseShotBtn);
-  simpleCloseShotBtn.WhenHeld(ShootCmd(&m_shooterSub, &m_intakeSub, false));
+  frc2::JoystickButton spinUpBtn(&m_operatorController, kSpinUpBtn);
+  spinUpBtn.WhenPressed(ShootCmd(&m_shooterSub, &m_intakeSub, true, true));
 
   frc2::JoystickButton shooterCloseBtn(&m_operatorController, kShooterCloseBtn);
   shooterCloseBtn.WhenHeld(CloseShootGrp(&m_intakeSub, &m_shooterSub));
 
   frc2::JoystickButton simpleFarShotBtn(&m_operatorController, kSimpleFarShotBtn);
-  simpleFarShotBtn.WhenHeld(ShootCmd(&m_shooterSub, &m_intakeSub, true));
+  simpleFarShotBtn.WhenHeld(ShootCmd(&m_shooterSub, &m_intakeSub, true, false));
 
   frc2::JoystickButton shooterFarBtn(&m_operatorController, kShooterFarBtn);
   shooterFarBtn.WhenHeld(AimSpinupShootGrp(&m_visionSub, &m_drivetrainSub, &m_shooterSub, &m_intakeSub, true));

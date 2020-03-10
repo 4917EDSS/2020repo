@@ -33,9 +33,8 @@ class TurnControlPanelToColourCmd
 
   ControlPanelSub* m_controlPanelSub;
   frc::Color m_startingColour;
-  frc::Color m_ColourToTurnTo;
   frc::Color m_currentColour;
 
  private:
-  void DetermineColourToTurnTo();
+  frc::Color m_ColourToTurnTo;
 };
