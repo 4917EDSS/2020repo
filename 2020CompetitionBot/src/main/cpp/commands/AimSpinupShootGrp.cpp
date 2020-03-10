@@ -21,5 +21,5 @@ AimSpinupShootGrp::AimSpinupShootGrp(VisionSub* visionSub, DrivetrainSub* drivet
           // The deadline command
           VisionAlignmentCmd(visionSub, drivetrainSub, isFar), 
           SpinFlywheelCmd(shooterSub, isFar)) {
-  AddCommands(SpinFlywheelCmd(shooterSub, false), ShootCmd(shooterSub, intakeSub, false));
+  AddCommands(SpinFlywheelCmd(shooterSub, false), ShootCmd(shooterSub, intakeSub, false, false));
 }
