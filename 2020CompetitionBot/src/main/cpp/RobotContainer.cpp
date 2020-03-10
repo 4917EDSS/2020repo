@@ -61,7 +61,7 @@
  */
 
 //Driver Buttons
-// constexpr int kBackupFromPowerPort = 2; // To be added
+constexpr int kBackupFromPowerPort = 2; 
 constexpr int kDisableAutoShiftBtn = 6;
 constexpr int kClimbBalanceLeftBtn = 7;
 constexpr int kClimbBalanceRightBtn = 8;
@@ -141,8 +141,8 @@ void RobotContainer::autoChooserSetup() {
 
 
   // Create the list of auto options and put it up on the dashboard
-  m_autoChooser.AddOption("Ramsete", new RamseteCmd(exampleTrajectory, &m_drivetrainSub));
-  m_autoChooser.AddOption("Backwards", new RamseteCmd(backwardsStraight, &m_drivetrainSub));
+  m_autoChooser.AddOption("Ramsete", new RamseteCmd(exampleTrajectory, &m_drivetrainSub, false));
+  m_autoChooser.AddOption("Backwards", new RamseteCmd(backwardsStraight, &m_drivetrainSub, false));
   m_autoChooser.SetDefaultOption("IntakeCmd", new IntakeCmd(&m_intakeSub,&m_drivetrainSub));
   frc::SmartDashboard::PutData("Auto Chooser", &m_autoChooser);
 }
@@ -153,6 +153,23 @@ frc2::Command* RobotContainer::getAutonomousCommand() {
 
 void RobotContainer::configureButtonBindings() {
   //Driver Commands...
+  frc::DifferentialDriveVoltageConstraint autoVoltageConstraint(
+    frc::SimpleMotorFeedforward<units::meters> (DriveConstants::ks, DriveConstants::kv, DriveConstants::ka),
+    DriveConstants::kDriveKinematics, 
+    10_V);
+  frc::TrajectoryConfig reverseConfig(kMaxSpeed/2, kMaxAcceleration/2);
+  reverseConfig.SetKinematics(DriveConstants::kDriveKinematics);
+  reverseConfig.AddConstraint(autoVoltageConstraint);
+  reverseConfig.SetReversed(true);
+
+  auto backwardsStraight = frc::TrajectoryGenerator::GenerateTrajectory(
+    frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
+    {},
+    frc::Pose2d(-0.3_m, 0_m, frc::Rotation2d(0_deg)),
+    reverseConfig);
+
+  frc2::JoystickButton backupFromPowerPortBtn(&m_driverController, kBackupFromPowerPort);
+  backupFromPowerPortBtn.WhenPressed(new RamseteCmd(backwardsStraight, &m_drivetrainSub, true));
 
    frc2::JoystickButton disableAutoShiftBtn(&m_driverController, kDisableAutoShiftBtn);
   disableAutoShiftBtn.WhenHeld(DisableAutoShiftCmd(&m_drivetrainSub));

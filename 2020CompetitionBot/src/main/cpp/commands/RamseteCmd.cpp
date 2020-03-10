@@ -13,7 +13,7 @@ constexpr double kRamseteB = 2;
 constexpr double kRamseteZeta = 0.7;
 constexpr double kPDriveVel = 2.43;
 
-RamseteCmd::RamseteCmd(Trajectory t, DrivetrainSub* drivetrainSub)
+RamseteCmd::RamseteCmd(Trajectory t, DrivetrainSub* drivetrainSub, bool isReset)
   : frc2::RamseteCommand(t, 
       [drivetrainSub]() {return drivetrainSub->getPose();},
       frc::RamseteController(kRamseteB, kRamseteZeta),
@@ -30,7 +30,9 @@ RamseteCmd::RamseteCmd(Trajectory t, DrivetrainSub* drivetrainSub)
   
   AddRequirements({drivetrainSub});
 }
-
+void RamseteCmd::Initialize() {
+  //m_drivetrainSub->init();
+}
 void RamseteCmd::End(bool interrupted) {
   frc2::RamseteCommand::End(interrupted);
   m_drivetrainSub->tankDrive(0, 0);

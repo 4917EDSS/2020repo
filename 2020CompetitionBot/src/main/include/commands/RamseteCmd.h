@@ -23,8 +23,11 @@
 class RamseteCmd
     : public frc2::RamseteCommand{
  public:
-  RamseteCmd(Trajectory t, DrivetrainSub* drivetrainsub);
+  RamseteCmd(Trajectory t, DrivetrainSub* drivetrainsub, bool isReset);
+  
+  void Initialize() override;
   void End(bool interrupted) override;
-  private:
+  
+ private:
   DrivetrainSub* m_drivetrainSub;
 };
