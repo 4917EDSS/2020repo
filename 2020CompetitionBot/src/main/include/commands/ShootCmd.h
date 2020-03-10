@@ -24,23 +24,24 @@ class ShootCmd
     : public frc2::CommandHelper<frc2::CommandBase, ShootCmd> {
  public:
 
-  ShootCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, bool isFar);
+  ShootCmd(ShooterSub* shooterSub, IntakeSub* intakeSub, bool isFar, bool isPreShoot);
 
   void Initialize() override;
   void Execute() override;
   void End(bool interrupted) override;
 
-  private:
+ private:
   ShooterSub* m_shooterSub;
   IntakeSub* m_intakeSub;
+  bool m_isFar;
+  bool m_isPreShoot;
+  
   double m_targetSpeed;
   double m_lastDiff;
   uint64_t m_lastTime;
-  bool m_isFar;
   double powers[5];
-  int m_index=0;
+  int m_index = 0;
   double m_integralDiff;
+  
   double runPID();
-
-
 };
