@@ -5,6 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 #include <frc/smartdashboard/SmartDashboard.h>
+#include <frc/DriverStation.h>
 #include "subsystems/ControlPanelSub.h"
 #include "Constants.h"
 
@@ -16,13 +17,17 @@ ControlPanelSub::ControlPanelSub()
   m_colourMatcher.AddColorMatch(ControlPanelConstants::kGreenTarget);
   m_colourMatcher.AddColorMatch(ControlPanelConstants::kRedTarget);
   m_colourMatcher.AddColorMatch(ControlPanelConstants::kYellowTarget);
+
+  frc::SmartDashboard::PutString("Field Colour", "Unkown");
 }
 
 void ControlPanelSub::init() {
   flipArmUp(true);
 }
 
-void ControlPanelSub::Periodic() {}
+void ControlPanelSub::Periodic() {
+  determineColourToTurnTo();
+}
 
 bool ControlPanelSub::isArmUp() {
   return !m_controlPanelFlipper.Get();
@@ -59,21 +64,57 @@ frc::Color ControlPanelSub::getColour(){
     colourString = "Unknown";
   }
 
-  frc::SmartDashboard::PutNumber("Red", detectedColour.red);
-  frc::SmartDashboard::PutNumber("Green", detectedColour.green);
-  frc::SmartDashboard::PutNumber("Blue", detectedColour.blue);
-  frc::SmartDashboard::PutNumber("Confidence", confidence);
+  // frc::SmartDashboard::PutNumber("Red", detectedColour.red);
+  // frc::SmartDashboard::PutNumber("Green", detectedColour.green);
+  // frc::SmartDashboard::PutNumber("Blue", detectedColour.blue);
+  // frc::SmartDashboard::PutNumber("Confidence", confidence);
   frc::SmartDashboard::PutString("Detected Colour", colourString);
-
   return matchedColour;
 }
 
-// TODO:  Move the colour conversion function from TrunControlPanelToColourCmd to here
+// Convert what field tells us to what the robot turns to.
 // Robot  | Field
 // -------|------
 // Red    | Blue
 // Yellow | Green
 // Blue   | Red
 // Green  | Yellow
+void ControlPanelSub::determineColourToTurnTo() {
+  // Get colour from the field
+  std::string gameData = frc::DriverStation::GetInstance().GetGameSpecificMessage();
+  frc::SmartDashboard::PutString("Field Colour", gameData);
 
+  if(gameData.length() > 0) {
+    switch (gameData[0]) {
+      case 'G' :
+        //Green case code
+        m_colourToTurnTo = ControlPanelConstants::kYellowTarget;
+        break;
+      case 'B' :
+        //Blue case code
+        m_colourToTurnTo = ControlPanelConstants::kRedTarget;
+        break;
+      case 'Y' :
+        //Yellow case code
+        m_colourToTurnTo = ControlPanelConstants::kGreenTarget;
+        break;
+      case 'R' :
+        //Red case code
+        m_colourToTurnTo = ControlPanelConstants::kBlueTarget;
+        break;
+      default :
+        //This is corrupt data
+        // TODO : Throw an error?
+        break;
+    }
 
+  } 
+  else {
+    // Code for no data received yet
+    // TODO : Throw an error?
+  }
+  
+  frc::Color ControlPanelSub::getColourToTurnTo() {
+    return m_colourToTurnTo;
+  }
+}

@@ -33,6 +33,7 @@ class ControlPanelSub : public frc2::SubsystemBase {
   void flipArmUp(bool position);
   void setWheelPower(double power);
   frc::Color getColour();
+  frc::Color getColourToTurnTo();
 
  private:
   static constexpr auto i2cPort = frc::I2C::Port::kOnboard;
@@ -41,4 +42,7 @@ class ControlPanelSub : public frc2::SubsystemBase {
   rev::ColorMatch m_colourMatcher;
   ctre::phoenix::motorcontrol::can::WPI_VictorSPX m_controlPanelMotor;
   frc::Solenoid m_controlPanelFlipper;
+  frc::Color m_colourToTurnTo = frc::Color::kBlack;
+
+  void determineColourToTurnTo();
 };
