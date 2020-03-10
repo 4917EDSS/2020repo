@@ -41,7 +41,7 @@ void ControlPanelSub::setWheelPower(double power){
   m_controlPanelMotor.Set(power);
 }
 
-frc::Color ControlPanelSub::getColour(){
+frc::Color ControlPanelSub::getColour() {
   frc::Color detectedColour = m_colourSensor.GetColor();
 
   std::string colourString;
@@ -113,8 +113,8 @@ void ControlPanelSub::determineColourToTurnTo() {
     // Code for no data received yet
     // TODO : Throw an error?
   }
-  
-  frc::Color ControlPanelSub::getColourToTurnTo() {
-    return m_colourToTurnTo;
-  }
+}
+
+frc::Color ControlPanelSub::getColourToTurnTo() {
+  return m_colourToTurnTo;
 }
