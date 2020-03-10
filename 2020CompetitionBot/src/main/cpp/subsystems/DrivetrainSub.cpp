@@ -105,10 +105,12 @@ void DrivetrainSub::arcadeDrive(double fwd, double rot) {
 
 void DrivetrainSub::shiftUp() {
    m_shifter.Set(true);
+   frc::SmartDashboard::PutBoolean("High Gear", true);
 }
 
 void DrivetrainSub::shiftDown() {
   m_shifter.Set(false);
+  frc::SmartDashboard::PutBoolean("High Gear", false);
 }
 
 bool DrivetrainSub::isShifterInHighGear() {
