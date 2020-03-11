@@ -51,6 +51,7 @@ bool ShooterSub::getHoodPosition() {
 void ShooterSub::flipHoodUp(bool location){
   m_hoodAdjuster.Set(!location);
   frc::SmartDashboard::PutBoolean("Hood Up", location);
+  std::cout << "Hood Up: " << location << std::endl;
 }
 
 // Gets maximum absolute speeds of both motors

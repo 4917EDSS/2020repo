@@ -150,6 +150,12 @@ void RobotContainer::autoChooserSetup() {
     frc::Pose2d(-3_m, 0_m, frc::Rotation2d(0_deg)),
     reverseConfig);
 
+  auto offLine = frc::TrajectoryGenerator::GenerateTrajectory(
+    frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
+    {},
+    frc::Pose2d(-0.5_m, 0_m, frc::Rotation2d(0_deg)),
+    reverseConfig);
+
  // frc::Pose2d bOrigin{12.435_m, -7.507_m, frc::Rotation2d(0_deg)};
  // auto trenchAuto = frc::TrajectoryGenerator::GenerateTrajectory( )
 
