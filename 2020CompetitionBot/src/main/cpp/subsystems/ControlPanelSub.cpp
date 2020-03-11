@@ -11,7 +11,7 @@
 
 ControlPanelSub::ControlPanelSub() 
   : m_controlPanelMotor(CanIds::kControlPanelMotor),
-    m_controlPanelFlipper(PneumaticIds::kControlPanelFlipper){
+    m_controlPanelFlipper(PneumaticIds::kControlPanelFlipper) {
 
   m_colourMatcher.AddColorMatch(ControlPanelConstants::kBlueTarget);
   m_colourMatcher.AddColorMatch(ControlPanelConstants::kGreenTarget);
@@ -26,18 +26,25 @@ void ControlPanelSub::init() {
 }
 
 void ControlPanelSub::Periodic() {
-  determineColourToTurnTo();
+  static int periodicCounts = 0;
+
+  // Don't check every loop
+  if(++periodicCounts >= 25) {
+    determineColourToTurnTo();
+    periodicCounts = 0;
+  }
+  
 }
 
 bool ControlPanelSub::isArmUp() {
   return !m_controlPanelFlipper.Get();
 }
 
-void ControlPanelSub::flipArmUp(bool position){
+void ControlPanelSub::flipArmUp(bool position) {
   m_controlPanelFlipper.Set(!position);
 }
 
-void ControlPanelSub::setWheelPower(double power){
+void ControlPanelSub::setWheelPower(double power) {
   m_controlPanelMotor.Set(power);
 }
 
@@ -80,6 +87,8 @@ frc::Color ControlPanelSub::getColour() {
 // Blue   | Red
 // Green  | Yellow
 void ControlPanelSub::determineColourToTurnTo() {
+  bool colourToTurnToValid = true;  // Assume true until we find out it's not valid
+
   // Get colour from the field
   std::string gameData = frc::DriverStation::GetInstance().GetGameSpecificMessage();
   frc::SmartDashboard::PutString("Field Colour", gameData);
@@ -103,18 +112,22 @@ void ControlPanelSub::determineColourToTurnTo() {
         m_colourToTurnTo = ControlPanelConstants::kBlueTarget;
         break;
       default :
-        //This is corrupt data
-        // TODO : Throw an error?
+        colourToTurnToValid = false;
         break;
     }
-
   } 
   else {
-    // Code for no data received yet
-    // TODO : Throw an error?
+    colourToTurnToValid = false;
   }
+
+  m_colourToTurnToValid = colourToTurnToValid;
+  frc::SmartDashboard::PutBoolean("Field Colour OK", m_colourToTurnToValid);
 }
 
 frc::Color ControlPanelSub::getColourToTurnTo() {
   return m_colourToTurnTo;
+}
+
+bool ControlPanelSub::isColourToTurnToValid() {
+  return m_colourToTurnToValid;
 }

@@ -31,16 +31,18 @@ RamseteCmd::RamseteCmd(Trajectory t, DrivetrainSub* drivetrainSub, bool isReset)
   
   AddRequirements({drivetrainSub});
 }
+
 void RamseteCmd::Initialize() {
   if (m_isReset) {
-  m_drivetrainSub->init();
+    m_drivetrainSub->init();
   }
   
   frc2::RamseteCommand::Initialize();
 }
+
 void RamseteCmd::End(bool interrupted) {
   frc2::RamseteCommand::End(interrupted);
   m_drivetrainSub->tankDrive(0, 0);
   std::cout << "X pos: " << m_drivetrainSub->getPose().Translation().X() << "\n";
   std::cout << "Y pos: " << m_drivetrainSub->getPose().Translation().Y() << "\n";
-  }
+}

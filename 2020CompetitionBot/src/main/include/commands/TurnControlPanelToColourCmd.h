@@ -31,10 +31,9 @@ class TurnControlPanelToColourCmd
 
   bool IsFinished() override;
 
-  ControlPanelSub* m_controlPanelSub;
-  frc::Color m_startingColour;
-  frc::Color m_currentColour;
-
  private:
-  frc::Color m_ColourToTurnTo;
+  ControlPanelSub* m_controlPanelSub;
+  frc::Color m_currentColour = frc::Color::kBlack;
+  frc::Color m_colourToTurnTo = frc::Color::kBlack;
+  bool m_colourToTurnToValid = false;
 };

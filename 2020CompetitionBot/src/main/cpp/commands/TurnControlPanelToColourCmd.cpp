@@ -19,10 +19,14 @@ TurnControlPanelToColourCmd::TurnControlPanelToColourCmd(ControlPanelSub* contro
 
 // Called when the command is initially scheduled.
 void TurnControlPanelToColourCmd::Initialize() {
-  m_controlPanelSub->getColourToTurnTo();
-  // we probably have to wait before we read the colour
-  m_startingColour = m_controlPanelSub->getColour();
-  m_controlPanelSub->setWheelPower(ControlPanelConstants::kMaxWheelSpeed);
+  if(m_controlPanelSub->isColourToTurnToValid()) {
+    m_colourToTurnTo = m_controlPanelSub->getColourToTurnTo();
+    m_controlPanelSub->setWheelPower(ControlPanelConstants::kMaxWheelSpeed);
+  }
+  else {
+    // We don't have a colour from the field yet so quit this command (see IsFinished)
+    m_colourToTurnToValid = false;
+  }
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -37,9 +41,7 @@ void TurnControlPanelToColourCmd::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool TurnControlPanelToColourCmd::IsFinished() {
-  if(m_currentColour == m_ColourToTurnTo) {
-    // This may be too abrupt of a stop - needs tuning
-    m_controlPanelSub->setWheelPower(0);
+  if(!m_colourToTurnToValid || (m_currentColour == m_colourToTurnTo)) {
     return true;
   } 
   else {

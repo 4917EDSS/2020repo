@@ -149,10 +149,26 @@ void RobotContainer::autoChooserSetup() {
 
 
   // Create the list of auto options and put it up on the dashboard
-  m_autoChooser.AddOption("Ramsete", new RamseteCmd(exampleTrajectory, &m_drivetrainSub, false));
-  m_autoChooser.AddOption("Backwards", new RamseteCmd(backwardsStraight, &m_drivetrainSub, false));
-  m_autoChooser.AddOption("Trench Auto", new frc2::SequentialCommandGroup{frc2::ParallelDeadlineGroup(frc2::WaitCommand(2_s),ShootCmd(&m_shooterSub, &m_intakeSub, true, false)),frc2::ParallelDeadlineGroup(RamseteCmd(backwardsStraight, &m_drivetrainSub, false),IntakeCmd(&m_intakeSub, &m_drivetrainSub)),RamseteCmd(forwardsStraight, &m_drivetrainSub, false),AimSpinupShootGrp(&m_visionSub, &m_drivetrainSub, &m_shooterSub, &m_intakeSub, true)});
-  m_autoChooser.SetDefaultOption("IntakeCmd", new IntakeCmd(&m_intakeSub,&m_drivetrainSub));
+  m_autoChooser.AddOption("Ramsete", new 
+    RamseteCmd(exampleTrajectory, &m_drivetrainSub, false));
+
+  m_autoChooser.AddOption("Backwards", new 
+    RamseteCmd(backwardsStraight, &m_drivetrainSub, false));
+
+  m_autoChooser.AddOption("Trench Auto", new 
+    frc2::SequentialCommandGroup{
+      frc2::ParallelDeadlineGroup(
+        frc2::WaitCommand(2_s),
+        ShootCmd(&m_shooterSub, &m_intakeSub, true, false)),
+      frc2::ParallelDeadlineGroup(
+        RamseteCmd(backwardsStraight, &m_drivetrainSub, false),
+        IntakeCmd(&m_intakeSub, &m_drivetrainSub)),
+      RamseteCmd(forwardsStraight, &m_drivetrainSub, false),
+      AimSpinupShootGrp(&m_visionSub, &m_drivetrainSub, &m_shooterSub, &m_intakeSub, true)});
+
+  m_autoChooser.SetDefaultOption("IntakeCmd", new 
+    IntakeCmd(&m_intakeSub,&m_drivetrainSub));  // TODO:  Replace with do-nothing command or a safe auto (like drive-back-from-auto-line)
+
   frc::SmartDashboard::PutData("Auto Chooser", &m_autoChooser);
 }
 
