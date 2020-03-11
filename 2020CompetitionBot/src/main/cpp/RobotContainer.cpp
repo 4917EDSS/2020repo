@@ -149,6 +149,11 @@ void RobotContainer::autoChooserSetup() {
     {},
     frc::Pose2d(-3_m, 0_m, frc::Rotation2d(0_deg)),
     reverseConfig);
+  auto backwardsStraight2m = frc::TrajectoryGenerator::GenerateTrajectory(
+    frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
+    {},
+    frc::Pose2d(-2_m, 0_m, frc::Rotation2d(0_deg)),
+    reverseConfig);    
 
   auto offLine = frc::TrajectoryGenerator::GenerateTrajectory(
     frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
@@ -179,6 +184,10 @@ m_autoChooser.AddOption("Drive Forward Shoot", new
 
   m_autoChooser.AddOption("Trench Auto", new 
     frc2::SequentialCommandGroup{
+      frc2::ParallelDeadlineGroup(
+        RamseteCmd(backwardsStraight2m, &m_drivetrainSub, false),
+        IntakeCmd(&m_intakeSub, &m_drivetrainSub)
+      ),
       frc2::ParallelDeadlineGroup(
         frc2::WaitCommand(2_s),
         ShootCmd(&m_shooterSub, &m_intakeSub, true, false)
