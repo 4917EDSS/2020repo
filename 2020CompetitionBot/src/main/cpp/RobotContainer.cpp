@@ -129,7 +129,7 @@ void RobotContainer::autoChooserSetup() {
   auto driveStartLineToPowerPort = frc::TrajectoryGenerator::GenerateTrajectory(
     frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
     {},
-    frc::Pose2d(2.75_m, 0_m, frc::Rotation2d(0_deg)),
+    frc::Pose2d(2.95_m, 0_m, frc::Rotation2d(0_deg)),
     config);
 
   auto exampleTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
@@ -150,7 +150,7 @@ void RobotContainer::autoChooserSetup() {
     frc::Pose2d(-3_m, 0_m, frc::Rotation2d(0_deg)),
     reverseConfig);
 
-  auto offLine = frc::TrajectoryGenerator::GenerateTrajectory(
+  auto offStartLine = frc::TrajectoryGenerator::GenerateTrajectory(
     frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
     {},
     frc::Pose2d(-0.5_m, 0_m, frc::Rotation2d(0_deg)),
@@ -161,15 +161,19 @@ void RobotContainer::autoChooserSetup() {
 
 
   // Create the list of auto options and put it up on the dashboard
-m_autoChooser.AddOption("Drive Forward Shoot", new 
-  frc2::SequentialCommandGroup{
-    frc2::ParallelDeadlineGroup(
-      RamseteCmd(driveStartLineToPowerPort, &m_drivetrainSub, false),
-      ShootCmd(&m_shooterSub, &m_intakeSub, false, true)
-    ),
-    ShootCmd(&m_shooterSub, &m_intakeSub, false, false)
-  }
-);
+  m_autoChooser.AddOption("Drive Forward Shoot", new 
+    frc2::SequentialCommandGroup{
+      frc2::ParallelDeadlineGroup(
+        RamseteCmd(driveStartLineToPowerPort, &m_drivetrainSub, false),
+        ShootCmd(&m_shooterSub, &m_intakeSub, false, true)
+      ),
+      ShootCmd(&m_shooterSub, &m_intakeSub, false, false)
+    }
+  );
+
+
+  m_autoChooser.AddOption("OffStartLine", new 
+    RamseteCmd(offStartLine, &m_drivetrainSub, false));
 
   m_autoChooser.AddOption("Ramsete", new 
     RamseteCmd(exampleTrajectory, &m_drivetrainSub, false));
