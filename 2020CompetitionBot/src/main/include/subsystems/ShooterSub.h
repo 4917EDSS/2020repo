@@ -17,6 +17,9 @@ namespace ShooterConstants {
     constexpr double kMaxRPM = 21750;
     constexpr double kCloseTargetSpeed = 15000;
     constexpr double kFarTargetSpeed = 17800;   
+    constexpr double kMaxSpeed = 20500; // this was found by setting the target speed to 30000 ticks, then seeing what speed the robot could hold consistently at a low battery.
+    static_assert(kFarTargetSpeed < kMaxSpeed, "Far target must be less than max speed");
+    static_assert(kCloseTargetSpeed < kMaxSpeed, "Close target must be less than max speed");
 }
 
 class ShooterSub : public frc2::SubsystemBase {

@@ -16,7 +16,7 @@ VisionAlignmentCmd::VisionAlignmentCmd(VisionSub* visionSub, DrivetrainSub* driv
     m_drivetrainSub(drivetrainSub),
     m_isFar(isFar),
     m_lastX(0),
-    m_pController(0, 20, VisionConstants::kXAllignmentTolerence, 0.10, 0.2) {
+    m_pController(0, 20, VisionConstants::kXAllignmentTolerence, 0.05, 0.15) {
   
   AddRequirements({visionSub, drivetrainSub});
 }
@@ -36,7 +36,6 @@ void VisionAlignmentCmd::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void VisionAlignmentCmd::Execute() {
-  std::cout << frc::RobotController::GetFPGATime() - m_startTime << std::endl;
   double x = m_visionSub->getVisionTarget();
   double outputPower = m_pController.getPower(x);
   m_drivetrainSub->tankDrive(-outputPower, outputPower);
@@ -50,15 +49,24 @@ void VisionAlignmentCmd::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool VisionAlignmentCmd::IsFinished() { 
-  if((frc::RobotController::GetFPGATime() - m_startTime) < 1500000) {
+  if((frc::RobotController::GetFPGATime() - m_startTime) < 500000) {
     return false;
   }
   double x = m_visionSub->getVisionTarget();
   double currentVelocity = (x - m_lastX);
   m_lastX = x;
-  if((fabs(x) < VisionConstants::kXAllignmentTolerence) && (fabs(currentVelocity) < kMaxEndVelocity)) {
-    return true;
+  if(fabs(x) < VisionConstants::kXAllignmentTolerence) {
+    std::cout << "x: " << x << std::endl;
+    
   }
+  if (fabs(currentVelocity) < kMaxEndVelocity) {
+    std::cout << "velocity: " << currentVelocity << std::endl;
+    
+  }
+   if ((fabs(x) < VisionConstants::kXAllignmentTolerence) && (fabs(currentVelocity) < kMaxEndVelocity)) {
+     return true;
+   }
+
   else {
     return false;
   }
