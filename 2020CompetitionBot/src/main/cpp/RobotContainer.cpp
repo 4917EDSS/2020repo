@@ -128,8 +128,8 @@ void RobotContainer::autoChooserSetup() {
 
   auto exampleTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
     frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
-    {/*frc::Translation2d(2_m, 1_m), frc::Translation2d(2_m, -1_m)*/},
-    frc::Pose2d(6_m, 0_m, frc::Rotation2d(0_deg)),
+    {/*frc::Translation2d(1_m, 1_m), frc::Translation2d(2_m, -1_m)*/},
+    frc::Pose2d(3_m, 0_m, frc::Rotation2d(0_deg)),
     config);
 
   auto forwardsStraight = frc::TrajectoryGenerator::GenerateTrajectory(
