@@ -21,6 +21,10 @@
 #include <frc2/command/SequentialCommandGroup.h>
 #include <frc2/command/button/JoystickButton.h>
 #include <frc2/command/RunCommand.h>
+#include <frc/Filesystem.h>
+#include <frc/trajectory/TrajectoryUtil.h>
+#include <wpi/Path.h>
+#include <wpi/SmallString.h>
 
 #include "Constants.h"
 #include "commands/DriveWithJoystickCmd.h"
@@ -124,6 +128,13 @@ void RobotContainer::autoChooserSetup() {
   reverseConfig.AddConstraint(autoVoltageConstraint);
   reverseConfig.SetReversed(true);
 
+  wpi::SmallString<64> deployDirectory;
+  frc::filesystem::GetDeployDirectory(deployDirectory);
+  wpi::sys::path::append(deployDirectory, "paths");
+  wpi::sys::path::append(deployDirectory, "90DegLeft.wpilib.json");
+
+  frc::Trajectory trajectory = frc::TrajectoryUtil::FromPathweaverJson(deployDirectory);
+
   // All autos are from the blue side, (0,0) is top left corner (red scoring side)
 
   auto exampleTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
@@ -144,13 +155,18 @@ void RobotContainer::autoChooserSetup() {
     frc::Pose2d(-3_m, 0_m, frc::Rotation2d(0_deg)),
     reverseConfig);
 
+ 
+
  // frc::Pose2d bOrigin{12.435_m, -7.507_m, frc::Rotation2d(0_deg)};
  // auto trenchAuto = frc::TrajectoryGenerator::GenerateTrajectory( )
-
+  
 
   // Create the list of auto options and put it up on the dashboard
   m_autoChooser.AddOption("Ramsete", new 
     RamseteCmd(exampleTrajectory, &m_drivetrainSub, false));
+
+  m_autoChooser.AddOption("TurnLeft", new
+  RamseteCmd(trajectory, &m_drivetrainSub, false));
 
   m_autoChooser.AddOption("Backwards", new 
     RamseteCmd(backwardsStraight, &m_drivetrainSub, false));
