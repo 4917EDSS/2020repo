@@ -149,10 +149,11 @@ void RobotContainer::autoChooserSetup() {
     {},
     frc::Pose2d(-3_m, 0_m, frc::Rotation2d(0_deg)),
     reverseConfig);
-  auto backwardsStraight2m = frc::TrajectoryGenerator::GenerateTrajectory(
+
+  auto backwardsTurn = frc::TrajectoryGenerator::GenerateTrajectory(
     frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
     {},
-    frc::Pose2d(-2_m, 0_m, frc::Rotation2d(0_deg)),
+    frc::Pose2d(-3_m, 0_m, frc::Rotation2d(20_deg)),
     reverseConfig);    
 
   auto offStartLine = frc::TrajectoryGenerator::GenerateTrajectory(
@@ -189,19 +190,13 @@ void RobotContainer::autoChooserSetup() {
   m_autoChooser.AddOption("Trench Auto", new 
     frc2::SequentialCommandGroup{
       frc2::ParallelDeadlineGroup(
-        RamseteCmd(backwardsStraight2m, &m_drivetrainSub, false),
+        RamseteCmd(backwardsTurn, &m_drivetrainSub, false),
         IntakeCmd(&m_intakeSub, &m_drivetrainSub)
       ),
       frc2::ParallelDeadlineGroup(
         frc2::WaitCommand(2_s),
-        ShootCmd(&m_shooterSub, &m_intakeSub, true, false)
-      ),
-      frc2::ParallelDeadlineGroup(
-        RamseteCmd(backwardsStraight, &m_drivetrainSub, false),
-        IntakeCmd(&m_intakeSub, &m_drivetrainSub)
-      ),
-      RamseteCmd(forwardsStraight, &m_drivetrainSub, false),
-      AimSpinupShootGrp(&m_visionSub, &m_drivetrainSub, &m_shooterSub, &m_intakeSub, true)
+        ShootCmd(&m_shooterSub, &m_intakeSub, true, false) // Replace w/ vision far cmd once limelight is in place
+      )
     }
   );
 
