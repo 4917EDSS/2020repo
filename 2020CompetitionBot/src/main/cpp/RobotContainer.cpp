@@ -137,6 +137,12 @@ void RobotContainer::autoChooserSetup() {
 
   // All autos are from the blue side, (0,0) is top left corner (red scoring side)
 
+  auto driveStartLineToPowerPort = frc::TrajectoryGenerator::GenerateTrajectory(
+    frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
+    {},
+    frc::Pose2d(2.95_m, 0_m, frc::Rotation2d(0_deg)),
+    config);
+
   auto exampleTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
     frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
     {/*frc::Translation2d(1_m, 1_m), frc::Translation2d(2_m, -1_m)*/},
@@ -154,6 +160,17 @@ void RobotContainer::autoChooserSetup() {
     {},
     frc::Pose2d(-3_m, 0_m, frc::Rotation2d(0_deg)),
     reverseConfig);
+  auto backwardsStraight2m = frc::TrajectoryGenerator::GenerateTrajectory(
+    frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
+    {},
+    frc::Pose2d(-2_m, 0_m, frc::Rotation2d(0_deg)),
+    reverseConfig);    
+
+  auto offStartLine = frc::TrajectoryGenerator::GenerateTrajectory(
+    frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
+    {},
+    frc::Pose2d(-0.5_m, 0_m, frc::Rotation2d(0_deg)),
+    reverseConfig);
 
  
 
@@ -162,6 +179,20 @@ void RobotContainer::autoChooserSetup() {
   
 
   // Create the list of auto options and put it up on the dashboard
+  m_autoChooser.AddOption("Drive Forward Shoot", new 
+    frc2::SequentialCommandGroup{
+      frc2::ParallelDeadlineGroup(
+        RamseteCmd(driveStartLineToPowerPort, &m_drivetrainSub, false),
+        ShootCmd(&m_shooterSub, &m_intakeSub, false, true)
+      ),
+      ShootCmd(&m_shooterSub, &m_intakeSub, false, false)
+    }
+  );
+
+
+  m_autoChooser.AddOption("OffStartLine", new 
+    RamseteCmd(offStartLine, &m_drivetrainSub, false));
+
   m_autoChooser.AddOption("Ramsete", new 
     RamseteCmd(exampleTrajectory, &m_drivetrainSub, false));
 
@@ -174,13 +205,22 @@ void RobotContainer::autoChooserSetup() {
   m_autoChooser.AddOption("Trench Auto", new 
     frc2::SequentialCommandGroup{
       frc2::ParallelDeadlineGroup(
+        RamseteCmd(backwardsStraight2m, &m_drivetrainSub, false),
+        IntakeCmd(&m_intakeSub, &m_drivetrainSub)
+      ),
+      frc2::ParallelDeadlineGroup(
         frc2::WaitCommand(2_s),
-        ShootCmd(&m_shooterSub, &m_intakeSub, true, false)),
+        ShootCmd(&m_shooterSub, &m_intakeSub, true, false)
+      ),
       frc2::ParallelDeadlineGroup(
         RamseteCmd(backwardsStraight, &m_drivetrainSub, false),
-        IntakeCmd(&m_intakeSub, &m_drivetrainSub)),
+        IntakeCmd(&m_intakeSub, &m_drivetrainSub)
+      ),
       RamseteCmd(forwardsStraight, &m_drivetrainSub, false),
-      AimSpinupShootGrp(&m_visionSub, &m_drivetrainSub, &m_shooterSub, &m_intakeSub, true)});
+      AimSpinupShootGrp(&m_visionSub, &m_drivetrainSub, &m_shooterSub, &m_intakeSub, true)
+    }
+  );
+
 
   m_autoChooser.SetDefaultOption("IntakeCmd", new 
     IntakeCmd(&m_intakeSub,&m_drivetrainSub));  // TODO:  Replace with do-nothing command or a safe auto (like drive-back-from-auto-line)
