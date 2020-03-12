@@ -80,6 +80,7 @@ void DrivetrainSub::Periodic() {
   // frc::SmartDashboard::PutNumber("MtrVlcty L", getLeftVelocity());
   // frc::SmartDashboard::PutBoolean("High Gear", isShifterInHighGear());
   // std::cout << getPose().Translation().X() << " " << getPose().Translation().Y() << " " << getPose().Rotation().Radians() << "\n";
+  frc::SmartDashboard::PutNumber("Nav-X Yaw", m_gyro.GetYaw());
 
 #ifdef RAMSETE_LOG
   std::cout << "RLog," << frc::RobotController::GetFPGATime() << "," << m_ramseteLog.m_poseX << "," << m_ramseteLog.m_poseY << "," << m_ramseteLog.m_poseAngle 

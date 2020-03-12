@@ -55,5 +55,6 @@ bool IntakeSub::getMagazineFrontSensor() {
 }
 
 bool IntakeSub::getMagazineFullSensor() {
-  return !m_magazineFullSensor.Get();
+  // return !m_magazineFullSensor.Get();
+  return false;
 }
